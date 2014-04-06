@@ -4,3 +4,4 @@ dist/
 node_modules/
 npm-debug.log
 test-results.xml
+*.sublime-workspace

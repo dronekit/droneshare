@@ -1,0 +1,23 @@
+<app:tabs>
+
+	<app:tab caption="Mission" selected="true">
+		<section ng-controller="gitHubController as controller">
+			<div class="alert alert-info" ng-show="!controller.searchTerm.length">
+				<h4 class="alert-heading">Heads up!</h4>
+				<span>Enter GitHub search criteria.</span>
+			</div>
+
+			<form class="well form-search" ng-submit="controller.search(controller.searchTerm)">
+				<input type="text" class="input-medium search-query" ng-model="controller.searchTerm" />
+				<button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i> Search</button>
+			</form>
+
+			<ul ng-hide="!controller.repos.length">
+				<li ng-repeat="repo in controller.repos track by repo.id | orderBy:'pushed_at':true">
+					<a ng-href="{{repo.clone_url}}" ng-bind="repo.name" target="_blank"></a>
+					<div ng-bind="repo.description"></div>
+				</li>
+			</ul>
+		</section>
+	</app:tab>
+</app:tabs>

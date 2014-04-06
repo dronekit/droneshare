@@ -328,7 +328,7 @@ module.exports = (grunt) ->
 					'libs/angular.min.js'
 					'NGAPP':
 						'ngAnimate': 'libs/angular-animate.min.js'
-						'ngMockE2E': 'libs/angular-mocks.js'
+						#'ngMockE2E': 'libs/angular-mocks.js'
 						'ngRoute': 'libs/angular-route.min.js'
 				]
 				require: 'NGBOOTSTRAP'

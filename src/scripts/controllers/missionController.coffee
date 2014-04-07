@@ -2,7 +2,7 @@ class Controller
 	constructor: (@$log, @missionService) ->
 		setMissions = =>
 			@missionService.get().then (results) =>
-				@people = results
+				@missions = results
 
 		@insertMission = (mission) =>
 			@missionService.save(mission)

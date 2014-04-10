@@ -16,6 +16,7 @@ module.exports = (grunt) ->
 		bower:
 			install:
 				options:
+					verbose: true
 					cleanTargetDir: true
 					copy: true
 					layout: (type, component) ->
@@ -330,6 +331,7 @@ module.exports = (grunt) ->
 						'ngAnimate': 'libs/angular-animate.min.js'
 						#'ngMockE2E': 'libs/angular-mocks.js'
 						'ngRoute': 'libs/angular-route.min.js'
+						'leaflet-directive': 'libs/angular-leaflet-directive.min.js'
 				]
 				require: 'NGBOOTSTRAP'
 			prod:

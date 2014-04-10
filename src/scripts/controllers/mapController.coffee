@@ -1,9 +1,10 @@
-class Controller
-	constructor: (@$scope) ->
-		defaults:
-			scrollWheelZoom: false
 
-angular.module('app').controller 'mapController', ['$scope', Controller]
+
+angular.module('app').controller 'mapController', ['$scope', ($scope) =>
+	angular.extend $scope,
+		defaults:
+			scrollWheelZoom: true
+	]
 
 ###
 app.controller("SimpleMapController", [ '$scope', function($scope) {

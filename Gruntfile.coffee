@@ -318,20 +318,17 @@ module.exports = (grunt) ->
 				cwd: '.temp/scripts'
 				src: [
 					'**/*.{coffee,js}'
-					'!libs/angular.{coffee,js}'
-					'!libs/angular-animate.{coffee,js}'
-					'!libs/angular-route.{coffee,js}'
 					'!libs/html5shiv-printshiv.{coffee,js}'
 					'!libs/json3.min.{coffee,js}'
 					'!libs/require.{coffee,js}'
 				]
 				order: [
-					'libs/angular.min.js'
+					'libs/angular.js'
 					'NGAPP':
-						'ngAnimate': 'libs/angular-animate.min.js'
+						'ngAnimate': 'libs/angular-animate.js'
 						#'ngMockE2E': 'libs/angular-mocks.js'
-						'ngRoute': 'libs/angular-route.min.js'
-						'leaflet-directive': 'libs/angular-leaflet-directive.min.js'
+						'ngRoute': 'libs/angular-route.js'
+						'leaflet-directive': 'libs/angular-leaflet-directive.js'
 				]
 				require: 'NGBOOTSTRAP'
 			prod:

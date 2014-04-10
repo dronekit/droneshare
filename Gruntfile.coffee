@@ -94,7 +94,7 @@ module.exports = (grunt) ->
 					livereload: true
 					middleware: require './middleware'
 					open: true
-					port: 0
+					port: 9099 # Use 0 for dynamic
 
 		# Copies directories and files from one location to another
 		copy:

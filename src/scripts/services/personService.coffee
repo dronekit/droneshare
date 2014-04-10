@@ -8,7 +8,7 @@ class Service
 		.then (results) ->
 			results.data
 
-	getPerson: (id) ->
+	getMission: (id) ->
 		@$http.get("#{urlBase}/#{id}")
 		.then (results) ->
 			results.data

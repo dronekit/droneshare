@@ -1,5 +1,5 @@
 class Service
-	urlBase = 'http://localhost:8080/api/v1/mission'
+	urlBase = 'http://nestor.3dr.com/api/v1/mission'
 
 	constructor: (@$log, @$http) ->
 

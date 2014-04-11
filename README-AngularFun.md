@@ -4,7 +4,6 @@
 > An [AngularJS](http://angularjs.org/) large application Reference Architecture
 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![Dependency Status](https://david-dm.org/CaryLandholt/AngularFun.png)](https://david-dm.org/CaryLandholt/AngularFun)
 
 ## About
 The intent is to provide a base for creating your own AngularJS applications with minimal boilerplate setup and ceremony.

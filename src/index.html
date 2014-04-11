@@ -58,7 +58,11 @@
 		</style>
 	</head>
 	<body ng-cloak class="ng-cloak">
-		<ng:view></ng:view>
+		<ng-include src="'views/header.html'"></ng-include>
+		<div class="container">
+			<ng:view></ng:view>
+		</div>
+		<ng-include src="'views/footer.html'"></ng-include>
 		<!--<ng:include src="'/views/site.html'"></ng:include> -->
 
 		<!-- <% if (config.environment && config.environment === 'prod') { %>

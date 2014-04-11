@@ -2,31 +2,38 @@
 
 	<app:tab caption="Mission Detail" selected="true">
 		<div class="row">
-			<div class="col-lg-6">
-				<section ng-controller="missionDetailController as controller">
+			<section ng-controller="missionDetailController as controller" class="col-lg-6">
 
-					<div class="alert alert-danger" ng-show="!!controller.error">
-						<h4 class="alert-heading" ng-bind="controller.error.title"></h4>
-						<span ng-bind="controller.error.message"></span>
-					</div>
+				<div class="alert alert-danger" ng-show="!!controller.error">
+					<h4 class="alert-heading" ng-bind="controller.error.title"></h4>
+					<span ng-bind="controller.error.message"></span>
+				</div>
 
-					<ul>
-					<li>
-						TLOG: <a ng-href="#/mission/{{controller.mission.id}}"  >{{controller.mission.tlogId}}</a>
-					</li>
-					<li>
-						isLive: {{controller.mission.isLive}}
-					</li>
-					</ul>
+				<table class="table table-striped">
+					<tbody>
+						<tr>
+							<th>TLOG</thead>
+							<td>
+								<a ng-href="#/mission/{{controller.mission.id}}"  >{{controller.mission.tlogId}}</a>
+							</td>
+						</tr>
+						<tr>
+							<th>isLive</th>
+							<td>
+								{{controller.mission.isLive}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
 
-				</section>
+			</section>
 
-				<section ng-controller="mapController as controller">
+			<section ng-controller="mapController as controller" class="col-lg-6">
 
-					kevin was here
-					<leaflet defaults="defaults" center="london" tiles="tiles" height="480px" width="640px"></leaflet>
-				</section>
-			</div>
+				<div class="alert alert-warning alert-dismissable">kevin was here</div>
+
+				<leaflet defaults="defaults" height="480px" width="100%"></leaflet>
+			</section>
 		</div>
 	</app:tab>
 </app:tabs>

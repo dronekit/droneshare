@@ -6,3 +6,8 @@
 The new version of droneshare - built upon DroneAPI
 
 (For the time being mostly just the AngularFun template)
+
+## A note on tabs, spaces and line-endings
+
+This project uses a [http://editorconfig.org/](.editorconfig) file to specify source formatting conventions.  We encourage you to install a suitable
+plug-in into your text-editor of choice.

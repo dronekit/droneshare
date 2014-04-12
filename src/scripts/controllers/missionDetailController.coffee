@@ -5,7 +5,7 @@ class Controller
 
   setMissions: =>
     console.log("Getting mission " + @routeParams.id)
-    @missionService.getMission(@routeParams.id).then (results) =>
+    @missionService.getId(@routeParams.id).then (results) =>
       @mission = results
 
 angular.module('app').controller 'missionDetailController', Controller

@@ -1,32 +1,40 @@
-class Service
-  constructor: (@$log, @$http, @$routeParams) ->
-    useLocalServer = $routeParams.localServer ? false
+class DapiService
+  @$inject: ['$http', '$routeParams']
+  constructor: (@http, routeParams) ->
+    useLocalServer = routeParams.localServer ? false
     base = if useLocalServer
       'http://localhost:8080'
     else
       'http://nestor.3dr.com'
-    path = '/api/v1/mission'
-    @urlBase = base + path
-    console.log("urlBase: " + @urlBase)
+    path = '/api/v1/'
+    @apiBase = base + path
+
+  urlBase: ->
+    @apiBase + @endpoint
 
   get: ->
-    @$http.get(@urlBase)
+    @http.get(@urlBase())
     .then (results) ->
       results.data
 
-  getMission: (id) ->
-    @$http.get("#{@urlBase}/#{id}")
+  getId: (id) ->
+    @http.get("#{@urlBase()}/#{id}")
     .then (results) ->
       results.data
 
-  getGeoJSON: (id) ->
-    @$http.get("#{@urlBase}/#{id}/messages.geo.json")
-    .then (results) ->
-      results.data
-
-  save: (mission) ->
-    @$http.post("#{@urlBase}", mission)
+  saveId: (id, mission) ->
+    @http.post("#{@urlBase()}/#{id}", mission)
     .error (results, status) ->
       {results, status}
 
-angular.module('app').service 'missionService', ['$log', '$http', '$routeParams', Service]
+
+class MissionService extends DapiService
+  endpoint: "mission"
+
+  getGeoJSON: (id) ->
+    @http.get("#{@urlBase()}/#{id}/messages.geo.json")
+    .then (results) ->
+      results.data
+
+
+angular.module('app').service 'missionService', MissionService

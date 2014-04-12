@@ -1,9 +1,9 @@
 class Controller
-  @$inject: ['$scope', '$routeParams', 'missionService']
-  constructor: (@scope, @routeParams, @missionService) ->
-    @setMissions()
+  @$inject: ['$routeParams', 'missionService']
+  constructor: (@routeParams, @missionService) ->
+    @fetchMission()
 
-  setMissions: =>
+  fetchMission: =>
     console.log("Getting mission " + @routeParams.id)
     @missionService.getId(@routeParams.id).then (results) =>
       @mission = results

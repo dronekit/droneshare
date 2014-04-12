@@ -1,6 +1,6 @@
 class Controller
-  @$inject: ['$scope', 'missionService']
-  constructor: (@scope, @missionService) ->
+  @$inject: ['missionService']
+  constructor: (@missionService) ->
     @setMissions()
 
   setMissions: =>

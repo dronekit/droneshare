@@ -1,5 +1,5 @@
 class Service
-  urlBase = 'http://nestor.3dr.com/api/v1/mission'
+  urlBase = 'http://localhost:8080/api/v1/mission'
 
   constructor: (@$log, @$http) ->
 
@@ -10,6 +10,11 @@ class Service
 
   getMission: (id) ->
     @$http.get("#{urlBase}/#{id}")
+    .then (results) ->
+      results.data
+
+  getGeoJSON: (id) ->
+    @$http.get("#{urlBase}/#{id}/messages.geo.json")
     .then (results) ->
       results.data
 

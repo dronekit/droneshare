@@ -1,5 +1,5 @@
 class Controller
-  @$inject: ['$scope']
+  @$inject: ['$scope', '$routeParams', 'missionService']
   constructor: (@scope, @routeParams, @missionService) ->
     @setMissions()
 
@@ -8,4 +8,4 @@ class Controller
     @missionService.getMission(@routeParams.id).then (results) =>
       @mission = results
 
-angular.module('app').controller 'missionDetailController', ['$scope', '$routeParams', 'missionService', Controller]
+angular.module('app').controller 'missionDetailController', Controller

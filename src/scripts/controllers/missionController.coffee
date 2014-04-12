@@ -1,5 +1,5 @@
 class Controller
-  @$inject: ['$scope']
+  @$inject: ['$scope', 'missionService']
   constructor: (@scope, @missionService) ->
     @setMissions()
 
@@ -20,4 +20,4 @@ class Controller
     .then (results) ->
       results
 
-angular.module('app').controller 'missionController', ['$scope', 'missionService', Controller]
+angular.module('app').controller 'missionController', Controller

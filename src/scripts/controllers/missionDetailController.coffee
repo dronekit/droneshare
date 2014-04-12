@@ -1,10 +1,11 @@
 class Controller
-  constructor: (@$log, @$routeParams, @missionService) ->
-    setMissions = =>
-      console.log("Getting mission " + $routeParams.id)
-      @missionService.getMission($routeParams.id).then (results) =>
-        @mission = results
+  @$inject: ['$scope']
+  constructor: (@scope, @routeParams, @missionService) ->
+    @setMissions()
 
-    setMissions()
+  setMissions: =>
+    console.log("Getting mission " + @routeParams.id)
+    @missionService.getMission(@routeParams.id).then (results) =>
+      @mission = results
 
-angular.module('app').controller 'missionDetailController', ['$log', '$routeParams', 'missionService', Controller]
+angular.module('app').controller 'missionDetailController', ['$scope', '$routeParams', 'missionService', Controller]

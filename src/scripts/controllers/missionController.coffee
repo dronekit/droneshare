@@ -1,22 +1,23 @@
 class Controller
-  constructor: (@$log, @missionService) ->
-    setMissions = =>
-      @missionService.get().then (results) =>
-        @missions = results
+  @$inject: ['$scope']
+  constructor: (@scope, @missionService) ->
+    @setMissions()
 
-    @insertMission = (mission) =>
-      @missionService.save(mission)
-      .success (results) =>
-        @error = ''
-        @mission = {}
+  setMissions: =>
+    @missionService.get().then (results) =>
+      @missions = results
 
-        setMissions()
-      .error (results, status) =>
-        if status is 403
-          @error = results
-      .then (results) ->
-        results
+  insertMission: (mission) =>
+    @missionService.save(mission)
+    .success (results) =>
+      @error = ''
+      @mission = {}
 
-    setMissions()
+      setMissions()
+    .error (results, status) =>
+      if status is 403
+        @error = results
+    .then (results) ->
+      results
 
-angular.module('app').controller 'missionController', ['$log', 'missionService', Controller]
+angular.module('app').controller 'missionController', ['$scope', 'missionService', Controller]

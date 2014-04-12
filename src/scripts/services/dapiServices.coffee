@@ -22,11 +22,16 @@ class DapiService
     .then (results) ->
       results.data
 
-  saveId: (id, mission) ->
-    @http.post("#{@urlBase()}/#{id}", mission)
+  saveId: (id, obj) ->
+    @http.post("#{@urlBase()}/#{id}", obj)
     .error (results, status) ->
       {results, status}
 
+class UserService extends DapiService
+  endpoint: "user"
+
+class VehicleService extends DapiService
+  endpoint: "vehicle"
 
 class MissionService extends DapiService
   endpoint: "mission"
@@ -37,4 +42,7 @@ class MissionService extends DapiService
       results.data
 
 
-angular.module('app').service 'missionService', MissionService
+module = angular.module('app')
+module.service 'missionService', MissionService
+module.service 'userService', UserService
+module.service 'vehicleService', VehicleService

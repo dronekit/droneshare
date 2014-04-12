@@ -46,6 +46,7 @@
     },
     "leaflet-dist": {
     	"scripts/libs": "leaflet-src.js",
+        "scripts/libs/images": "images/*.png",
     	"styles": "*.css"
     }
   },

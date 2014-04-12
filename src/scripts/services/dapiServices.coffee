@@ -1,6 +1,6 @@
 class DapiService
-  @$inject: ['$http', '$routeParams']
-  constructor: (@http, routeParams) ->
+  @$inject: ['$log', '$http', '$routeParams']
+  constructor: (@log, @http, routeParams) ->
     useLocalServer = routeParams.localServer ? false
     base = if useLocalServer
       'http://localhost:8080'
@@ -13,16 +13,19 @@ class DapiService
     @apiBase + @endpoint
 
   get: ->
+    @log.debug("Getting all #{@endpoint}")
     @http.get(@urlBase())
     .then (results) ->
       results.data
 
   getId: (id) ->
+    @log.debug("Getting #{@endpoint}/#{id}")
     @http.get("#{@urlBase()}/#{id}")
     .then (results) ->
       results.data
 
   saveId: (id, obj) ->
+    @log.debug("Saving #{@endpoint}/#{id}")
     @http.post("#{@urlBase()}/#{id}", obj)
     .error (results, status) ->
       {results, status}

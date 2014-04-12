@@ -110,6 +110,11 @@ module.exports = (grunt) ->
 					src: '**'
 					dest: '<%= settings.tempDirectory %>'
 					expand: true
+        ,
+          cwd: 'WEB-INF'
+          src: 'app.yaml'
+          dest: '<%= settings.tempDirectory %>/'
+          expand: true
 				]
 			dev:
 				cwd: '<%= settings.tempDirectory %>'

@@ -1,9 +1,10 @@
 class Controller
-  constructor: (@$log, @missionService) ->
+  constructor: (@$log, @$routeParams, @missionService) ->
     setMissions = =>
-      @missionService.getMission(1).then (results) =>
+      console.log("Getting mission " + $routeParams.id)
+      @missionService.getMission($routeParams.id).then (results) =>
         @mission = results
 
     setMissions()
 
-angular.module('app').controller 'missionDetailController', ['$log', 'missionService', Controller]
+angular.module('app').controller 'missionDetailController', ['$log', '$routeParams', 'missionService', Controller]

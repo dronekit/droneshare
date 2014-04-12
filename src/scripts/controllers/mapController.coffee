@@ -2,9 +2,9 @@
 
 # FIXME - fetch kml from here http://localhost:8080/api/v1/mission/10/messages.kml
 
-angular.module('app').controller 'mapController', ['$scope', ($scope) =>
+angular.module('app').controller 'mapController', ['$scope', ($scope) ->
   # Collect various maps worth using
-  mbox = (key) =>
+  mbox = (key) ->
     url: "https://a.tiles.mapbox.com/v3/" + key + "/{z}/{x}/{y}.png"
     options: attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
 

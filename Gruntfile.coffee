@@ -80,7 +80,7 @@ module.exports = (grunt) ->
 				]
 				options:
 					indentation:
-						value: 1
+						value: 2
 					max_line_length:
 						level: 'ignore'
 					no_tabs:

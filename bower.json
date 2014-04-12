@@ -45,7 +45,7 @@
     	"scripts/libs": "dist/angular-leaflet-directive.js"
     },
     "leaflet-dist": {
-    	"scripts/libs": "leaflet.js",
+    	"scripts/libs": "leaflet-src.js",
     	"styles": "*.css"
     }
   },

@@ -32,11 +32,19 @@ class Controller
       zoom: 8
 
     # Quick hack of a test - just fetch some json
+    #@http.get("http://tombatossals.github.io/angular-leaflet-directive/examples/json/JPN.geo.json")
     @http.get("http://localhost:8080/api/v1/mission/10/messages.geo.json")
-    .then (data) =>
+    .then (result) =>
       console.log("Providing geojson " + @scope)
       @scope.geojson =
-        data: data
-        # also consider setting style
+        data: result.data
+        style:
+          # FIXME - populate styles inside the JSON instead?
+          fillColor: "green"
+          weight: 2
+          #opacity: 1
+          color: 'black'
+          dashArray: '3'
+          fillOpacity: 0.7
 
 angular.module('app').controller 'mapController', Controller

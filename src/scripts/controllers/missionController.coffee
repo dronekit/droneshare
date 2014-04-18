@@ -4,7 +4,11 @@ class Controller
     @setMissions()
 
   setMissions: =>
-    @missionService.get().then (results) =>
+    params =
+      order_by: "updatedOn"
+      order_dir: "desc"
+      page_size: "10"
+    @missionService.get(params).then (results) =>
       @missions = results
 
   insertMission: (mission) =>

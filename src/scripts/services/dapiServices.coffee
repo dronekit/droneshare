@@ -22,9 +22,12 @@ class AuthService extends DapiService
   endpoint: "auth"
 
 class RESTService extends DapiService
-  get: ->
+  get: (params = {}) ->
     @log.debug("Getting all #{@endpoint}")
-    @http.get(@urlBase(), @config)
+    cfg = @config
+    cfg.params = params
+
+    @http.get(@urlBase(), cfg)
     .then (results) ->
       results.data
 

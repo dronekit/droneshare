@@ -1,6 +1,14 @@
 class Controller
-  @$inject: ['missionService']
-  constructor: (@missionService) ->
+  @$inject: ['missionService', 'atmosphere']
+  constructor: (@missionService, atmosphereService) ->
+    request =
+      url: 'http://localhost:8080/api/v1/mission/live?login=root&password=fish4403&api_key=eb34bd67.megadroneshare',
+      contentType : 'application/json',
+      transport : 'websocket',
+      reconnectInterval : 5000,
+      enableXDR: true,
+      timeout : 60000
+    @atmosphere = atmosphereService.init(request)
     @setMissions()
 
   setMissions: =>

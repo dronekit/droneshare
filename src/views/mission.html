@@ -1,6 +1,13 @@
 <app:tabs>
 
 	<app:tab caption="Mission" selected="true">
+        <div class="row">
+            <div class="col-lg-6">
+                <section ng-controller="liveMapController as map">
+                    <leaflet tiles="tiles" defaults="defaults" height="480px" width="100%"></leaflet>
+                </section>
+            </div>
+        </div>
 		<div class="row">
 			<div class="col-lg-6">
 				<section ng-controller="missionController as controller">
@@ -23,7 +30,7 @@
 					</form>
 -->
 
-                    <div class="panel panel-default" ng-hide="!controller.missions.length">
+                    <div class="panel panel-default" ng-hide="!controller.missions.length" >
                       <ul class="list-group">
                         <li ng-repeat="mission in controller.missions" class="list-group-item">
                             <a ng-href="#/mission/{{mission.id}}" ng-bind="mission.tlogId" />

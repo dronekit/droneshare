@@ -1,7 +1,7 @@
 
 
 # FIXME - fetch kml from here http://localhost:8080/api/v1/mission/10/messages.kml
-class Controller
+class MapController
   @$inject: ['$scope', '$http']
   constructor: (@scope, @http) ->
     @initMap()
@@ -31,4 +31,17 @@ class Controller
       lng: -0.09
       zoom: 8
 
-angular.module('app').controller 'mapController', Controller
+class LiveMapController extends MapController
+  @$inject: ['$scope', '$http', 'missionService']
+  constructor: (scope, http, @missionService) ->
+    super(scope, http)
+
+    @missionService.atmosphere.on("log", @onLive)
+
+  onLive: (data) =>
+    @log.info("Live: " + JSON.stringify(data))
+    # FIXME - not sure if I need apply... (or how to optimize it)
+    @scope.$apply()
+
+angular.module('app').controller 'mapController', MapController
+angular.module('app').controller 'liveMapController', LiveMapController

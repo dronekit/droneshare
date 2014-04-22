@@ -1,5 +1,5 @@
 class Controller
-  # @$inject: ['$scope', '$log', 'adminService']
+  @$inject: ['$scope', '$log', 'adminService']
   constructor: (@scope, @log, @adminService) ->
     @simType = "quick"
     @lines = []
@@ -13,9 +13,9 @@ class Controller
     @lines = @lines[-10..]
     @scope.$apply()
 
-  @startSim: (simTyp) =>
-    @adminService.startSim(simTyp)
+  @startSim: () =>
+    @adminService.startSim(@simType)
 
-Controller.$inject = ['$scope', '$log', 'adminService']
+#Controller.$inject = ['$scope', '$log', 'adminService']
 
 angular.module('app').controller 'adminController', Controller

@@ -1,3 +1,18 @@
+
+atmosphereOptions =
+  contentType : 'application/json'
+  transport : 'websocket'
+  reconnectInterval : 5000
+  enableXDR: true
+  timeout : 60000
+  fallbackTransport: 'jsonp' # Server might have issues with 'long-polling'
+  #onError: (resp) =>
+  #  @log.error("Atmosphere error: #{resp}")
+  #onTransportFailure: (msg, resp) =>
+  #  @log.error("Transport failure #{msg} #{resp}")
+  #onOpen: (resp) =>
+  #  @log.info("Got open response #{resp.status}")
+
 class DapiService
   @$inject: ['$log', '$http', '$routeParams']
   constructor: (@log, @http, routeParams) ->
@@ -51,6 +66,16 @@ class VehicleService extends RESTService
   endpoint: "vehicle"
 
 class MissionService extends RESTService
+  @$inject: ['$log', '$http', '$routeParams', 'atmosphere']
+  constructor: (log, http, routeParams, @atmosphere) ->
+    super(log, http, routeParams)
+
+    request =
+      url: @urlBase() + '/live?api_key=eb34bd67.megadroneshare'
+
+    angular.extend(request, atmosphereOptions)
+    @atmosphere.init(request)
+
   endpoint: "mission"
 
   getGeoJSON: (id) ->
@@ -66,19 +91,8 @@ class AdminService extends RESTService
 
     request =
       url: @urlBase() + '/log?login=root&password=fish4403&api_key=eb34bd67.megadroneshare'
-      contentType : 'application/json'
-      transport : 'websocket'
-      reconnectInterval : 5000
-      enableXDR: true
-      timeout : 60000
-      fallbackTransport: 'jsonp' # Server might have issues with 'long-polling'
-      #onError: (resp) =>
-      #  @log.error("Atmosphere error: #{resp}")
-      #onTransportFailure: (msg, resp) =>
-      #  @log.error("Transport failure #{msg} #{resp}")
-      #onOpen: (resp) =>
-      #  @log.info("Got open response #{resp.status}")
 
+    angular.extend(request, atmosphereOptions)
     @atmosphere.init(request)
 
   endpoint: "admin"

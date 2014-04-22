@@ -32,7 +32,7 @@ angular.module('ngAtmosphere', [])
       }
       if (listeners.hasOwnProperty(data.type)) {
         angular.forEach(listeners[data.type], function (listener) {
-          listener.fn.call(this, data);
+          listener.fn.call(this, data.data);
         });
       }
     }

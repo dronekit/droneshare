@@ -8,6 +8,7 @@ class DapiService
       'http://nestor.3dr.com'
     path = '/api/v1/'
     @apiBase = base + path
+    @log.debug("Creating service " + @apiBase)
     @config =
       # FIXME - better to include in an auth header per RFC2617 Authorization: DroneApi apikey="blah.blah"
       #params:
@@ -57,9 +58,37 @@ class MissionService extends RESTService
     .then (results) ->
       results.data
 
+# Server admin operations - not useful to users/developers
+class AdminService extends RESTService
+  @$inject: ['$log', '$http', '$routeParams', 'atmosphere']
+  constructor: (log, http, routeParams, @atmosphere) ->
+    super(log, http, routeParams)
+
+    request =
+      url: @urlBase() + '/log?login=root&password=fish4403&api_key=eb34bd67.megadroneshare'
+      contentType : 'application/json'
+      transport : 'websocket'
+      reconnectInterval : 5000
+      enableXDR: true
+      timeout : 60000
+      fallbackTransport: 'jsonp' # Server might have issues with 'long-polling'
+      #onError: (resp) =>
+      #  @log.error("Atmosphere error: #{resp}")
+      #onTransportFailure: (msg, resp) =>
+      #  @log.error("Transport failure #{msg} #{resp}")
+      #onOpen: (resp) =>
+      #  @log.info("Got open response #{resp.status}")
+
+    @atmosphere.init(request)
+
+  endpoint: "admin"
+
+  startSim: (typ) ->
+    getId(typ) # FIXME, should POST instead
 
 module = angular.module('app')
 module.service 'missionService', MissionService
 module.service 'userService', UserService
 module.service 'vehicleService', VehicleService
 module.service 'authService', AuthService
+module.service 'adminService', AdminService

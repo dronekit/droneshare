@@ -6,6 +6,8 @@ class Config
       controller: 'missionDetailController'
     .when '/github/:id',
       controller: 'gitHubController'
+    .when '/admin',
+      templateUrl: 'views/admin-screen.html'
     .when '/',
       templateUrl: 'views/site.html'
     .otherwise

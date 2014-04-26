@@ -30,11 +30,16 @@ angular.module('ngAtmosphere', [])
       if (debug){
         console.log('ngAtmosphere DEBUG: received response from server', data.type, JSON.stringify(data));
       }
-      if (listeners.hasOwnProperty(data.type)) {
-        angular.forEach(listeners[data.type], function (listener) {
-          listener.fn.call(this, data.data);
-        });
-      }
+
+      var callByKey = function (key) {
+        if (listeners.hasOwnProperty(key))
+          angular.forEach(listeners[key], function (listener) {
+            listener.fn.call(this, data.data);
+          });
+        };
+
+      callByKey(data.type);
+      callByKey(null);
     }
 
     // Public API here
@@ -58,6 +63,8 @@ angular.module('ngAtmosphere', [])
           $.atmosphere.unsubscribeUrl(connection.getUrl());
         }
       },
+
+      // type is either a string to match or null to receive all msgs
       on: function (type, callbackFn) {
 
         var id = Math.random();

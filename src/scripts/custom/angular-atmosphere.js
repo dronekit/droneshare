@@ -28,7 +28,7 @@ angular.module('ngAtmosphere', [])
         data = angular.fromJson(data);
       }
       if (debug){
-        console.log('ngAtmosphere DEBUG: received response from server', data.type, data);
+        console.log('ngAtmosphere DEBUG: received response from server', data.type, JSON.stringify(data));
       }
       if (listeners.hasOwnProperty(data.type)) {
         angular.forEach(listeners[data.type], function (listener) {

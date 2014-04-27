@@ -10,7 +10,9 @@
     "html5shiv": "3.7.0",
     "json3": "3.3.0",
     "requirejs": "2.1.11",
-    "angular-leaflet-directive": "0.7.6"
+    "angular-leaflet-directive": "0.7.6",
+    "raven-js": "~1.1.14",
+    "angular-raven": "~0.5.6"
   },
   "exportsOverride": {
     "angular": {
@@ -31,7 +33,7 @@
     },
     "html5shiv": {
       "scripts/libs": "dist/html5shiv-printshiv.js"
-      },
+    },
     "jquery": {
       "scripts/libs": "none"
     },
@@ -41,13 +43,19 @@
     "requirejs": {
       "scripts/libs": "require.js"
     },
+    "raven-js": {
+      "scripts/libs": "dist/raven.min.js"
+    },
+    "angular-raven": {
+      "scripts/libs": "angular-raven.js"
+    },
     "angular-leaflet-directive": {
-    	"scripts/libs": "dist/angular-leaflet-directive.js"
+      "scripts/libs": "dist/angular-leaflet-directive.js"
     },
     "leaflet-dist": {
-    	"scripts/libs": "leaflet-src.js",
-        "scripts/libs/images": "images/*.png",
-    	"styles": "*.css"
+      "scripts/libs": "leaflet-src.js",
+      "scripts/libs/images": "images/*.png",
+      "styles": "*.css"
     }
   },
   "resolutions": {

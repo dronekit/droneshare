@@ -330,12 +330,14 @@ module.exports = (grunt) ->
         order: [
           'custom/atmosphere.js'
           'libs/angular.js'
+          'libs/raven.min.js'
           'NGAPP':
             'ngAnimate': 'libs/angular-animate.js'
             #'ngMockE2E': 'libs/angular-mocks.js'
             'ngRoute': 'libs/angular-route.js'
             'leaflet-directive': 'libs/angular-leaflet-directive.js'
             'ngAtmosphere': 'custom/angular-atmosphere.js'
+            'ngRaven': 'libs/angular-raven.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:

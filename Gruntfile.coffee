@@ -338,7 +338,9 @@ module.exports = (grunt) ->
             'ngRoute': 'libs/angular-route.js'
             'leaflet-directive': 'custom/angular-leaflet-directive.js'
             'ngAtmosphere': 'custom/angular-atmosphere.js'
-            'ngRaven': 'libs/angular-raven.js'
+            'ngRaven': 'libs/angular-raven.js',
+            'angulartics': 'libs/angulartics.min.js',
+            'angulartics.google.analytics': 'libs/angulartics-ga.min.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:

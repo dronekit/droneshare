@@ -11,7 +11,8 @@
     "json3": "3.3.0",
     "requirejs": "2.1.11",
     "raven-js": "~1.1.14",
-    "angular-raven": "~0.5.6"
+    "angular-raven": "~0.5.6",
+    "angulartics": "~0.15.17"
   },
   "exportsOverride": {
     "angular": {
@@ -47,6 +48,9 @@
     },
     "angular-raven": {
       "scripts/libs": "angular-raven.js"
+    },
+    "angulartics": {
+      "scripts/libs": ["dist/angulartics-ga.min.js", "dist/angulartics.min.js" ]
     }
   }
 }

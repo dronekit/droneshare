@@ -459,7 +459,8 @@
                 style: geojson.style,
                 onEachFeature: onEachFeature
               };
-              leafletGeoJSON = L.geoJson(geojson.data, geojson.options);
+              // kevinh - was L.geoJson - FIXME options not yet in use
+              leafletGeoJSON = L.mapbox.featureLayer(geojson.data, geojson.options);
               leafletData.setGeoJSON(leafletGeoJSON);
               leafletGeoJSON.addTo(map);
             });

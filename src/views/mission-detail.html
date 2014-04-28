@@ -29,7 +29,9 @@
 
 			<section ng-controller="mapController as map" class="col-lg-6">
 				<div class="alert alert-warning alert-dismissable">Map Test</div>
-				<leaflet tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="480px" width="100%"></leaflet>
+                <!-- watchMarkers true will cause angular updates to particular marker objects to be immediately reflected on the map
+                Useful for the live map vehicle display -->
+				<leaflet watchMarkers="true" tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="480px" width="100%"></leaflet>
 			</section>
 		</div>
 	</app:tab>

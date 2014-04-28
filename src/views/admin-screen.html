@@ -8,10 +8,17 @@
 					<span ng-bind="controller.error.message"></span>
 				</div>
 
-                <form class="well form" ng-submit="controller.startSim(controller.simType)">
+                <form class="well form" ng-submit="controller.startSim()">
                     <input type="text" class="input-medium" ng-model="controller.simType" />
                     <button type="submit" class="btn">Run Simulator</button>
                 </form>
+
+                <form class="well form" ng-init="count = 20" ng-submit="controller.importOld(count)">
+                    <input type="text" class="input-medium" ng-model="count" />
+                    <button type="submit" class="btn">Run Import</button>
+                </form>
+
+                <p>Debug info: {{controller.debugInfo}}</p>
 
                 <div class="panel panel-default">
                 <div class="panel-heading">Server log</div>

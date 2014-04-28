@@ -4,7 +4,20 @@ class Controller
     @simType = "quick"
     @lines = []
 
+    @log.debug("Starting log viewing")
     adminService.atmosphere.on("log", @onLog)
+
+    # Async fetch of debugging info
+    @adminService.getDebugInfo().then (results) =>
+      @log.debug("Setting debug info")
+      @scope.debugInfo = results
+
+    @startSim = () =>
+      @log.debug("Running sim " + @simType)
+      @adminService.startSim(@simType)
+
+    @importOld = (count) =>
+      @adminService.importOld(count)
 
   onLog: (data) =>
     @log.info("Logmsg: " + data)
@@ -13,8 +26,7 @@ class Controller
     @lines = @lines[-10..]
     @scope.$apply()
 
-  @startSim: () =>
-    @adminService.startSim(@simType)
+
 
 #Controller.$inject = ['$scope', '$log', 'adminService']
 

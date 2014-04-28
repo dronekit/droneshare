@@ -98,7 +98,15 @@ class AdminService extends RESTService
   endpoint: "admin"
 
   startSim: (typ) ->
-    getId(typ) # FIXME, should POST instead
+    @log.info("Service starting sim " + typ)
+    @getId("sim/" + typ) # FIXME, should POST instead
+
+  importOld: (count) ->
+    @log.info("importing " + count)
+    @getId("import/" + count) # FIXME, should POST instead
+
+  getDebugInfo: () ->
+    @getId("debugInfo")
 
 module = angular.module('app')
 module.service 'missionService', MissionService

@@ -1,9 +1,19 @@
 class Config
   constructor: ($routeProvider) ->
     $routeProvider
+    .when '/user',
+      templateUrl: 'views/user-list.html'
+    .when '/user/:id',
+      templateUrl: 'views/user-detail.html'
+    .when '/vehicle',
+      templateUrl: 'views/vehicle-list.html'
+    .when '/vehicle/:id',
+      templateUrl: 'views/vehicle-detail.html'
+    .when '/mission',
+      templateUrl: 'views/mission.html'
     .when '/mission/:id',
       templateUrl: 'views/mission-detail.html'
-      controller: 'missionDetailController'
+      #controller: 'missionDetailController'
     .when '/github/:id',
       controller: 'gitHubController'
     .when '/admin',

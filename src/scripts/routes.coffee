@@ -10,7 +10,7 @@ class Config
     .when '/vehicle/:id',
       templateUrl: 'views/vehicle-detail.html'
     .when '/mission',
-      templateUrl: 'views/mission.html'
+      templateUrl: 'views/mission-list.html'
     .when '/mission/:id',
       templateUrl: 'views/mission-detail.html'
       #controller: 'missionDetailController'

@@ -13,17 +13,38 @@
 						<tr>
 							<th>TLOG</thead>
 							<td>
-								<a ng-href="#/mission/{{controller.mission.id}}"  >{{controller.mission.tlogId}}</a>
+								<a   >Download TLOG</a>
 							</td>
 						</tr>
 						<tr>
 							<th>isLive</th>
 							<td>
-								{{controller.mission.isLive}}
+								{{controller.record.isLive}}
 							</td>
 						</tr>
+                        <tr>
+                            <th>Max Groundspeed</th>
+                            <td>
+                                {{controller.record.summary.maxGroundSpeed | number }} m/s
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Max Airspeed</th>
+                            <td>
+                                {{controller.record.summary.maxAirSpeed | number }} m/s
+                            </td>
+                        </tr>
 					</tbody>
 				</table>
+
+<!-- FIXME - find a way to tunnel this through angular so we can attach our app key -->
+<a class="btn btn-default btn-lg" ng-href="{{controller.urlBase}}/messages.tlog">
+    <span class="glyphicon glyphicon-download"></span> Download TLOG
+</a>
+
+<a class="btn btn-default btn-lg" ng-href="{{controller.urlBase}}/messages.kmz">
+    <span class="glyphicon glyphicon-download"></span> Download KML
+</a>
 
 			</section>
 

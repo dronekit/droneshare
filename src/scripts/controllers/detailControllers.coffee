@@ -1,6 +1,9 @@
 
 class DetailController
   constructor: (@scope, @routeParams) ->
+    # Useful for constructing sub urls in the HTML
+    @urlBase = @service.urlId(@routeParams.id)
+
     @service.getId(@routeParams.id).then (results) =>
       @record = results
 

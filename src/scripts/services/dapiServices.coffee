@@ -47,9 +47,14 @@ class RESTService extends DapiService
     .then (results) ->
       results.data
 
+  # Return a URL that points to the specified ID
+  urlId: (id) ->
+    "#{@urlBase()}/#{id}"
+
+  # Async read the specified ID
   getId: (id) ->
     @log.debug("Getting #{@endpoint}/#{id}")
-    @http.get("#{@urlBase()}/#{id}", @config)
+    @http.get(@urlId(id), @config)
     .then (results) ->
       results.data
 

@@ -11,15 +11,21 @@
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            <th>TLOG</thead>
+                            <th>Name</thead>
                             <td>
                                 <a ng-href="#/user/{{controller.record.login}}"  >{{controller.record.login}}</a>
                             </td>
                         </tr>
                         <tr>
-                            <th>isLive</th>
+                            <th>Full name</thead>
                             <td>
-                                {{controller.mission.isLive}}
+                                {{controller.record.fullName}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Avatar</th>
+                            <td>
+                                <a ng-href="{{controller.record.profileURL}}"><img ng-src="{{controller.record.avatarImage}}"/></a>
                             </td>
                         </tr>
                     </tbody>

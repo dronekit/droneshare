@@ -1,6 +1,6 @@
 <app:tabs>
 
-    <app:tab caption="User Detail" selected="true">
+    <app:tab caption="Vehicle Detail" selected="true">
         <div class="row" ng-controller="vehicleDetailController as controller">
             <section class="col-lg-6">
                 <div class="alert alert-danger" ng-show="!!controller.error">
@@ -11,12 +11,10 @@
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            <th>TLOG</thead>
+                            <th>ID</thead>
                             <td>
                                 <a ng-href="#/user/{{controller.record.id}}"  >{{controller.record.id}}</a>
                             </td>
-                        </tr>
-                        <tr>
                         </tr>
                     </tbody>
                 </table>

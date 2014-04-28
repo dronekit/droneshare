@@ -1,7 +1,7 @@
 <app:tabs>
 
     <app:tab caption="User Detail" selected="true">
-        <div class="row" ng-controller="userDetailController as controller">
+        <div class="row" ng-controller="vehicleDetailController as controller">
             <section class="col-lg-6">
                 <div class="alert alert-danger" ng-show="!!controller.error">
                     <h4 class="alert-heading" ng-bind="controller.error.title"></h4>
@@ -13,14 +13,10 @@
                         <tr>
                             <th>TLOG</thead>
                             <td>
-                                <a ng-href="#/user/{{controller.record.login}}"  >{{controller.record.login}}</a>
+                                <a ng-href="#/user/{{controller.record.id}}"  >{{controller.record.id}}</a>
                             </td>
                         </tr>
                         <tr>
-                            <th>isLive</th>
-                            <td>
-                                {{controller.mission.isLive}}
-                            </td>
                         </tr>
                     </tbody>
                 </table>

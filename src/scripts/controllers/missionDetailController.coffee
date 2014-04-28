@@ -1,16 +1,29 @@
-class Controller
+
+class DetailController
+  constructor: (@scope, @routeParams) ->
+    @service.getId(@routeParams.id).then (results) =>
+      @record = results
+
+class UserDetailController extends DetailController
+  @$inject: ['$log', '$scope', '$routeParams', 'userService']
+  constructor: (@log, scope, routeParams, @service) ->
+    super(scope, routeParams)
+
+class VehicleDetailController extends DetailController
+  @$inject: ['$log', '$scope', '$routeParams', 'vehicleService']
+  constructor: (@log, scope, routeParams, @service) ->
+    super(scope, routeParams)
+
+class MissionDetailController extends DetailController
   @$inject: ['$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@log, @scope, @routeParams, @missionService) ->
-    @fetchMission()
+  constructor: (@log, scope, routeParams, @service) ->
+    super(scope, routeParams)
+
     @scope.center = {}  # Apparently required to use bounds
     @scope.bounds = {}
 
-  fetchMission: =>
-    @missionService.getId(@routeParams.id).then (results) =>
-      @mission = results
-
     # Go ahead and fetch 'geojson' in case child directives (map) want it
-    @missionService.getGeoJSON(@routeParams.id).then (results) =>
+    @service.getGeoJSON(@routeParams.id).then (results) =>
       @log.debug("Setting geojson")
 
       # Bounding box MUST be in the GeoJSON and it must be 3 dimensional
@@ -34,4 +47,6 @@ class Controller
           dashArray: '3'
           fillOpacity: 0.7
 
-angular.module('app').controller 'missionDetailController', Controller
+angular.module('app').controller 'userDetailController', UserDetailController
+angular.module('app').controller 'vehicleDetailController', VehicleDetailController
+angular.module('app').controller 'missionDetailController', MissionDetailController

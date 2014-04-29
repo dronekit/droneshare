@@ -67,7 +67,9 @@ class LiveMapController extends MapController
     @scope.vehicleMarkers[@vehicleKey(data.missionId)] ?= {}
 
   onMissionEnd: (data) =>
-    delete @scope.vehicleMarkers[@vehicleKey(data.missionId)]
+    vehicleKey = @vehicleKey(data.missionId)
+    delete @scope.vehicleMarkers[vehicleKey]
+    delete @scope.vehiclePaths[vehicleKey]
 
   updateVehicle: (vehicleKey, data) =>
     if data.payload.lat and data.payload.lat

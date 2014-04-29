@@ -11,12 +11,6 @@
 				<table class="table table-striped">
 					<tbody>
 						<tr>
-							<th>TLOG</thead>
-							<td>
-								<a   >Download TLOG</a>
-							</td>
-						</tr>
-						<tr>
 							<th>isLive</th>
 							<td>
 								{{controller.record.isLive}}
@@ -25,13 +19,19 @@
                         <tr>
                             <th>Max Groundspeed</th>
                             <td>
-                                {{controller.record.summary.maxGroundSpeed | number }} m/s
+                                {{controller.record.maxGroundspeed | number }} m/s
                             </td>
                         </tr>
                         <tr>
                             <th>Max Airspeed</th>
                             <td>
-                                {{controller.record.summary.maxAirSpeed | number }} m/s
+                                {{controller.record.maxAirspeed | number }} m/s
+                            </td>
+                        </tr>
+                        <tr ng-show="!!controller.record.softwareVersion">
+                            <th>Software version</th>
+                            <td>
+                                {{controller.record.softwareVersion }}
                             </td>
                         </tr>
 					</tbody>

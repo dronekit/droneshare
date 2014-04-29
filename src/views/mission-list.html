@@ -26,7 +26,7 @@
                     <div class="panel panel-default" ng-hide="!controller.records.length" >
                       <ul class="list-group">
                         <li ng-repeat="mission in controller.records" class="list-group-item">
-                            <a ng-href="#/mission/{{mission.id}}" ng-bind="mission.tlogId" />
+                            <a ng-href="#/mission/{{mission.id}}" ng-bind="mission.notes" />
                         </li>
                       </ul>
                     </div>

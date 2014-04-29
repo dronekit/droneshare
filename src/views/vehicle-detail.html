@@ -31,6 +31,14 @@
                     </tbody>
                 </table>
 
+                <div class="panel panel-default" ng-hide="!controller.record.missions.length" >
+                  <ul class="list-group">
+                    <li ng-repeat="mission in controller.missions" class="list-group-item">
+                        <a ng-href="#/mission/{{mission}}">Mission {{mission}}</a>
+                    </li>
+                  </ul>
+                </div>
+
             </section>
 
         </div>

@@ -1,4 +1,6 @@
 
+apiKey = "eb34bd67.megadroneshare"
+
 atmosphereOptions =
   contentType : 'application/json'
   transport : 'websocket'
@@ -6,6 +8,8 @@ atmosphereOptions =
   enableXDR: true
   timeout : 60000
   fallbackTransport: 'jsonp' # Server might have issues with 'long-polling'
+  headers:
+    api_key: apiKey
   #onError: (resp) =>
   #  @log.error("Atmosphere error: #{resp}")
   #onTransportFailure: (msg, resp) =>
@@ -29,7 +33,7 @@ class DapiService
       #params:
       #  api_key: "eb34bd67.megadroneshare"
       headers:
-        Authorization: 'DroneApi apikey="eb34bd67.megadroneshare"'
+        Authorization: 'DroneApi apikey="#{apiKey}"'
 
   urlBase: ->
     @apiBase + @endpoint
@@ -76,7 +80,7 @@ class MissionService extends RESTService
     super(log, http, routeParams)
 
     request =
-      url: @urlBase() + '/live?api_key=eb34bd67.megadroneshare'
+      url: @urlBase() + '/live'
 
     angular.extend(request, atmosphereOptions)
     @atmosphere.init(request)
@@ -95,7 +99,7 @@ class AdminService extends RESTService
     super(log, http, routeParams)
 
     request =
-      url: @urlBase() + '/log?login=root&password=fish4403&api_key=eb34bd67.megadroneshare'
+      url: @urlBase() + '/log'
 
     angular.extend(request, atmosphereOptions)
     @atmosphere.init(request)

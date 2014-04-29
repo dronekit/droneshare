@@ -330,7 +330,6 @@ module.exports = (grunt) ->
         order: [
           'custom/atmosphere.js'
           'libs/angular.js'
-          'libs/raven.min.js'
           'libs/mapbox.js'
           'NGAPP':
             'ngAnimate': 'libs/angular-animate.js'
@@ -338,7 +337,6 @@ module.exports = (grunt) ->
             'ngRoute': 'libs/angular-route.js'
             'leaflet-directive': 'custom/angular-leaflet-directive.js'
             'ngAtmosphere': 'custom/angular-atmosphere.js'
-            'ngRaven': 'libs/angular-raven.js',
             'angulartics': 'libs/angulartics.min.js',
             'angulartics.google.analytics': 'libs/angulartics-ga.min.js'
         ]

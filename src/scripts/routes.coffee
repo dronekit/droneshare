@@ -26,10 +26,10 @@ class Config
 angular.module('app').config ['$routeProvider', Config]
 
 # Raven bug tracking - FIXME - move elsewhere
-Raven.config('https://ffe3750cae4b47189ab3395c803ab8c4@app.getsentry.com/23130', {
-    # Raven settings - FIXME pull from here
-    # https://github.com/gdi2290/angular-raven
-  }).install()
+#Raven.config('https://ffe3750cae4b47189ab3395c803ab8c4@app.getsentry.com/23130', {
+#    # Raven settings - FIXME pull from here
+#    # https://github.com/gdi2290/angular-raven
+#  }).install()
 
 # Raven.captureMessage('hello world')
 #     .setUser({"id": "SERVER_RENDERED_ID", "email": "SERVER_RENDERED_EMAIL" })

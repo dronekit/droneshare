@@ -24,7 +24,9 @@ class MapController
       mapbox_example: mbox("examples.map-zr0njcqy")
       threedr_default: mbox("kevin3dr.hokdl9ko")
 
-    @scope.defaults = scrollWheelZoom: true
+    @scope.defaults =
+      scrollWheelZoom: true
+      zoom: 10
     @scope.tiles = maps.threedr_default
 
 class LiveMapController extends MapController
@@ -32,14 +34,13 @@ class LiveMapController extends MapController
   constructor: (scope, http, @missionService) ->
     scope.vehicleMarkers = {}
     scope.vehiclePaths = {}
+    scope.center =
+      lat: 19.4284700
+      lng: -99.1276600
+      zoom: 3
     # TODO: fix how we get initial bounds and how we center the map
     # right now it's hard fixed to hawaii since bot gives
     # every mission around the area
-    scope.bounds = [[21.4858041, -157.5735364]]
-    scope.hawaii =
-      lat: 21.4858041,
-      lng: -157.5735364,
-      zoom: 10
 
     # TODO: fake markers arn't workng
     #scope.vehicleMarkers['missionId_fake'] = {lat: scope.hawaii.lat, lng: scope.hawwai.lng, focus: false, draggable: false}

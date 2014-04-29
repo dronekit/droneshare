@@ -50,23 +50,12 @@
           ga('create', 'UA-50407686-1', '3dr.com');
         </script>
 
-        <!-- When you load angular at the bottom, you need to create the "ng-cloak" rules yourself -->
         <style>
-            [ng\:cloak],
-            [ng-cloak],
-            [data-ng-cloak],
-            [x-ng-cloak],
-            .ng-cloak,
-            .x-ng-cloak {
-                display: none;
-            }
-
-            ng\:form {
-                display: block;
-            }
+            [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none; }
+            ng\:form { display: block; }
         </style>
     </head>
-    <body ng-cloak class="ng-cloak">
+    <body class="ng-cloak">
         <ng-include src="'views/header.html'"></ng-include>
         <div class="container-fluid">
             <ng:view></ng:view>

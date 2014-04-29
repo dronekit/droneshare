@@ -31,6 +31,7 @@ class LiveMapController extends MapController
   @$inject: ['$scope', '$http', 'missionService']
   constructor: (scope, http, @missionService) ->
     scope.vehicleMarkers = {}
+    scope.vehiclePaths = {}
     # TODO: fix how we get initial bounds and how we center the map
     # right now it's hard fixed to hawaii since bot gives
     # every mission around the area
@@ -55,7 +56,7 @@ class LiveMapController extends MapController
 
   onLive: (data) =>
     @scope.vehicleMarkers["missionId_#{data.missionId}"] ?= {}
-    @updateVehicle("missionId_#{data.missionId}", data)
+    @updateVehicle(@vehicleKey(data.missionId), data)
 
     @scope.bounds.push [data.payload.lat, data.payload.lon]
 
@@ -63,30 +64,38 @@ class LiveMapController extends MapController
     @scope.$apply()
 
   onMissionStart: (data) =>
-    @scope.vehicleMarkers["missionId_#{data.missionId}"] ?= {}
+    @scope.vehicleMarkers[@vehicleKey(data.missionId)] ?= {}
 
   onMissionEnd: (data) =>
-    delete @scope.vehicleMarkers["missionId_#{data.missionId}"]
+    delete @scope.vehicleMarkers[@vehicleKey(data.missionId)]
 
-  updateVehicle: (vehicleId, data) =>
-    @scope.vehicleMarkers["missionId_#{data.missionId}"].lat = data.payload.lat
-    @scope.vehicleMarkers["missionId_#{data.missionId}"].lng = data.payload.lon
-    @scope.vehicleMarkers["missionId_#{data.missionId}"].focus = false
-    @scope.vehicleMarkers["missionId_#{data.missionId}"].draggable = false
-    # TODO: icons need to be better
-    @scope.vehicleMarkers["missionId_#{data.missionId}"].icon =
-        iconUrl: 'images/vehicle-marker.png'
-        iconSize: [35, 35] #size of the icon
-        iconAnchor: [17, 34] # point of the icon which will correspond to marker's location
-        popupAnchor: [-5, -5] # point from which the popup should open relative to the inconAnchor
-        shadowSize: [35, 35] # size of the shadow
-        shadowAnchor: [17, 34] # point of the shadow which will correspont to the markers location
+  updateVehicle: (vehicleKey, data) =>
+    if data.payload.lat and data.payload.lat
+      @scope.vehicleMarkers[vehicleKey].lat = data.payload.lat
+      @scope.vehicleMarkers[vehicleKey].lng = data.payload.lon
+      @scope.vehicleMarkers[vehicleKey].focus = false
+      @scope.vehicleMarkers[vehicleKey].draggable = false
+      # TODO: icons need to be better
+      # direction of arrow on icon should change depending on direction
+      @scope.vehicleMarkers[vehicleKey].icon =
+          iconUrl: 'images/vehicle-marker.png'
+          iconSize: [35, 35] #size of the icon
+          iconAnchor: [17.5, 17.5] # point of the icon which will correspond to marker's location
+          popupAnchor: [0, -17.5] # point from which the popup should open relative to the inconAnchor
+      @motionTracking(vehicleKey, {lat: data.payload.lat, lng: data.payload.lon})
 
   updateVehicleMessage: (data) =>
     # TODO: its really ugly and its doing nothing
-    @scope.vehicleMarkers["missionId_#{data.missionId}"] ?= {}
-    vehicle = @scope.vehicleMarkers["missionId_#{data.missionId}"]
-    @scope.vehicleMarkers["missionId_#{data.missionId}"].message ?= "lat: #{vehicle.lat} - lon: #{vehicle.lng} - #{JSON.stringify(data.payload)}"
+    vehicleKey = @vehicleKey(data.missionId)
+    @scope.vehicleMarkers[vehicleKey] ?= {}
+    @scope.vehicleMarkers[vehicleKey].message ?= "lat: #{@scope.vehicleMarkers[vehicleKey].lat} - lon: #{@scope.vehicleMarkers[vehicleKey].lng} - #{JSON.stringify(data.payload)}"
+
+  motionTracking: (vehicleKey, latlng) =>
+    @scope.vehiclePaths[vehicleKey] ?= { color: '#f76944', weight: 7, latlngs: []}
+    @scope.vehiclePaths[vehicleKey].latlngs.push(latlng)
+
+  vehicleKey: (vehicleId) =>
+    "missionId_#{vehicleId}"
 
 angular.module('app').controller 'mapController', MapController
 angular.module('app').controller 'liveMapController', LiveMapController

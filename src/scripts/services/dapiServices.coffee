@@ -33,7 +33,7 @@ class DapiService
       #params:
       #  api_key: "eb34bd67.megadroneshare"
       headers:
-        Authorization: 'DroneApi apikey="#{apiKey}"'
+        Authorization: 'DroneApi apikey="' + apiKey + '"'
 
   urlBase: ->
     @apiBase + @endpoint

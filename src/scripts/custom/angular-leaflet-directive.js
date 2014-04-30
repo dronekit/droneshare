@@ -2265,6 +2265,31 @@
       };
     }
   ]);
+
+  // kevinh added rotated markers per https://www.mapbox.com/mapbox.js/example/v1.0.0/rotating-controlling-marker/
+  // MIT-licensed code by Benjamin Becquet
+  // https://github.com/bbecquet/Leaflet.PolylineDecorator
+  L.RotatedMarker = L.Marker.extend({
+    options: { angle: 0 },
+    _setPos: function(pos) {
+      L.Marker.prototype._setPos.call(this, pos);
+      if (L.DomUtil.TRANSFORM) {
+        // use the CSS transform rule if available
+        this._icon.style[L.DomUtil.TRANSFORM] += ' rotate(' + this.options.angle + 'deg)';
+      } else if (L.Browser.ie) {
+        // fallback for IE6, IE7, IE8
+        var rad = this.options.angle * L.LatLng.DEG_TO_RAD,
+        costheta = Math.cos(rad),
+        sintheta = Math.sin(rad);
+        this._icon.style.filter += ' progid:DXImageTransform.Microsoft.Matrix(sizingMethod=\'auto expand\', M11=' +
+          costheta + ', M12=' + (-sintheta) + ', M21=' + sintheta + ', M22=' + costheta + ')';
+      }
+    }
+  });
+  L.rotatedMarker = function(pos, options) {
+      return new L.RotatedMarker(pos, options);
+  };
+
   angular.module('leaflet-directive').factory('leafletMarkersHelpers', [
     '$rootScope',
     'leafletHelpers',
@@ -2334,9 +2359,9 @@
               clickable: isDefined(markerData.clickable) ? markerData.clickable : true,
               riseOnHover: isDefined(markerData.riseOnHover) ? markerData.riseOnHover : false,
               zIndexOffset: isDefined(markerData.zIndexOffset) ? markerData.zIndexOffset : 0,
-              iconAngle: isDefined(markerData.iconAngle) ? markerData.iconAngle : 0
+              angle: isDefined(markerData.iconAngle) ? markerData.iconAngle : 0,
             };
-          return new L.marker(markerData, markerOptions);
+          return new L.rotatedMarker(markerData, markerOptions);
         },
         addMarkerToGroup: function (marker, groupName, map) {
           if (!isString(groupName)) {

@@ -70,8 +70,8 @@ class BoundsFactory
     dirty
 
 class LiveMapController extends MapController
-  @$inject: ['$scope', '$http', 'missionService']
-  constructor: (scope, http, @missionService) ->
+  @$inject: ['$log', '$scope', '$http', 'missionService']
+  constructor: (@log, scope, http, @missionService) ->
     @boundsFactory = new BoundsFactory
 
     @count = 0
@@ -89,6 +89,7 @@ class LiveMapController extends MapController
     super(scope, http)
 
     @missionService.atmosphere.on("loc", @onLive)
+    @missionService.atmosphere.on("att", @onAttitude)
     @missionService.atmosphere.on("start", @onMissionStart)
     @missionService.atmosphere.on("end", @onMissionEnd)
     @missionService.atmosphere.on("mode", @updateVehicleMessage)
@@ -106,6 +107,20 @@ class LiveMapController extends MapController
       # Grow (or create) our bounds
       if @boundsFactory.expand(data.payload.lat, data.payload.lon)
         @scope.bounds = @boundsFactory.bounds
+    )
+
+  onAttitude: (data) =>
+    # FIXME - not sure if I need apply... (or how to optimize it)
+    # Apply should be called around the function to be guarded... -kevinh
+    @scope.$apply(() =>
+      key = @vehicleKey(data.missionId)
+      v = @scope.vehicleMarkers[key]
+      if v? # We only update heading if we already have an object with position
+        iconFudge = -26 # Our art has the wrong angle - fix it
+        v.iconAngle = iconFudge + data.payload.yaw
+        # oops - angular-leaflet only reads options at the time the marker is created, either we need to manage our own
+        # markers (probably a good idea) or we need to recreate the marker to get the new heading to show up.
+        @log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
     )
 
   onMissionStart: (data) =>

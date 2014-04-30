@@ -40,14 +40,34 @@ class BoundsFactory
         lng: Number.MAX_VALUE
 
   # expand bounding box to include pt
+  # returns true if we changed the bounding box
   expand: (lat, lon) ->
     # Updating bounds are _very_ expensive in leaflet, so we try to 'bucket' our bounds in .1 deg increments
     roundUp = (x) -> Math.ceil(x * 10) / 10.0
     roundDown = (x) -> Math.floor(x * 10) / 10.0
-    @bounds.southWest.lat = Math.min(roundDown(lat), @bounds.southWest.lat)
-    @bounds.southWest.lng = Math.min(roundDown(lon), @bounds.southWest.lng)
-    @bounds.northEast.lat = Math.max(roundUp(lat), @bounds.northEast.lat)
-    @bounds.northEast.lng = Math.max(roundUp(lon), @bounds.northEast.lng)
+
+    dirty = false
+
+    # We use the dirty flag to avoid changing scope object if nothing changed
+    min = (newval, old) ->
+      if newval < old
+        dirty = true
+        newval
+      else
+        old
+
+    max = (newval, old) ->
+      if newval > old
+        dirty = true
+        newval
+      else
+        old
+
+    @bounds.southWest.lat = min(roundDown(lat),@bounds.southWest.lat)
+    @bounds.southWest.lng = min(roundDown(lon), @bounds.southWest.lng)
+    @bounds.northEast.lat = max(roundUp(lat), @bounds.northEast.lat)
+    @bounds.northEast.lng = max(roundUp(lon), @bounds.northEast.lng)
+    dirty
 
 class LiveMapController extends MapController
   @$inject: ['$scope', '$http', 'missionService']
@@ -77,15 +97,16 @@ class LiveMapController extends MapController
     @missionService.atmosphere.on("text", @updateVehicleMessage)
 
   onLive: (data) =>
-    key = @vehicleKey(data.missionId)
-    @updateVehicle(key, data)
-
-    # Grow (or create) our bounds
-    @boundsFactory.expand(data.payload.lat, data.payload.lon)
-    @scope.bounds = @boundsFactory.bounds
-
     # FIXME - not sure if I need apply... (or how to optimize it)
-    @scope.$apply()
+    # Apply should be called around the function to be guarded... -kevinh
+    @scope.$apply(() =>
+      key = @vehicleKey(data.missionId)
+      @updateVehicle(key, data)
+
+      # Grow (or create) our bounds
+      if @boundsFactory.expand(data.payload.lat, data.payload.lon)
+        @scope.bounds = @boundsFactory.bounds
+    )
 
   onMissionStart: (data) =>
     # creating empty markers is bad - causes null ref in leaflet

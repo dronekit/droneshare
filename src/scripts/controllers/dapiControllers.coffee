@@ -1,4 +1,15 @@
 
+# Provides login information and operations for the GUI - typically instantiated at a root level on the page
+class AuthController
+  @$inject: ['authService']
+  constructor: (@service) ->
+    @login = ""
+    @password = ""
+
+    @doLogin = () =>
+      @service.login(@login, @password)
+
+
 class DapiController
   constructor: () ->
     @fetchRecords()
@@ -42,3 +53,4 @@ class VehicleController extends DapiController
 angular.module('app').controller 'missionController', MissionController
 angular.module('app').controller 'vehicleController', VehicleController
 angular.module('app').controller 'userController', UserController
+angular.module('app').controller 'authController', AuthController

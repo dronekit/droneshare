@@ -120,7 +120,7 @@ class LiveMapController extends MapController
         v.iconAngle = iconFudge + data.payload.yaw
         # oops - angular-leaflet only reads options at the time the marker is created, either we need to manage our own
         # markers (probably a good idea) or we need to recreate the marker to get the new heading to show up.
-        @log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
+        #@log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
     )
 
   onMissionStart: (data) =>

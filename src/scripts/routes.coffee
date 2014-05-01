@@ -1,6 +1,8 @@
 class Config
   constructor: ($routeProvider) ->
     $routeProvider
+    .when '/login',
+      templateUrl: 'views/login.html'
     .when '/user',
       templateUrl: 'views/user-list.html'
     .when '/user/:id',

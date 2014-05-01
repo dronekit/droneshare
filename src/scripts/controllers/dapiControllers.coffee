@@ -1,14 +1,23 @@
 
 # Provides login information and operations for the GUI - typically instantiated at a root level on the page
 class AuthController
-  @$inject: ['authService']
-  constructor: (@service) ->
+  @$inject: ['$scope', '$location', 'authService']
+  constructor: (@scope, @location, @service) ->
     @login = ""
     @password = ""
+    @user = null
+    @service.checkLogin().then (user) =>
+      @user = user
 
     @doLogin = () =>
-      @service.login(@login, @password)
+      @service.login(@login, @password).then (results) =>
+        @user = results
 
+    @doLogout = () =>
+      @service.logout().then (results) =>
+        # Redirect to root
+        @location.path("/")
+        # @scope.$apply()
 
 class DapiController
   constructor: () ->

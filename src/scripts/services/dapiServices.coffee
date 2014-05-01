@@ -71,13 +71,13 @@ class AuthService extends RESTService
   constructor: (log, http, routeParams) ->
     super(log, http, routeParams)
     @setLoggedOut() # Preinit user
-    @checkLogin() # Prefetch to find out if we are logged in
+    # @checkLogin() - we now rely on the controllers to start this process. FIXME, start only if needed
 
   endpoint: "auth"
 
   logout: () ->
+    @setLoggedOut()
     @saveId("logout")
-    setLoggedOut()
 
   login: (loginName, password) ->
     # Use a form style post
@@ -96,9 +96,11 @@ class AuthService extends RESTService
       @log.debug("Not logged in #{results}, #{status}")
       @setLoggedOut()
 
+  # Returns the updated user record
   setLoggedIn: (userRecord) ->
     @user = userRecord
     @user.loggedIn = true
+    @user
 
   setLoggedOut: () ->
     @user =
@@ -106,13 +108,9 @@ class AuthService extends RESTService
 
   checkLogin: () ->
     @getId("user")
-    .success (results) =>
-      @log.debug("Got user!")
+    .then (results) =>
+      @log.debug("login complete!")
       @setLoggedIn(results)
-    .error (results, status) =>
-      @log.debug("Not logged in #{results}, #{status}")
-      @setLoggedOut()
-
 
 
 class UserService extends RESTService
@@ -129,6 +127,7 @@ class MissionService extends RESTService
     request =
       url: @urlBase() + '/live'
 
+    angular.extend(request, @config)
     angular.extend(request, atmosphereOptions)
     @atmosphere.init(request)
 
@@ -148,6 +147,7 @@ class AdminService extends RESTService
     request =
       url: @urlBase() + '/log'
 
+    angular.extend(request, @config)
     angular.extend(request, atmosphereOptions)
     @atmosphere.init(request)
 

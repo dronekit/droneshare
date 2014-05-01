@@ -1,0 +1,26 @@
+<div class="col-md-3 col-md-offset-3" ng-controller="authController as auth">
+
+    <!-- SHOW ERROR/SUCCESS MESSAGES -->
+    <div id="auth.messages"></div>
+
+    <!-- FORM -->
+    <form "form-signin" role="form" ng-submit="auth.doLogin()">
+        <h2 class="form-signin-heading">Please log-in</h2>
+
+        <!-- NAME -->
+        <input type="text" class="form-control" placeholder="Account name" ng-model="auth.login">
+
+        <input type="password" class="form-control" placeholder="Password" ng-model="auth.password">
+
+        <!-- FIXME - respect remember me -->
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+
+        <!-- SUBMIT BUTTON -->
+        <button type="submit" class="btn btn-lg btn-primary btn-block">
+            Login
+        </button>
+    </form>
+
+</div>

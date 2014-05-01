@@ -16,7 +16,7 @@ angular.module('ngAtmosphere', [])
       throw new NoAtmospherePluginError();
     }
 
-    var debug = false;
+    var debug = true;
     var listeners = {};
     var listenerIndex = {};
 

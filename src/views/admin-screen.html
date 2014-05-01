@@ -18,7 +18,10 @@
                     <button type="submit" class="btn">Run Import</button>
                 </form>
 
-                <p>Debug info: {{controller.debugInfo}}</p>
+                <p>Debug info: {{controller.debugInfo}} </p>
+                <!-- FIXME - doesn't work
+                <div ng-bind-html="controller.debugInfo"></div>
+                -->
 
                 <div class="panel panel-default">
                 <div class="panel-heading">Server log</div>

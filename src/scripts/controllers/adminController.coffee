@@ -1,8 +1,9 @@
 class Controller
-  @$inject: ['$scope', '$log', 'adminService']
-  constructor: (@scope, @log, @adminService) ->
-    @simType = "quick"
+  @$inject: ['$sce', '$scope', '$log', 'adminService']
+  constructor: (@sce, @scope, @log, @adminService) ->
+    @simType = "std/true/4/60"
     @lines = []
+    @debugInfo = "(waiting for server...)"
 
     @log.debug("Starting log viewing")
     adminService.atmosphere.on("log", @onLog)
@@ -10,7 +11,7 @@ class Controller
     # Async fetch of debugging info
     @adminService.getDebugInfo().then (results) =>
       @log.debug("Setting debug info")
-      @scope.debugInfo = results
+      @debugInfo = results
 
     @startSim = () =>
       @log.debug("Running sim " + @simType)
@@ -22,9 +23,10 @@ class Controller
   onLog: (data) =>
     @log.info("Logmsg: " + data)
     # Keep the last 10 log entries
-    @lines.push(data.toString())
-    @lines = @lines[-10..]
-    @scope.$apply()
+    @scope.$apply(() =>
+      @lines.push(data.toString())
+      @lines = @lines[-10..]
+    )
 
 
 

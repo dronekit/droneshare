@@ -30,6 +30,7 @@ class DapiService
     @log.debug("Creating service " + @apiBase)
     @config =
       withCredentials: true # Needed to send cookies
+      useXDomain: true # needed to send cookies in POST
       # FIXME - better to include in an auth header per RFC2617 Authorization: DroneApi apikey="blah.blah"
       #params:
       #  api_key: "eb34bd67.megadroneshare"
@@ -63,7 +64,7 @@ class RESTService extends DapiService
   saveId: (id, obj, config) ->
     @log.debug("Saving #{@endpoint}/#{id}")
     c = angular.extend(@config, config)
-    @http.post("#{@urlBase()}/#{id}", obj, @config)
+    @http.post("#{@urlBase()}/#{id}", obj, c)
 
 class AuthService extends RESTService
 
@@ -153,15 +154,15 @@ class AdminService extends RESTService
 
   endpoint: "admin"
 
-  startSim: (typ) ->
+  startSim: (typ) =>
     @log.info("Service starting sim " + typ)
-    @getId("sim/" + typ) # FIXME, should POST instead
+    @saveId("sim/" + typ)
 
-  importOld: (count) ->
+  importOld: (count) =>
     @log.info("importing " + count)
-    @getId("import/" + count) # FIXME, should POST instead
+    @saveId("import/" + count)
 
-  getDebugInfo: () ->
+  getDebugInfo: () =>
     @getId("debugInfo")
 
 module = angular.module('app')

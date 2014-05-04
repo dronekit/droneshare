@@ -5,12 +5,19 @@ class AuthController
   constructor: (@scope, @location, @service) ->
     @login = ""
     @password = ""
+    @password2 = ""
+    @email = ""
+    @fullName = ""
     @user = null
     @service.checkLogin().then (user) =>
       @user = user
 
     @doLogin = () =>
       @service.login(@login, @password).then (results) =>
+        @user = results
+
+    @doCreate = () =>
+      @service.create(@login, @password, @email, @fullName).then (results) =>
         @user = results
 
     @doLogout = () =>

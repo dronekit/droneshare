@@ -1,6 +1,10 @@
 class Config
-  constructor: ($routeProvider) ->
+  constructor: ($routeProvider, $locationProvider) ->
+    # No workie - FIXME $locationProvider.html5Mode(true)
+
     $routeProvider
+    .when '/create',
+      templateUrl: 'views/user-create.html'
     .when '/logout',
       templateUrl: 'views/logout.html'
     .when '/login',
@@ -27,7 +31,7 @@ class Config
     .otherwise
       redirectTo: '/'
 
-angular.module('app').config ['$routeProvider', Config]
+angular.module('app').config ['$routeProvider', '$locationProvider', Config]
 
 # Raven bug tracking - FIXME - move elsewhere
 #Raven.config('https://ffe3750cae4b47189ab3395c803ab8c4@app.getsentry.com/23130', {

@@ -80,6 +80,21 @@ class AuthService extends RESTService
     @setLoggedOut()
     @saveId("logout")
 
+  create: (loginName, password, email, fullName) ->
+    @log.debug("Attempting create for #{loginName}")
+    payload =
+      login: loginName
+      password: password
+      email: email
+      fullName: fullName
+
+    @saveId("create", payload)
+    .success (results) =>
+      @log.debug("Created in!")
+      @setLoggedIn(results)
+    .error (results, status) =>
+      @log.debug("Not created in #{results}, #{status}")
+
   login: (loginName, password) ->
     # Use a form style post
     config =

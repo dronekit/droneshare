@@ -120,6 +120,9 @@ class AuthService extends RESTService
     @user =
       loggedIn: false
 
+  getUser: () =>
+    @user
+
   checkLogin: () ->
     @getId("user")
     .then (results) =>

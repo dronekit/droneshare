@@ -10,13 +10,13 @@
         <div class="collapse navbar-collapse">
             <a class="navbar-brand" href="/">Mega Drone Share</a>
 
-            <ul class="nav navbar-nav navbar-right" ng-show="auth.user.loggedIn">
+            <ul class="nav navbar-nav navbar-right" ng-show="auth.getUser().loggedIn">
                 <li>
-                    <img ng-src="{{auth.user.avatarImage}}?s=48"/>
+                    <img ng-src="{{auth.getUser().avatarImage}}?s=48"/>
                     <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth.user.login}} <b class="caret"></b></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth.getUser().login}} <b class="caret"></b></a>
                       <ul class="dropdown-menu">
-                        <li><a href="#/user/{{auth.user.login}}">Account</a></li>
+                        <li><a href="#/user/{{auth.getUser().login}}">Account</a></li>
                         <li><a href="#/logout">Logout</a></li>
                       </ul>
                     </li>

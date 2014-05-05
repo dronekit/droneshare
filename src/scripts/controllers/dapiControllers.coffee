@@ -10,13 +10,9 @@ class AuthController
     @fullName = ""
     @user = null
     @error = null
+    @getUser = @service.getUser
 
-    @scope.$on('$viewContentLoaded', (event) =>
-      @log.info('viewContentLoaded')
-    )
-
-    @service.checkLogin().then (user) =>
-      @user = user
+    @service.checkLogin()
 
     @can_login = () =>
       @password.trim() != "" && @login.trim() != ""
@@ -35,7 +31,6 @@ class AuthController
 
     @do_login = () =>
       @service.login(@login, @password).then((results) =>
-        @user = results.data
         @error = null
         @location.path("/") # Back to top of app
       , (reason) =>
@@ -45,7 +40,6 @@ class AuthController
 
     @doCreate = () =>
       @service.create(@login, @password, @email, @fullName).then((results) =>
-        @user = results.data
         @error = null
         @location.path("/") # Back to top of app
       , (reason) =>

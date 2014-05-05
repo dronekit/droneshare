@@ -1,23 +1,31 @@
 
 # Provides login information and operations for the GUI - typically instantiated at a root level on the page
 class AuthController
-  @$inject: ['$scope', '$location', 'authService']
-  constructor: (@scope, @location, @service) ->
+  @$inject: ['$route', '$log', '$scope', '$location', 'authService']
+  constructor: (@route, @log, @scope, @location, @service) ->
     @login = ""
     @password = ""
     @password2 = ""
     @email = ""
     @fullName = ""
     @user = null
+    @error = null
+
+    @scope.$on('$viewContentLoaded', (event) =>
+      @log.info('viewContentLoaded')
+    )
 
     @service.checkLogin().then (user) =>
       @user = user
 
+    @can_login = () =>
+      @password.trim() != "" && @login.trim() != ""
+
     @can_create = () =>
       @password == @password2 && @password.trim() != "" && @login.trim() != "" && (@email ? "").trim() != "" && @fullName.trim() != ""
 
-    # If defined, show to user as an error message (passwords do not match, too short, etc...)
-    @get_error = () =>
+    # If defined, show to user as a presubmit warning (passwords do not match, too short, etc...)
+    @get_create_warning = () =>
       if !@email?
         "Invalid email address"
       else if (@password2 != "" && @password != @password2)
@@ -25,19 +33,31 @@ class AuthController
       else
         null
 
-    @doLogin = () =>
-      @service.login(@login, @password).then (results) =>
-        @user = results
+    @do_login = () =>
+      @service.login(@login, @password).then((results) =>
+        @user = results.data
+        @error = null
+        @location.path("/") # Back to top of app
+      , (reason) =>
+        @log.debug("Login failed due to #{reason.statusText}")
+        @error = reason.statusText
+      )
 
     @doCreate = () =>
-      @service.create(@login, @password, @email, @fullName).then (results) =>
-        @user = results
+      @service.create(@login, @password, @email, @fullName).then((results) =>
+        @user = results.data
+        @error = null
+        @location.path("/") # Back to top of app
+      , (reason) =>
+        @log.debug("Not created due to #{reason.statusText}")
+        @error = reason.statusText
+      )
 
     @doLogout = () =>
       @service.logout().then (results) =>
         # Redirect to root
         @location.path("/")
-        # @scope.$apply()
+        @error = null
 
 class DapiController
   constructor: () ->

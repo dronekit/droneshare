@@ -123,7 +123,7 @@ class LiveMapController extends MapController
         #@log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
     )
 
-  onMissionStart: (data) =>
+  onMissionStart: (data) ->
     # creating empty markers is bad - causes null ref in leaflet
     # @scope.vehicleMarkers[@vehicleKey(data.missionId)] ?= {}
 
@@ -161,7 +161,7 @@ class LiveMapController extends MapController
     v.latlngs.push(latlng)
     @scope.vehiclePaths[vehicleKey] = v
 
-  vehicleKey: (vehicleId) =>
+  vehicleKey: (vehicleId) ->
     "missionId_#{vehicleId}"
 
 angular.module('app').controller 'mapController', MapController

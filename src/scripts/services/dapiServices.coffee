@@ -92,8 +92,6 @@ class AuthService extends RESTService
     .success (results) =>
       @log.debug("Created in!")
       @setLoggedIn(results)
-    .error (results, status) =>
-      @log.debug("Not created in #{results}, #{status}")
 
   login: (loginName, password) ->
     # Use a form style post
@@ -113,12 +111,12 @@ class AuthService extends RESTService
       @setLoggedOut()
 
   # Returns the updated user record
-  setLoggedIn: (userRecord) ->
+  setLoggedIn: (userRecord) =>
     @user = userRecord
     @user.loggedIn = true
     @user
 
-  setLoggedOut: () ->
+  setLoggedOut: () =>
     @user =
       loggedIn: false
 

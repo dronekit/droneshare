@@ -1,0 +1,29 @@
+<div class="col-md-3 col-md-offset-3" ng-controller="authController as auth">
+
+    <!-- SHOW ERROR/SUCCESS MESSAGES -->
+    <div class="alert alert-danger" ng-show="!!auth.get_error()">
+        <h4 class="alert-heading">Problem</h4>
+        <span ng-bind="auth.get_error()"></span>
+    </div>
+
+    <!-- FORM -->
+    <form "form-signin" role="form" ng-submit="auth.doCreate()">
+        <h2 class="form-signin-heading">Please log-in</h2>
+
+        <!-- FIXME - check availability as the user types -->
+        <!-- FIXME - add help popups explaing why we are asking these things -->
+        <input type="text" class="form-control" placeholder="Account name" ng-model="auth.login">
+        <input type="text" class="form-control" placeholder="Full Name" ng-model="auth.fullName">
+        <input type="email" class="form-control" placeholder="Email address" ng-model="auth.email">
+
+        <!-- FIXME - warn about non matching passwords -->
+        <input type="password" class="form-control" placeholder="New Password" ng-model="auth.password" >
+        <input type="password" class="form-control" placeholder="Confirm Password" ng-model="auth.password2" >
+
+        <!-- SUBMIT BUTTON -->
+        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="!auth.can_create()">
+            Create Account
+        </button>
+    </form>
+
+</div>

@@ -9,8 +9,21 @@ class AuthController
     @email = ""
     @fullName = ""
     @user = null
+
     @service.checkLogin().then (user) =>
       @user = user
+
+    @can_create = () =>
+      @password == @password2 && @password.trim() != "" && @login.trim() != "" && (@email ? "").trim() != "" && @fullName.trim() != ""
+
+    # If defined, show to user as an error message (passwords do not match, too short, etc...)
+    @get_error = () =>
+      if !@email?
+        "Invalid email address"
+      else if (@password2 != "" && @password != @password2)
+        "Passwords do not match"
+      else
+        null
 
     @doLogin = () =>
       @service.login(@login, @password).then (results) =>

@@ -63,7 +63,7 @@ class RESTService extends DapiService
 
   saveId: (id, obj, c) =>
     @log.debug("Saving #{@endpoint}/#{id}")
-    c = angular.extend(c, @config)
+    c = angular.extend(c ? {}, @config)
     @http.post("#{@urlBase()}/#{id}", obj, c)
 
 class AuthService extends RESTService

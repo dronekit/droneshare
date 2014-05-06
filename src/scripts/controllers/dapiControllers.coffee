@@ -45,7 +45,7 @@ class AuthController
         @error = reason.statusText
       )
 
-    @doLogout = () =>
+    @do_logout = () =>
       @service.logout().then (results) =>
         # Redirect to root
         @location.path("/")

@@ -61,9 +61,9 @@ class RESTService extends DapiService
     .then (results) ->
       results.data
 
-  saveId: (id, obj, config) ->
+  saveId: (id, obj, c) =>
     @log.debug("Saving #{@endpoint}/#{id}")
-    c = angular.extend(@config, config)
+    c = angular.extend(c, @config)
     @http.post("#{@urlBase()}/#{id}", obj, c)
 
 class AuthService extends RESTService
@@ -72,7 +72,7 @@ class AuthService extends RESTService
   constructor: (log, http, routeParams) ->
     super(log, http, routeParams)
     @setLoggedOut() # Preinit user
-    # @checkLogin() - we now rely on the controllers to start this process. FIXME, start only if needed
+    @checkLogin() # Do an initial fetch
 
   endpoint: "auth"
 

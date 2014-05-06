@@ -12,8 +12,6 @@ class AuthController
     @error = null
     @getUser = @service.getUser
 
-    @service.checkLogin()
-
     @can_login = () =>
       @password.trim() != "" && @login.trim() != ""
 

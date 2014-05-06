@@ -338,7 +338,8 @@ module.exports = (grunt) ->
             'leaflet-directive': 'custom/angular-leaflet-directive.js'
             'ngAtmosphere': 'custom/angular-atmosphere.js'
             'angulartics': 'libs/angulartics.min.js',
-            'angulartics.google.analytics': 'libs/angulartics-ga.min.js'
+            'angulartics.google.analytics': 'libs/angulartics-ga.min.js',
+            'ui.bootstrap': 'libs/ui-bootstrap-0.11.0.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:

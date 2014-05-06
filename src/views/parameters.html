@@ -6,6 +6,8 @@
                     <span ng-bind="controller.error.message"></span>
                 </div>
 
+<a href="#" tooltip="yay it works">Tooltips still don't work. why?  FIXME!</a>
+
                 <table class="table table-striped" ng-hide="!controller.parameters" >
                     <thead>
                         <tr>
@@ -17,8 +19,19 @@
                     <tbody>
                         <tr ng-repeat="r in controller.parameters">
                             <td>{{r.id}}</td>
-                            <td>{{r.value}}</td>
+
+                            <!-- Either nest inside a tooltip or just show bare depending on
+                            if we have a range specified. FIXME - there has to be a cleaner
+                            way to do this.
+                            <td><a href="#" tooltip=""Recommended between {{r.range[0]}} and {{r.range[1]}}"">{{r.value}}</a></td>
+
+                             -->
+                                {{r.value}}
+
+                            <!--<td ng-if="!r.range">{{r.value}}</td> -->
+
                             <td>{{r.doc}}</td>
+
                         </tr>
                     </tbody>
                 </table>

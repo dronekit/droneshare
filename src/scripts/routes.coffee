@@ -21,6 +21,8 @@ class Config
       templateUrl: 'views/mission-list.html'
     .when '/mission/:id',
       templateUrl: 'views/mission-detail.html'
+    .when '/parameters/:id',
+      templateUrl: 'views/parameters.html'
       #controller: 'missionDetailController'
     .when '/github/:id',
       controller: 'gitHubController'

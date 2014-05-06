@@ -150,7 +150,12 @@ class MissionService extends RESTService
 
   endpoint: "mission"
 
-  getGeoJSON: (id) ->
+  get_parameters: (id) ->
+    @http.get("#{@urlBase()}/#{id}/parameters.json", @config)
+    .success (results) ->
+      results.data
+
+  get_geojson: (id) ->
     @http.get("#{@urlBase()}/#{id}/messages.geo.json", @config)
     .success (results) ->
       results.data

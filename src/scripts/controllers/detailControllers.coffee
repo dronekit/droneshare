@@ -25,8 +25,14 @@ class MissionDetailController extends DetailController
     @scope.center = {}  # Apparently required to use bounds
     @scope.bounds = {}
 
+    # Prefetch params - FIXME - only fetch as needed?
+    @service.get_parameters(@routeParams.id).then (httpResp) =>
+      @log.debug("Setting parameters")
+      @parameters = httpResp.data
+
     # Go ahead and fetch 'geojson' in case child directives (map) want it
-    @service.getGeoJSON(@routeParams.id).then (results) =>
+    @service.get_geojson(@routeParams.id).then (httpResp) =>
+      results = httpResp.data
       @log.debug("Setting geojson")
 
       # Bounding box MUST be in the GeoJSON and it must be 3 dimensional

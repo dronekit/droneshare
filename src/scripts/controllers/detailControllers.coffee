@@ -25,10 +25,24 @@ class MissionDetailController extends DetailController
     @scope.center = {}  # Apparently required to use bounds
     @scope.bounds = {}
 
+    @scope.plotOptions =
+      xaxis :
+        mode : "time"
+        timeformat : "%M:%S"
+      zoom :
+        interactive : true
+      pan :
+        interactive : true
+    @scope.plotData = {}
+
     # Prefetch params - FIXME - only fetch as needed?
     @service.get_parameters(@routeParams.id).then (httpResp) =>
       @log.debug("Setting parameters")
       @parameters = httpResp.data
+
+    @service.get_plotdata(@routeParams.id).then (httpResp) =>
+      @log.debug("Setting parameters")
+      @scope.plotData = httpResp.data
 
     # Go ahead and fetch 'geojson' in case child directives (map) want it
     @service.get_geojson(@routeParams.id).then (httpResp) =>

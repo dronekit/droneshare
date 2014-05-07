@@ -23,6 +23,8 @@ class Config
       templateUrl: 'views/mission-detail.html'
     .when '/parameters/:id',
       templateUrl: 'views/parameters.html'
+    .when '/plot/:id',
+      templateUrl: 'views/flotview.html'
       #controller: 'missionDetailController'
     .when '/github/:id',
       controller: 'gitHubController'

@@ -155,6 +155,11 @@ class MissionService extends RESTService
     .success (results) ->
       results.data
 
+  get_plotdata: (id) ->
+    @http.get("#{@urlBase()}/#{id}/dseries", @config)
+    .success (results) ->
+      results.data
+
   get_geojson: (id) ->
     @http.get("#{@urlBase()}/#{id}/messages.geo.json", @config)
     .success (results) ->

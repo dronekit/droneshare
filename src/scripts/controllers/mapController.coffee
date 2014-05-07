@@ -116,8 +116,7 @@ class LiveMapController extends MapController
       key = @vehicleKey(data.missionId)
       v = @scope.vehicleMarkers[key]
       if v? # We only update heading if we already have an object with position
-        iconFudge = -26 # Our art has the wrong angle - fix it
-        v.iconAngle = iconFudge + data.payload.yaw
+        v.iconAngle = data.payload.yaw
         # oops - angular-leaflet only reads options at the time the marker is created, either we need to manage our own
         # markers (probably a good idea) or we need to recreate the marker to get the new heading to show up.
         #@log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")

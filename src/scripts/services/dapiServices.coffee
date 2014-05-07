@@ -43,9 +43,9 @@ class DapiService
 class RESTService extends DapiService
   get: (params = {}) ->
     @log.debug("Getting all #{@endpoint}")
-    cfg = @config
-    cfg.params = params
-
+    cfg =
+      params: params
+    angular.extend(cfg, @config)
     @http.get(@urlBase(), cfg)
     .then (results) ->
       results.data

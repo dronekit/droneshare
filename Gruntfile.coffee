@@ -332,6 +332,7 @@ module.exports = (grunt) ->
           'libs/jquery.js'
           'libs/jquery.flot.js'
           'libs/jquery.flot.time.js'
+          'libs/angular-file-upload-shim.min.js'
           'libs/angular.js'
           'libs/mapbox.js'
           'NGAPP':
@@ -343,7 +344,9 @@ module.exports = (grunt) ->
             'angulartics': 'libs/angulartics.min.js',
             'angulartics.google.analytics': 'libs/angulartics-ga.min.js',
             'ui.bootstrap': 'libs/ui-bootstrap-0.11.0.js',
-            'angular-flot': 'libs/angular-flot.js'
+            'angular-flot': 'libs/angular-flot.js',
+            'ngSocial': 'libs/angular-social.js',
+            'angularFileUpload': 'libs/angular-file-upload.min.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:

@@ -13,13 +13,28 @@ class UserDetailController extends DetailController
     super(scope, routeParams)
 
 class VehicleDetailController extends DetailController
-  @$inject: ['$log', '$scope', '$routeParams', 'vehicleService']
-  constructor: (@log, scope, routeParams, @service) ->
+  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService']
+  constructor: (@upload, @log, scope, routeParams, @service) ->
     super(scope, routeParams)
 
+    @on_file_select = (files) =>
+      c =
+        url: @service.urlId(@routeParams.id) + '/missions'
+        method: 'POST'
+        file: files
+      c = angular.extend(c, @service.config)
+      @upload.upload(c)
+      .progress((evt) =>
+        @log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total)))
+      .success((data, status, headers, config) =>
+        @log.info('success!'))
+      .error((result) =>
+        @log.error('upload failed: ' + result)
+      )
+
 class MissionDetailController extends DetailController
-  @$inject: ['$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@log, scope, routeParams, @service) ->
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService']
+  constructor: (@modal, @log, scope, routeParams, @service) ->
     super(scope, routeParams)
 
     @scope.center = {}  # Apparently required to use bounds

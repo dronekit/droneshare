@@ -31,6 +31,13 @@
                     </tbody>
                 </table>
 
+  <input type="file" ng-file-select="onFileSelect($files)" multiple>
+  <div ng-file-drop="controller.on_file_select($files)" class="drop-box"
+        ng-show="dropSupported">drop files here</div>
+  <div ng-file-drop-available="dropSupported=true"
+        ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+  <!-- <button ng-click="upload.abort()">Cancel Upload</button> -->
+
                 <div class="panel panel-default" ng-hide="!controller.record.missions.length" >
                   <ul class="list-group">
                     <li ng-repeat="mission in controller.missions" class="list-group-item">

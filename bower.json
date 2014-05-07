@@ -12,7 +12,8 @@
     "requirejs": "2.1.11",
     "angulartics": "~0.15.17",
     "angular-flot": "0.0.3",
-    "flot": "~0.8.3"
+    "flot": "~0.8.3",
+    "angular-social": "~0.1.1"
   },
   "exportsOverride": {
     "angular": {
@@ -55,6 +56,13 @@
     },
     "angular-flot": {
       "scripts/libs": "angular-flot.js"
+    },
+    "angular-social": {
+      "scripts/libs": "angular-social.js",
+      "styles": "angular-social.css"
     }
+  },
+  "resolutions": {
+    "angular": "1.3.0-beta.5"
   }
 }

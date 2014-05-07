@@ -1,4 +1,11 @@
 <!-- A snippet that assumes we are nested inside a missionDetailController -->
+
+<div class="alert alert-error">
+      Droneshare has detected parameters that are outside of the recommended
+      range.  The suspect values are marked in red - you should check on DIY Drones to figure out if you
+      are doing a bad thing.
+</div>
+
 <table class="table table-striped" ng-hide="!controller.parameters" >
     <thead>
         <tr>
@@ -12,16 +19,14 @@
             <td>{{r.id}}</td>
 
             <!-- Either nest inside a tooltip or just show bare depending on
-            if we have a range specified. FIXME - there has to be a cleaner
-            way to do this.
-        -->
-        <td ng-show="!!r.range"><a href="#" tooltip="Recommended between {{r.range[0]}} and {{r.range[1]}}">{{r.value}}</a></td>
-        <td ng-show="!r.range">{{r.value}}</td>
+                if we have a range specified. FIXME - there has to be a cleaner
+                way to do this.
+            -->
+            <td ng-show="!!r.range"><a href="#" tooltip="Recommended between {{r.range[0]}} and {{r.range[1]}}">{{r.value}}</a></td>
+            <td ng-show="!r.range">{{r.value}}</td>
 
-        <td>{{r.doc}}</td>
+            <td>{{r.doc}}</td>
 
-    </tr>
-</tbody>
+        </tr>
+    </tbody>
 </table>
-
-

@@ -1,0 +1,30 @@
+<!-- A snippet that assumes we are nested inside a missionDetailController -->
+<table class="table table-striped" ng-hide="!controller.parameters" >
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Value</td>
+            <td>Documentation</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="r in controller.parameters">
+            <td>{{r.id}}</td>
+
+            <!-- Either nest inside a tooltip or just show bare depending on
+            if we have a range specified. FIXME - there has to be a cleaner
+            way to do this.
+            <td><a href="#" tooltip=""Recommended between {{r.range[0]}} and {{r.range[1]}}"">{{r.value}}</a></td>
+
+        -->
+        <td>{{r.value}}</td>
+
+        <!--<td ng-if="!r.range">{{r.value}}</td> -->
+
+        <td>{{r.doc}}</td>
+
+    </tr>
+</tbody>
+</table>
+
+

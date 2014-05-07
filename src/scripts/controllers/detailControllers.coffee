@@ -22,7 +22,7 @@ class VehicleDetailController extends DetailController
         url: @service.urlId(@routeParams.id) + '/missions'
         method: 'POST'
         file: files
-      c = angular.extend(c, @service.config)
+      angular.extend(c, @service.config)
       @upload.upload(c)
       .progress((evt) =>
         @log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total)))

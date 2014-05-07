@@ -18,13 +18,13 @@ class Config
     .when '/vehicle/:id',
       templateUrl: 'views/vehicle-detail.html'
     .when '/mission',
-      templateUrl: 'views/mission-list.html'
+      templateUrl: 'views/mission/list-window.html'
     .when '/mission/:id',
-      templateUrl: 'views/mission-detail.html'
+      templateUrl: 'views/mission/detail-window.html'
     .when '/parameters/:id',
-      templateUrl: 'views/parameters.html'
+      templateUrl: 'views/mission/parameters-window.html'
     .when '/plot/:id',
-      templateUrl: 'views/flotview.html'
+      templateUrl: 'views/mission/plot-window.html'
       #controller: 'missionDetailController'
     .when '/github/:id',
       controller: 'gitHubController'

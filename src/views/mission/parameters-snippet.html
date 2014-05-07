@@ -14,10 +14,11 @@
             <!-- Either nest inside a tooltip or just show bare depending on
             if we have a range specified. FIXME - there has to be a cleaner
             way to do this.
-            <td><a href="#" tooltip=""Recommended between {{r.range[0]}} and {{r.range[1]}}"">{{r.value}}</a></td>
+
 
         -->
-        <td>{{r.value}}</td>
+        <td ng-show="!!r.range"><a href="#" tooltip="Recommended between {{r.range[0]}} and {{r.range[1]}}">{{r.value}}</a></td>
+        <td ng-show="!r.range">{{r.value}}</td>
 
         <!--<td ng-if="!r.range">{{r.value}}</td> -->
 

@@ -57,7 +57,8 @@ class RESTService extends DapiService
   # Async read the specified ID
   getId: (id) ->
     @log.debug("Getting #{@endpoint}/#{id}")
-    @http.get(@urlId(id), @config)
+    c = angular.extend({}, @config)
+    @http.get(@urlId(id), c)
     .then (results) ->
       results.data
 
@@ -151,17 +152,20 @@ class MissionService extends RESTService
   endpoint: "mission"
 
   get_parameters: (id) ->
-    @http.get("#{@urlBase()}/#{id}/parameters.json", @config)
+    c = angular.extend({}, @config)
+    @http.get("#{@urlBase()}/#{id}/parameters.json", c)
     .success (results) ->
       results.data
 
   get_plotdata: (id) ->
-    @http.get("#{@urlBase()}/#{id}/dseries", @config)
+    c = angular.extend({}, @config)
+    @http.get("#{@urlBase()}/#{id}/dseries", c)
     .success (results) ->
       results.data
 
   get_geojson: (id) ->
-    @http.get("#{@urlBase()}/#{id}/messages.geo.json", @config)
+    c = angular.extend({}, @config)
+    @http.get("#{@urlBase()}/#{id}/messages.geo.json", c)
     .success (results) ->
       results.data
 

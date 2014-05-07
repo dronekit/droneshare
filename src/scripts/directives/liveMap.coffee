@@ -8,8 +8,12 @@ angular.module('app').directive 'liveMap', ['$window', ($window) -> return {
       $scope.ui_bounds = $('#main-navigation').height() + $('#footer').height()
       $scope.initializeWindowSize = ->
         $scope.windowHeight = $window.innerHeight - ( $scope.ui_bounds )
-        console.debug('MapDim ', $scope.windowHeight, ' ', $scope.leafletData)
+        $scope.windowWidth = $window.innerWidth
+
         $scope.leafletData.getMap().then (map) ->
+          $(map._container).css
+            height: "#{$scope.windowHeight}px"
+            width: "#{$scope.windowWidth}px"
           map.invalidateSize(false)
       angular.element($window).bind 'resize', ->
         $scope.initializeWindowSize()

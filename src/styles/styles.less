@@ -1,4 +1,5 @@
 @import "bootstrap.less";
+@link-color: #fff;
 @base-blue: #319bd7;
 @border-blue: #45cbf1;
 
@@ -19,13 +20,14 @@
 
 body {
     padding-bottom: 70px;
+    background-color: #eee;
 }
 
 #main-navigation {
     margin-bottom: 0;
 }
 
-#logo{
+#logo {
     padding: 17px 15px 0;
     height: 55px;
 }
@@ -38,6 +40,14 @@ body {
     height: 65px;
     text-align: center;
     padding-top: 35px;
+}
+
+#user-nav {
+    ul.list-inline {
+        margin-bottom: 0;
+        line-height: 80px;
+        height: 80px;
+    }
 }
 
 .ng-cloak {
@@ -79,11 +89,4 @@ body {
 .tab-content {
     margin-top: 15px;
 }
-
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
-
 

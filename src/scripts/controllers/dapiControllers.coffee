@@ -51,6 +51,12 @@ class AuthController
         @location.path("/")
         @error = null
 
+  isLoggedIn: ->
+    return if @getUser().loggedIn then true else false
+
+  isAnonymous: ->
+    return if @isLoggedIn() then false else true
+
 class DapiController
   constructor: () ->
     @fetchRecords()

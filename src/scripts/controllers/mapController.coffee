@@ -70,8 +70,9 @@ class BoundsFactory
     dirty
 
 class LiveMapController extends MapController
-  @$inject: ['$log', '$scope', '$http', 'missionService']
-  constructor: (@log, scope, http, @missionService) ->
+  @$inject: ['$scope', '$log', 'leafletData', '$http', 'missionService']
+  constructor: (scope, @log, leafletData, http, @missionService) ->
+    scope.leafletData = leafletData
     @boundsFactory = new BoundsFactory
 
     @count = 0
@@ -79,9 +80,6 @@ class LiveMapController extends MapController
     scope.vehiclePaths = {}
     scope.bounds = {} # Angular wants to see at least an empty object (not undefined)
     scope.center = {}
-    #  lat: 19.4284700
-    #  lng: -99.1276600
-    #  zoom: 3
 
     # TODO: fake markers arn't workng
     #scope.vehicleMarkers['missionId_fake'] = {lat: scope.hawaii.lat, lng: scope.hawwai.lng, focus: false, draggable: false}

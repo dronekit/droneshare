@@ -329,6 +329,9 @@ module.exports = (grunt) ->
         ]
         order: [
           'custom/atmosphere.js'
+          'libs/jquery.js'
+          'libs/jquery.flot.js'
+          'libs/jquery.flot.time.js'
           'libs/angular.js'
           'libs/mapbox.js'
           'NGAPP':
@@ -339,7 +342,8 @@ module.exports = (grunt) ->
             'ngAtmosphere': 'custom/angular-atmosphere.js'
             'angulartics': 'libs/angulartics.min.js',
             'angulartics.google.analytics': 'libs/angulartics-ga.min.js',
-            'ui.bootstrap': 'libs/ui-bootstrap-0.11.0.js'
+            'ui.bootstrap': 'libs/ui-bootstrap-0.11.0.js',
+            'angular-flot': 'libs/angular-flot.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:

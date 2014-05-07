@@ -10,7 +10,9 @@
     "html5shiv": "3.7.0",
     "json3": "3.3.0",
     "requirejs": "2.1.11",
-    "angulartics": "~0.15.17"
+    "angulartics": "~0.15.17",
+    "angular-flot": "0.0.3",
+    "flot": "~0.8.3"
   },
   "exportsOverride": {
     "angular": {
@@ -32,8 +34,8 @@
     "html5shiv": {
       "scripts/libs": "dist/html5shiv-printshiv.js"
     },
-    "jquery": {
-      "scripts/libs": "none"
+    "flot": {
+      "scripts/libs": [ "jquery.js", "jquery.flot.js", "jquery.flot.time.js" ]
     },
     "json3": {
       "scripts/libs": "lib/json3.min.js"
@@ -42,7 +44,13 @@
       "scripts/libs": "require.js"
     },
     "angulartics": {
-      "scripts/libs": ["dist/angulartics-ga.min.js", "dist/angulartics.min.js" ]
+      "scripts/libs": [
+        "dist/angulartics-ga.min.js",
+        "dist/angulartics.min.js"
+      ]
+    },
+    "angular-flot": {
+      "scripts/libs": "angular-flot.js"
     }
   }
 }

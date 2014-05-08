@@ -8,7 +8,7 @@ class Config
     .when '/logout',
       templateUrl: 'views/logout.html'
     .when '/login',
-      templateUrl: 'views/login.html'
+      templateUrl: 'views/login/login-window.html'
     .when '/user',
       templateUrl: 'views/user-list.html'
     .when '/user/:id',

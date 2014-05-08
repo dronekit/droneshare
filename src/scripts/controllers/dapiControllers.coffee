@@ -7,6 +7,7 @@ class AuthController
     @password = ""
     @email = ""
     @fullName = ""
+    @wantEmails = true
     @user = null
     @error = null
     @getUser = @service.getUser
@@ -21,10 +22,11 @@ class AuthController
     @get_create_warning = () =>
       if !@email?
         "Invalid email address"
-      else if @password.length < 8
-        "Password too short"
-      else if !/\d/.test(@password)
-        "Password must contain a digit"
+      else if @password != ""
+        if @password.length < 8
+          "Password too short"
+        else if !/\d/.test(@password)
+          "Password must contain a digit"
       else
         null
 
@@ -38,7 +40,14 @@ class AuthController
       )
 
     @doCreate = () =>
-      @service.create(@login, @password, @email, @fullName).then((results) =>
+      payload =
+        login: @login
+        password: @password
+        email: @email
+        fullName: @fullName
+        wantEmails: @wantEmails
+
+      @service.create(payload).then((results) =>
         @error = null
         @location.path("/") # Back to top of app
       , (reason) =>

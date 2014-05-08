@@ -1,48 +1,5 @@
-<div class="col-md-3 col-md-offset-3" ng-controller="authController as auth">
+<div ng-controller="authController as auth">
 
-    <!-- SHOW ERROR/SUCCESS MESSAGES -->
-    <div class="alert alert-danger" ng-show="!!auth.error">
-        <span ng-bind="auth.error"></span>
-    </div>
-
-    <!-- FORM -->
-    <form role="form" ng-submit="auth.doCreate()">
-        <h2>Create account</h2>
-
-        <!-- FIXME - check availability as the user types -->
-        <!-- FIXME - add help popups explaing why we are asking these things -->
-        <div class="form-group">
-            <label for="accountName">Pick a username</label>
-            <input id="accountName" type="text" class="form-control" placeholder="happypilotbob" ng-model="auth.login">
-        </div>
-        <div class="form-group">
-            <label for="fullName">Full name</label>
-            <input id="fullName" type="text" class="form-control" placeholder="Bob Henderson" ng-model="auth.fullName">
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input id="email" type="email" class="form-control" placeholder="Email address" ng-model="auth.email">
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input id="password" type="password" class="form-control" placeholder="New Password" ng-model="auth.password" >
-            <p class="help-block">Use at least 7 characters and one digit.</p>
-        </div>
-
-        <div class="checkbox">
-          <input type="checkbox" value="send-emails" checked> Send service emails (feature announcements, etc...)
-        </div>
-
-        <div class="alert alert-warning" ng-show="!!auth.get_create_warning()">
-            <span ng-bind="auth.get_create_warning()"></span>
-        </div>
-
-        <!-- SUBMIT BUTTON -->
-        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="!auth.can_create()">
-            Create Account
-        </button>
-    </form>
+    <ng-include src="'views/login/create-snippet.html'"
 
 </div>

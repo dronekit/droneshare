@@ -1,0 +1,46 @@
+
+
+<form role="form" ng-submit="auth.do_login()">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-3">
+            <!-- SHOW ERROR/SUCCESS MESSAGES -->
+            <div class="alert alert-danger" ng-show="!!auth.error">
+                <span ng-bind="auth.error"></span>
+            </div>
+
+            <h2>Please log-in</h2>
+
+            <div class="form-group" >
+                <label for="inputLogin">Username or email</label>
+                <input id="inputLogin" type="text" class="form-control" placeholder="Enter username" ng-model="auth.login">
+            </div>
+            <div class="form-group" >
+                <label for="inputPassword">Password <a href="#">(forgot password)</a></label>
+                <input id="inputPassword" type="password" class="form-control" placeholder="Password" ng-model="auth.password">
+            </div>
+
+            <!-- FIXME - respect remember me -->
+            <div class="checkbox">
+              <input type="checkbox" value="remember-me" checked> Remember me
+            </div>
+        </div>
+    </div>
+
+    <div class="row col-md-offset-3">
+        <div class="col-md-1">
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" class="btn btn-lg btn-primary" ng-disabled="!auth.can_login()">
+                Login
+            </button>
+        </div>
+                <div class="col-md-1">
+
+        </div>
+        <div class="col-md-1">
+            <a href="#create" class="btn btn-default btn-lg">
+                New Account
+            </a>
+        </div>
+    </div>
+</form>
+

@@ -1,53 +1,59 @@
-<app:tabs>
 
-    <app:tab caption="Vehicle Detail" selected="true">
-        <div class="row" ng-controller="vehicleDetailController as controller">
-            <section class="col-lg-6">
-                <div class="alert alert-danger" ng-show="!!controller.error">
-                    <h4 class="alert-heading" ng-bind="controller.error.title"></h4>
-                    <span ng-bind="controller.error.message"></span>
-                </div>
+<div class="row" ng-controller="vehicleDetailController as controller">
+    <section class="col-lg-6">
 
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th>ID</thead>
-                            <td>
-                                <a ng-href="#/user/{{controller.record.id}}"  >{{controller.record.id}}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Type</thead>
+    <alert ng-repeat="alert in controller.errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
+    <alert ng-repeat="alert in controller.successes" type="success" close="controller.clear_success()">{{alert}}</alert>
+
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th>ID</thead>
+                        <td>
+                            <a ng-href="#/user/{{controller.record.id}}"  >{{controller.record.id}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Type</thead>
                             <td>
                                 {{controller.record.vehicleType}}
                             </td>
                         </tr>
                         <tr>
                             <th>Autopilot</thead>
-                            <td>
-                                {{controller.record.autopilotType}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                <td>
+                                    {{controller.record.autopilotType}}
+                                </td>
+                            </tr>
+            </tbody>
+        </table>
 
-  <input type="file" ng-file-select="onFileSelect($files)" multiple>
-  <div ng-file-drop="controller.on_file_select($files)" class="drop-box"
-        ng-show="dropSupported">drop files here</div>
-  <div ng-file-drop-available="dropSupported=true"
-        ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
-  <!-- <button ng-click="upload.abort()">Cancel Upload</button> -->
+      <div ng-hide="controller.uploading">
+          <h3>Upload new flight logs:</h3>
+          <input type="file" ng-file-select="onFileSelect($files)" multiple>
+          <p/>
+          <div ng-file-drop="controller.on_file_select($files)" class="drop-box"
+          ng-show="dropSupported">Drag and drop tlogs here...</div>
+          <div ng-file-drop-available="dropSupported=true"
+          ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+          <!-- <button ng-click="upload.abort()">Cancel Upload</button> -->
+      </div>
 
-                <div class="panel panel-default" ng-hide="!controller.record.missions.length" >
-                  <ul class="list-group">
-                    <li ng-repeat="mission in controller.record.missions" class="list-group-item">
-                        <a ng-href="#/mission/{{mission}}">Mission {{mission}}</a>
-                    </li>
-                  </ul>
-                </div>
+      <div ng-show="controller.uploading">
+        <h3>Uploading...</h3>
+        <progressbar  value="controller.upload_progress" animate="true" class="progress-striped active" type="success" />
+    </div>
 
-            </section>
+    <h3>Past flights</h3>
+    <div class="panel panel-default" ng-hide="!controller.record.missions.length" >
+      <ul class="list-group">
+        <li ng-repeat="mission in controller.record.missions" class="list-group-item">
+            <a ng-href="#/mission/{{mission}}">Mission {{mission}}</a>
+        </li>
+    </ul>
+</div>
 
-        </div>
-    </app:tab>
-</app:tabs>
+        </section>
+
+    </div>
+

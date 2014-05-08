@@ -3,9 +3,27 @@ class DetailController
   constructor: (@scope, @routeParams) ->
     # Useful for constructing sub urls in the HTML
     @urlBase = @service.urlId(@routeParams.id)
+    @clear_error()
+    @clear_success()
 
-    @service.getId(@routeParams.id).then (results) =>
-      @record = results
+    @fetch_all_records = () =>
+      @service.getId(@routeParams.id).then (results) =>
+        @record = results
+
+    @fetch_all_records() # Prefetch at start
+
+  # protected method, allow subclasses to set error title bars
+  set_error: (message) =>
+    @errors.push(message)
+
+  clear_error: () =>
+    @errors = []
+
+  add_success: (message) =>
+    @successes.push(message)
+
+  clear_success: (message) =>
+    @successes = []
 
 class UserDetailController extends DetailController
   @$inject: ['$log', '$scope', '$routeParams', 'userService']
@@ -17,7 +35,11 @@ class VehicleDetailController extends DetailController
   constructor: (@upload, @log, scope, routeParams, @service) ->
     super(scope, routeParams)
 
+    @uploading = false
+    @upload_progress = 0
+
     @on_file_select = (files) =>
+      @clear_error()
       c =
         url: @service.urlId(@routeParams.id) + '/missions'
         method: 'POST'
@@ -25,10 +47,21 @@ class VehicleDetailController extends DetailController
       angular.extend(c, @service.config)
       @upload.upload(c)
       .progress((evt) =>
-        @log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total)))
+        if evt.total > 0
+          @uploading = true
+          progress = evt.loaded * 0.75 # We reserve last 1/4 for server time
+          @upload_progress = parseInt(100.0 * progress / evt.total)
+          @log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total)))
+
       .success((data, status, headers, config) =>
-        @log.info('success!'))
-      .error((result) =>
+        @log.info('success!')
+        @add_success('Upload completed!')
+        @uploading = false
+        @fetch_all_records() # Add any newly created missions
+        )
+      .error((data, status, headers) =>
+        @uploading = false
+        @add_error('Upload failed')
         @log.error('upload failed: ' + result)
       )
 

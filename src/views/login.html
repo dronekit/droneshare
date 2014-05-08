@@ -5,19 +5,22 @@
         <span ng-bind="auth.error"></span>
     </div>
 
-    <!-- FORM -->
-    <form "form-signin" role="form" ng-submit="auth.do_login()">
-        <h2 class="form-signin-heading">Please log-in</h2>
+    <form role="form" ng-submit="auth.do_login()">
+        <h2>Please log-in</h2>
 
-        <!-- NAME -->
-        <input type="text" class="form-control" placeholder="Account name" ng-model="auth.login">
-
-        <input type="password" class="form-control" placeholder="Password" ng-model="auth.password">
+        <div class="form-group" >
+            <label for="inputLogin">Username or email</label>
+            <input id="inputLogin" type="text" class="form-control" placeholder="Enter username" ng-model="auth.login">
+        </div>
+        <div class="form-group" >
+            <label for="inputPassword">Password</label>
+            <input id="inputPassword" type="password" class="form-control" placeholder="Password" ng-model="auth.password">
+        </div>
 
         <!-- FIXME - respect remember me -->
-        <label class="checkbox">
+        <div class="checkbox">
           <input type="checkbox" value="remember-me" checked> Remember me
-        </label>
+        </div>
 
         <!-- SUBMIT BUTTON -->
         <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="!auth.can_login()">

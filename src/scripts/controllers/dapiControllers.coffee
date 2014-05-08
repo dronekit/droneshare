@@ -5,7 +5,6 @@ class AuthController
   constructor: (@route, @log, @scope, @location, @service) ->
     @login = ""
     @password = ""
-    @password2 = ""
     @email = ""
     @fullName = ""
     @user = null
@@ -16,14 +15,16 @@ class AuthController
       @password.trim() != "" && @login.trim() != ""
 
     @can_create = () =>
-      @password == @password2 && @password.trim() != "" && @login.trim() != "" && (@email ? "").trim() != "" && @fullName.trim() != ""
+      @password.trim() != "" && @login.trim() != "" && (@email ? "").trim() != "" && @fullName.trim() != ""
 
     # If defined, show to user as a presubmit warning (passwords do not match, too short, etc...)
     @get_create_warning = () =>
       if !@email?
         "Invalid email address"
-      else if (@password2 != "" && @password != @password2)
-        "Passwords do not match"
+      else if @password.length < 8
+        "Password too short"
+      else if !/\d/.test(@password)
+        "Password must contain a digit"
       else
         null
 

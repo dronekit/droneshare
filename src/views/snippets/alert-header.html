@@ -1,3 +1,5 @@
 <!-- Standard alert/failure boilerplate - add at beginning of most pages -->
-<alert ng-repeat="alert in $parent.controller.errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
-<alert ng-repeat="alert in $parent.controller.successes" type="success" close="controller.clear_success()">{{alert}}</alert>
+<!-- FIXME - does not work yet - can't find controller -->
+
+<alert ng-repeat="alert in controller.errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
+<alert ng-repeat="alert in controller.successes" type="success" close="controller.clear_success()">{{alert}}</alert>

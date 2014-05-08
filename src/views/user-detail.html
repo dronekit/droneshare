@@ -1,6 +1,4 @@
-<app:tabs>
 
-<app:tab caption="User Detail" selected="true">
 <div class="row" ng-controller="userDetailController as controller">
     <section class="col-lg-6">
         <div class="alert alert-danger" ng-show="!!controller.error">
@@ -8,37 +6,42 @@
             <span ng-bind="controller.error.message"></span>
         </div>
 
+
+        <h2>{{controller.record.fullName}}</h2>
+
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    <th>Name</thead>
+                    <th>Username</thead>
                         <td>
                             <a ng-href="#/user/{{controller.record.login}}"  >{{controller.record.login}}</a>
                         </td>
                     </tr>
-                    <tr>
-                        <th>Full name</thead>
+                    <tr ng-show="!!controller.record.email">
+                        <th>Email</thead>
                             <td>
-                                {{controller.record.fullName}}
+                                {{controller.record.email}}
                             </td>
                         </tr>
-                        <tr>
-                            <th>Email</thead>
-                                <td>
-                                    {{controller.record.email}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Avatar</th>
-                                <td>
-                                    <a ng-href="{{controller.record.profileURL}}"><img ng-src="{{controller.record.avatarImage}}?d=mm" class="img-rounded"/></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <tr ng-show="!!controller.record.avatarImage">
+                            <th>Avatar</th>
+                            <td>
+                                <a ng-href="{{controller.record.profileURL}}"><img ng-src="{{controller.record.avatarImage}}?d=mm" class="img-rounded"/></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                </section>
 
-            </div>
-        </app:tab>
-    </app:tabs>
+    <h3>Vehicles</h3>
+    <div class="panel panel-default" ng-hide="!controller.record.vehicles.length" >
+      <ul class="list-group">
+        <li ng-repeat="vehicle in controller.record.vehicles" class="list-group-item">
+            <a ng-href="#/vehicle/{{vehicle}}">Vehicle {{vehicle}}</a>
+        </li>
+    </ul>
+
+            </section>
+
+        </div>
+

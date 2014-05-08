@@ -5,9 +5,12 @@
 
 # Thanks
 
-We would like to thank the following projects and contributors:
+We would like to thank the following open-source projects and contributors:
 
 * Bootstrap CSS
 * Angular-JS
 * [Glyphicons](http://glyphicons.com/)
 * [AngularFun](https://github.com/CaryLandholt/AngularFun)
+* Mapbox
+* Angular-UI
+* Flot

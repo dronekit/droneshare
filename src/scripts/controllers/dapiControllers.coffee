@@ -68,12 +68,18 @@ class AuthController
     return if @isLoggedIn() then false else true
 
 class DapiController
+
   constructor: () ->
     @fetchRecords()
 
   fetchRecords: =>
     @service.get(@fetchParams ? {}).then (results) =>
-      @records = results
+      @records = (@extendRecord(r) for r in results)
+      console.log("Fetched #{@records.length} records")
+
+  # Subclasses can override if they would like to modify the records that were returned by the server
+  extendRecord: (rec) ->
+    rec
 
   addRecord: (mission) =>
     @service.save(mission)
@@ -96,6 +102,11 @@ class MissionController extends DapiController
       order_dir: "desc"
       page_size: "10"
     super()
+
+  # Subclasses can override if they would like to modify the records that were returned by the server
+  extendRecord: (rec) ->
+    rec.text = rec.summaryText ? "Mission #{rec.id}"
+    rec
 
 class UserController extends DapiController
   @$inject: ['userService']

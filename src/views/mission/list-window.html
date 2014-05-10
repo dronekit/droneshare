@@ -1,6 +1,4 @@
-<app:tabs>
 
-	<app:tab caption="Mission" selected="true">
 		<div class="row">
 			<div class="col-lg-6">
 				<section ng-controller="missionController as controller">
@@ -10,6 +8,7 @@
 						<span ng-bind="controller.error.message"></span>
 					</div>
 
+        <h2>Recent Missions</h2>
 <!--
 					<form class="well form-search" ng-submit="controller.insertPerson(controller.person)">
 						<p>
@@ -26,12 +25,10 @@
                     <div class="panel panel-default" ng-hide="!controller.records.length" >
                       <ul class="list-group">
                         <li ng-repeat="mission in controller.records" class="list-group-item">
-                            <a ng-href="#/mission/{{mission.id}}" ng-bind="mission.notes" />
+                            <a ng-href="#/mission/{{mission.id}}" ng-bind="mission.text" />
                         </li>
                       </ul>
                     </div>
 				</section>
 			</div>
 		</div>
-	</app:tab>
-</app:tabs>

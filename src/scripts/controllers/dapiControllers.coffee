@@ -105,6 +105,8 @@ class MissionController extends DapiController
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) ->
+    date = new Date(rec.createdOn)
+    rec.dateString = date.toDateString()
     rec.text = rec.summaryText ? "Mission #{rec.id}"
     rec
 

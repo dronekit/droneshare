@@ -22,12 +22,21 @@
 					</form>
 -->
 
-                    <div class="panel panel-default" ng-hide="!controller.records.length" >
-                      <ul class="list-group">
-                        <li ng-repeat="mission in controller.records" class="list-group-item">
-                            <a ng-href="#/mission/{{mission.id}}" ng-bind="mission.text" />
+                    <div ng-hide="!controller.records.length" >
+                      <table class="table table-striped">
+                        <tr>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Vehicle</th>
+                            <th>Location<th>
+                        </th>
+                        <tr ng-repeat="mission in controller.records">
+                            <td>{{mission.dateString}}</td>
+                            <td><a ng-href="#/user/{{mission.userName}}" ng-bind="mission.userName"/></td>
+                            <td>{{mission.vehicleText}}</td>
+                            <td><a ng-href="#/mission/{{mission.id}}" ng-bind="mission.text">flew</a></td>
                         </li>
-                      </ul>
+                      </table>
                     </div>
 				</section>
 			</div>

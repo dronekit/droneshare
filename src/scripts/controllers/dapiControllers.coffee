@@ -73,7 +73,7 @@ class DapiController
     @fetchRecords()
 
   fetchRecords: =>
-    @service.get(@fetchParams ? {}).then (results) =>
+    @service.service.get(@fetchParams ? {}).then (results) =>
       @records = (@extendRecord(r) for r in results)
       console.log("Fetched #{@records.length} records")
 

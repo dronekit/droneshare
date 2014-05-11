@@ -15,7 +15,8 @@
 @navbar-default-link-active-color: #fff;
 @navbar-default-toggle-hover-bg: @navbar-active-hover-bg;
 
-/*@navbar-default-toggle-icon-bar-bg:*/
+.alpha { padding-left: 0; }
+.omega { padding-right: 0; }
 
 body {
     padding-bottom: 70px;
@@ -89,3 +90,51 @@ body {
     margin-top: 15px;
 }
 
+mission-detail {
+    display: block;
+}
+
+#mission-detail-map {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.mission-summary {
+    margin-bottom: 15px;
+    .col {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .contact-card {
+        font-size: 10px;
+        .name {
+            color: @base-blue;
+        }
+        .vehicle-type {
+            color: #9a9a9a;
+        }
+    }
+}
+
+.mission-details {
+    background-color: #fff;
+    min-height: 745px;
+    .mission-location {
+        color: @base-blue;
+        font-size: 21px;
+        margin: 10px 0 0 0;
+    }
+    .col {
+        font-size: 24px;
+        min-height: 75px;
+        h5 {
+            font-size: 11px;
+        }
+        .small {
+            font-size: 50%;
+        }
+    }
+    #mission-detail-islive {
+        font-size: 14px;
+    }
+}

@@ -1,79 +1,115 @@
-<app:tabs>
+<div class="row">
+    <section id="mission-detail-map" ng-controller="mapController as map" class="col-lg-10">
+        <leaflet watchMarkers="true" tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
+    </section>
 
-	<app:tab caption="Mission Detail" selected="true">
-		<div class="row" ng-controller="missionDetailController as controller">
-			<section class="col-lg-6">
-				<div class="alert alert-danger" ng-show="!!controller.error">
-					<h4 class="alert-heading" ng-bind="controller.error.title"></h4>
-					<span ng-bind="controller.error.message"></span>
-				</div>
+    <section id="mission-detail-data" class="col-lg-2">
+        <div class="alert alert-danger" ng-show="!!error">
+            <h4 class="alert-heading" ng-bind="error.title"></h4>
+            <span ng-bind="error.message"></span>
+        </div>
+        <div class="row mission-summary">
+            <h4 class="col-md-12">Flight Details</h4>
+            <div class="col-md-12">
+                <div class="col col-sm-3 vehicle-type">
+                    <img src="http://placehold.it/40x40">
+                </div>
+                <div class="col col-sm-3 avatar">
+                    <img src="http://placehold.it/40x40">
+                </div>
+                <div class="col col-sm-6 contact-card">
+                    <span class="name">{{ mission.userName }}</span><br>
+                    <span class="origin-location">Cambridge, MD</span><br>
+                    <span class="vehicle-type">3DR Aero</span>
+                </div>
+            </div>
+        </div>
 
-				<table class="table table-striped">
-					<tbody>
-						<tr>
-							<th>isLive</th>
-							<td>
-								{{controller.record.isLive}}
-							</td>
-						</tr>
-                        <tr>
-                            <th>Max Groundspeed</th>
-                            <td>
-                                {{controller.record.maxGroundspeed | number }} m/s
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Max Airspeed</th>
-                            <td>
-                                {{controller.record.maxAirspeed | number }} m/s
-                            </td>
-                        </tr>
-                        <tr ng-show="!!controller.record.softwareVersion">
-                            <th>Software version</th>
-                            <td>
-                                {{controller.record.softwareVersion }}
-                            </td>
-                        </tr>
-					</tbody>
-				</table>
+        <div class="row mission-details">
+            <div class="col-md-12">
+                <div class="row">
+                    <h3 class="col-sm-12 mission-location">{{ mission.summaryText }}</h3>
+                    <div id="mission-detail-islive" class="col col-sm-6">
+                        <h5>Flight connection</h5>
+                        <div class="" ng-if="mission.isLive">
+                            <i class="glyphicon glyphicon-refresh"></i> Live
+                        </div>
+                        <div class="" ng-if="!mission.isLive">
+                            <i class="glyphicon glyphicon-ok-circle"></i> Flight ended
+                        </div>
+                    </div>
+                    <div class="col col-sm-6">
+                        <h5>Max Altitude</h5>
+                        <div class="">
+                            {{mission.maxAlt | number }} <span class="small">m</span>
+                        </div>
+                    </div>
+                    <div class="col col-sm-6">
+                        <h5>Max Groundspeed</h5>
+                        <div class="">
+                            {{mission.maxGroundspeed | number }} <span class="small">m/s</span>
+                        </div>
+                    </div>
+                    <div class="col col-sm-6">
+                        <h5>Max Airspeed</h5>
+                        <div class="">
+                            {{mission.maxAirspeed | number }} <span class="small">m/s</span>
+                        </div>
+                    </div>
+                    <div class="col col-sm-12">
+                        <h5>Software version</h5>
+                        <div class="">
+                            {{mission.softwareVersion}}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<!-- FIXME - find a way to tunnel this through angular so we can attach our app key -->
-<a class="btn btn-default btn-lg" ng-href="{{controller.urlBase}}/messages.tlog">
-    <span class="glyphicon glyphicon-download"></span> Download TLOG
-</a>
+            <div class="col-md-12">
+                <div class="row downloads">
+                    <div class="col-sm-12">
+                        <!-- FIXME - find a way to tunnel this through angular so we can attach our app key -->
+                        <ul class="list-unstyled">
+                            <li>
+                                Downloads:
+                            </li>
+                            <li>
+                                <a ng-href="{{urlBase}}/messages.tlog"><i class="glyphicon glyphicon-download"></i> Download TLOG</a>
+                            </li>
+                            <li>
+                                <a ng-href="{{urlBase}}/messages.kmz"><span class="glyphicon glyphicon-download"></span> Download KML</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-<a class="btn btn-default btn-lg" ng-href="{{controller.urlBase}}/messages.kmz">
-    <span class="glyphicon glyphicon-download"></span> Download KML
-</a>
+            <div class="col-sm-12">
+                <div class="row social">
+                    <div class="col-sm-12">
+                        <h5>Share:</h5>
+                        <ul class="list-inline">
+                            <li class="facebook">
+                                <a href="#"><img src="/images/fb-share.jpg"></a>
+                            </li>
+                            <li class="google-plus">
+                                <a href="#"><img src="/images/google-plus-share.jpg"></a>
+                            </li>
+                            <li class="twitter">
+                                <a href="#"><img src="/images/twitter-share.jpg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-<!-- FIXME - pass in real data -->
-<ul ng-social-buttons
-     data-url="'http://droneshare.appspot.com/'"
-     data-title="'test'"
-     data-description="'test2'"
-     data-image="'http://s3.mistinfo.com/32/d8/32d8eab76f4c242f665bda66b5edc6c5.jpg'">
-    <li>Share:</li>
-    <li class="ng-social-facebook">Facebook</li>
-    <li class="ng-social-google-plus">Google+</li>
-    <li class="ng-social-twitter">Twitter</li>
-    <!--
-    <li class="ng-social-vk">Вконтакте</li>
-    <li class="ng-social-odnoklassniki">Одноклассники</li>
-    <li class="ng-social-mailru">Мой мир</li>
-    <li class="ng-social-pinterest">Pinterest</li>
-    <li class="ng-social-github" user="esvit" repository="ng-table">GitHub</li>
-    <li class="ng-social-github-forks" user="esvit" repository="ng-table">Forks</li>
-    -->
-</ul>
+        </div>
 
-			</section>
+    </section>
+</div>
 
-			<section ng-controller="mapController as map" class="col-lg-6">
-				<div class="alert alert-warning alert-dismissable">Map Test</div>
-                <!-- watchMarkers true will cause angular updates to particular marker objects to be immediately reflected on the map
-                Useful for the live map vehicle display -->
-				<leaflet watchMarkers="true" tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="480px" width="100%"></leaflet>
-			</section>
-		</div>
-	</app:tab>
-</app:tabs>
+
+<!--
+<featured-flights data-count="3"></featured-flights>
+<recent-flights data-count="4"></recent-flights>
+-->

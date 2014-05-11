@@ -143,6 +143,19 @@ class MissionService extends RESTService
     angular.extend(request, atmosphereOptions)
     @atmosphere.init(request)
 
+    @record = {}
+    return {
+      service: @
+      mission: {}
+      geojson: {}
+      loadGeoJson: (mission_id) ->
+        @service.get_geojson(mission_id).then (result) ->
+          @geojson = result
+      loadMission: (mission_id) ->
+        @service.getId(mission_id).then (data) ->
+          @mission =  data
+    }
+
   endpoint: "mission"
 
   get_parameters: (id) ->
@@ -160,7 +173,7 @@ class MissionService extends RESTService
   get_geojson: (id) ->
     c = angular.extend({}, @config)
     @http.get("#{@urlBase()}/#{id}/messages.geo.json", c)
-    .success (results) ->
+    .then (results) ->
       results.data
 
 # Server admin operations - not useful to users/developers

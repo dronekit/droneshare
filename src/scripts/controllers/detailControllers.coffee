@@ -8,6 +8,7 @@ class DetailController
 
     @fetch_all_records = () =>
       @service.getId(@routeParams.id).then (results) =>
+        @scope.record = results
         @record = results
 
     @fetch_all_records() # Prefetch at start
@@ -65,13 +66,33 @@ class VehicleDetailController extends DetailController
         @log.error('upload failed: ' + result)
       )
 
-class MissionDetailController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@modal, @log, scope, routeParams, @service) ->
-    super(scope, routeParams)
+class MissionDetailController
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'loadMission', 'loadGeoJson', 'missionService']
+  constructor: (@modal, @log, @scope, @routeParams, @mission, @geojson, @resolvedObject) ->
+    @urlBase = @resolvedObject.service.urlId(@routeParams.id)
+    @log.debug("Setting mission")
+    @log.debug(@mission)
+    @scope.mission = @mission
+    @scope.center = {}
 
-    @scope.center = {}  # Apparently required to use bounds
-    @scope.bounds = {}
+    @log.debug("Setting geojson")
+    # Bounding box MUST be in the GeoJSON and it must be 3 dimensional
+    @scope.bounds =
+      southWest:
+        lng: @geojson.bbox[0]
+        lat: @geojson.bbox[1]
+      northEast:
+        lng: @geojson.bbox[3]
+        lat: @geojson.bbox[4]
+
+    @scope.geojson =
+      data: @geojson
+      style:
+        fillColor: "green"
+        weight: 2
+        color: 'black'
+        dashArray: '3'
+        fillOpacity: 0.7
 
     @scope.plotOptions =
       xaxis :
@@ -84,39 +105,13 @@ class MissionDetailController extends DetailController
     @scope.plotData = {}
 
     # Prefetch params - FIXME - only fetch as needed?
-    @service.get_parameters(@routeParams.id).then (httpResp) =>
-      @log.debug("Setting parameters")
-      @parameters = httpResp.data
+    #@resolvedObject.service.get_parameters(@routeParams.id).then (httpResp) =>
+      #@log.debug("Setting parameters")
+      #@parameters = httpResp.data
 
-    @service.get_plotdata(@routeParams.id).then (httpResp) =>
-      @log.debug("Setting parameters")
-      @scope.plotData = httpResp.data
-
-    # Go ahead and fetch 'geojson' in case child directives (map) want it
-    @service.get_geojson(@routeParams.id).then (httpResp) =>
-      results = httpResp.data
-      @log.debug("Setting geojson")
-
-      # Bounding box MUST be in the GeoJSON and it must be 3 dimensional
-      bbox = results.bbox
-      @scope.bounds =
-        southWest:
-          lng: bbox[0]
-          lat: bbox[1]
-        northEast:
-          lng: bbox[3]
-          lat: bbox[4]
-
-      @scope.geojson =
-        data: results
-        style:
-          # FIXME - populate styles inside the JSON instead?
-          fillColor: "green"
-          weight: 2
-          #opacity: 1
-          color: 'black'
-          dashArray: '3'
-          fillOpacity: 0.7
+    #@resolvedObject.service.get_plotdata(@routeParams.id).then (httpResp) =>
+      #@log.debug("Setting parameters")
+      #@scope.plotData = httpResp.data
 
 angular.module('app').controller 'userDetailController', UserDetailController
 angular.module('app').controller 'vehicleDetailController', VehicleDetailController

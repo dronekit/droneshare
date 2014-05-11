@@ -73,6 +73,7 @@ class MissionDetailController
     @log.debug("Setting mission")
     @log.debug(@mission)
     @scope.mission = @mission
+    @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}
 
     @log.debug("Setting geojson")

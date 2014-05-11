@@ -27,13 +27,12 @@
                         <tr>
                             <th>Date</th>
                             <th>User</th>
-                            <th>Vehicle</th>
                             <th>Location<th>
                         </th>
                         <tr ng-repeat="mission in controller.records">
                             <td>{{mission.dateString}}</td>
                             <td><a ng-href="#/user/{{mission.userName}}" ng-bind="mission.userName"/></td>
-                            <td>{{mission.vehicleText}}</td>
+                            <!-- <td>{{mission.vehicleText}}</td> -->
 
                             <td>
                             <!-- Google guidelines for sharing:

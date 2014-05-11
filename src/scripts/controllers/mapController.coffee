@@ -86,14 +86,16 @@ class LiveMapController extends MapController
 
     super(scope, http)
 
-    @missionService.atmosphere.on("loc", @onLive)
-    @missionService.atmosphere.on("att", @onAttitude)
-    @missionService.atmosphere.on("start", @onMissionStart)
-    @missionService.atmosphere.on("end", @onMissionEnd)
-    @missionService.atmosphere.on("mode", @updateVehicleMessage)
-    @missionService.atmosphere.on("arm", @updateVehicleMessage)
-    @missionService.atmosphere.on("mystery", @updateVehicleMessage)
-    @missionService.atmosphere.on("text", @updateVehicleMessage)
+    # FIXME - Ramon, why is service now one level nested in @missionService?
+    s = @missionService.service
+    s.atmosphere.on("loc", @onLive)
+    s.atmosphere.on("att", @onAttitude)
+    s.atmosphere.on("start", @onMissionStart)
+    s.atmosphere.on("end", @onMissionEnd)
+    s.atmosphere.on("mode", @updateVehicleMessage)
+    s.atmosphere.on("arm", @updateVehicleMessage)
+    s.atmosphere.on("mystery", @updateVehicleMessage)
+    s.atmosphere.on("text", @updateVehicleMessage)
 
   onLive: (data) =>
     # FIXME - not sure if I need apply... (or how to optimize it)

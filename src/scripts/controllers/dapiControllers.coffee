@@ -100,7 +100,7 @@ class MissionController extends DapiController
     @fetchParams =
       order_by: "updatedOn"
       order_dir: "desc"
-      page_size: "10"
+      page_size: "12"
     super()
 
   # Subclasses can override if they would like to modify the records that were returned by the server
@@ -108,6 +108,10 @@ class MissionController extends DapiController
     date = new Date(rec.createdOn)
     rec.dateString = date.toDateString()
     rec.text = rec.summaryText ? "Mission #{rec.id}"
+
+    # Temp hack - server has some records encoded with "near " at the beginning
+    # Remove this after next DB rebuild
+    rec.text = rec.text.replace(/(?:near )?(.*)/, '$1')
     rec
 
 class UserController extends DapiController

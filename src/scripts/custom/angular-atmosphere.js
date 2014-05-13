@@ -60,7 +60,8 @@ angular.module('ngAtmosphere', [])
           if (debug) {
             console.log('ngAtmosphere DEBUG: unsubscribing to ' + connection.getUrl());
           }
-          $.atmosphere.unsubscribeUrl(connection.getUrl());
+          window.atmosphere.unsubscribeUrl(connection.getUrl());
+          connection = null;
         }
       },
 

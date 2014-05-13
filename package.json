@@ -45,7 +45,8 @@
     "karma-junit-reporter": "~0.2.1",
     "load-grunt-tasks": "~0.4.0",
     "time-grunt": "~0.3.1",
-    "express-cors": "0.0.3"
+    "express-cors": "0.0.3",
+    "optipng-bin": "^0.3.8"
   },
   "engines": {
     "node": "0.8.x",

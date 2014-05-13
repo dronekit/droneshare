@@ -136,13 +136,6 @@ class MissionService extends RESTService
   constructor: (log, http, routeParams, @atmosphere) ->
     super(log, http, routeParams)
 
-    request =
-      url: @urlBase() + '/live'
-
-    angular.extend(request, @config)
-    angular.extend(request, atmosphereOptions)
-    @atmosphere.init(request)
-
     @record = {}
     return {
       service: @
@@ -157,6 +150,17 @@ class MissionService extends RESTService
     }
 
   endpoint: "mission"
+
+  atmosphere_connect: () =>
+    request =
+      url: @urlBase() + '/live'
+
+    angular.extend(request, @config)
+    angular.extend(request, atmosphereOptions)
+    @atmosphere.init(request)
+
+  atmosphere_disconnect: () =>
+    @atmosphere.close()
 
   get_parameters: (id) ->
     c = angular.extend({}, @config)

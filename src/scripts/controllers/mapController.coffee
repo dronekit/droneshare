@@ -88,14 +88,31 @@ class LiveMapController extends MapController
 
     # FIXME - Ramon, why is service now one level nested in @missionService?
     s = @missionService.service
-    s.atmosphere.on("loc", @onLive)
-    s.atmosphere.on("att", @onAttitude)
-    s.atmosphere.on("start", @onMissionStart)
-    s.atmosphere.on("end", @onMissionEnd)
-    s.atmosphere.on("mode", @updateVehicleMessage)
-    s.atmosphere.on("arm", @updateVehicleMessage)
-    s.atmosphere.on("mystery", @updateVehicleMessage)
-    s.atmosphere.on("text", @updateVehicleMessage)
+
+    listeners =
+      "loc": @onLive
+      "att": @onAttitude
+      "start": @onMissionStart
+      "end": @onMissionEnd
+      "mode": @updateVehicleMessage
+      "arm": @updateVehicleMessage
+      "mystery": @updateVehicleMessage
+      "text": @updateVehicleMessage
+
+    listenerIds = s.atmosphere.on(name, callback) for name, callback of listeners
+    @log.debug('live map now subscribed')
+
+    # We bounce our atmosphere link, because the server will automatically resend vehicle messages on each new connection
+    # (And our controller is not keeping a list of past connection messages - FIXME, it would be better to keep
+    # a model object to preserve such state)
+    s.atmosphere_connect()
+
+    scope.$on("$destroy", () =>
+        @log.debug('Unsubscribe for atmosphere notification')
+        for id of listenerIds
+          s.atmosphere.off(id)
+        s.atmosphere_disconnect()
+    )
 
   onLive: (data) =>
     # FIXME - not sure if I need apply... (or how to optimize it)

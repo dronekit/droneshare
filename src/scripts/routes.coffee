@@ -4,15 +4,15 @@ class Config
 
     $routeProvider
     .when '/create',
-      templateUrl: 'views/user-create.html'
+      templateUrl: 'views/login/user-create.html'
     .when '/logout',
-      templateUrl: 'views/logout.html'
+      templateUrl: 'views/login/logout.html'
     .when '/login',
       templateUrl: 'views/login/login-window.html'
     .when '/user',
-      templateUrl: 'views/user-list.html'
+      templateUrl: 'views/user/list-all.html'
     .when '/user/:id',
-      templateUrl: 'views/user-detail.html'
+      templateUrl: 'views/user/detail.html'
     .when '/vehicle',
       templateUrl: 'views/vehicle-list.html'
     .when '/vehicle/:id',

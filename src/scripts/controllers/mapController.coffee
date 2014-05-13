@@ -108,10 +108,10 @@ class LiveMapController extends MapController
     s.atmosphere_connect()
 
     scope.$on("$destroy", () =>
-        @log.debug('Unsubscribe for atmosphere notification')
-        for id of listenerIds
-          s.atmosphere.off(id)
-        s.atmosphere_disconnect()
+      @log.debug('Unsubscribe for atmosphere notification')
+      for id of listenerIds
+        s.atmosphere.off(id)
+      s.atmosphere_disconnect()
     )
 
   onLive: (data) =>

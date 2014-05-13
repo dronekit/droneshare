@@ -33,7 +33,13 @@
                 </table>
 
 
-    <h3>Vehicles</h3>
+    <h3>Vehicles
+
+        <button type="button" class="btn btn-default btn-primary btn" ng-click="controller.add_vehicle()">
+            <span class="glyphicon glyphicon-plus"></span> New vehicle
+        </button>
+    </h3>
+
     <div class="panel panel-default" ng-hide="!controller.record.vehicles.length" >
       <ul class="list-group">
         <li ng-repeat="vehicle in controller.record.vehicles" class="list-group-item">

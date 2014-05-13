@@ -18,6 +18,9 @@
 .alpha { padding-left: 0; }
 .omega { padding-right: 0; }
 
+// Recommended by angular-ui site - to make these elements work correctly
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 body {
     padding-bottom: 70px;
     background-color: #eee;
@@ -48,6 +51,11 @@ body {
         line-height: 80px;
         height: 80px;
     }
+}
+
+// Set height on the user navbar high enough that avatar icon doesn't make buttons too big
+.user-navbar {
+  height: 38px;
 }
 
 .ng-cloak {

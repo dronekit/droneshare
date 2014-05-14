@@ -22,11 +22,6 @@ class Config
     .when '/mission/:id',
       controller: 'missionDetailController'
       templateUrl: 'views/mission/detail-window.html'
-      resolve:
-        loadMission: ($route, missionService) ->
-          missionService.loadMission($route.current.params.id)
-        loadGeoJson: ($route, missionService) ->
-          missionService.loadGeoJson($route.current.params.id)
     .when '/parameters/:id',
       templateUrl: 'views/mission/parameters-window.html'
     .when '/plot/:id',

@@ -21,7 +21,7 @@ class DapiService
   @$inject: ['$log', '$http', '$routeParams']
   constructor: (@log, @http, routeParams) ->
     useLocalServer = routeParams.local ? false
-    #useLocalServer = true
+    useLocalServer = true
     base = if useLocalServer
       'http://localhost:8080'
     else
@@ -142,15 +142,6 @@ class MissionService extends RESTService
   @$inject: ['$log', '$http', '$routeParams', 'atmosphere']
   constructor: (log, http, routeParams, @atmosphere) ->
     super(log, http, routeParams)
-
-    mission: {}
-    geojson: {}
-    loadGeoJson: (mission_id) =>
-      @get_geojson(mission_id).then (result) ->
-        @geojson = result
-    loadMission: (mission_id) =>
-      @getId(mission_id).then (data) ->
-        @mission =  data
 
   endpoint: "mission"
 

@@ -71,34 +71,35 @@ class VehicleDetailController extends DetailController
         @log.error('upload failed: ' + result)
       )
 
-class MissionDetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'loadMission', 'loadGeoJson', 'missionService']
-  constructor: (@modal, @log, @scope, @routeParams, @mission, @geojson, @resolvedObject) ->
-    @urlBase = @resolvedObject.service.urlId(@routeParams.id)
-    @log.debug("Setting mission")
-    @log.debug(@mission)
-    @scope.mission = @mission
+class MissionDetailController extends DetailController
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService']
+  constructor: (@modal, @log, scope, routeParams, @service) ->
+    super(scope, routeParams)
     @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}
+    @scope.bounds = {}
+    @scope.geojson = {}
 
-    @log.debug("Setting geojson")
-    # Bounding box MUST be in the GeoJSON and it must be 3 dimensional
-    @scope.bounds =
-      southWest:
-        lng: @geojson.bbox[0]
-        lat: @geojson.bbox[1]
-      northEast:
-        lng: @geojson.bbox[3]
-        lat: @geojson.bbox[4]
+    @service.get_geojson(@routeParams.id).then (result) =>
+      @log.debug("Setting geojson")
+      @geojson = result
+      @scope.geojson =
+        data: @geojson
+        style:
+          fillColor: "green"
+          weight: 2
+          color: 'black'
+          dashArray: '3'
+          fillOpacity: 0.7
 
-    @scope.geojson =
-      data: @geojson
-      style:
-        fillColor: "green"
-        weight: 2
-        color: 'black'
-        dashArray: '3'
-        fillOpacity: 0.7
+      # Bounding box MUST be in the GeoJSON and it must be 3 dimensional
+      @scope.bounds =
+        southWest:
+          lng: @geojson.bbox[0]
+          lat: @geojson.bbox[1]
+        northEast:
+          lng: @geojson.bbox[3]
+          lat: @geojson.bbox[4]
 
     @scope.plotOptions =
       xaxis :

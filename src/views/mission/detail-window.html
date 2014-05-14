@@ -18,9 +18,9 @@
                     <img src="http://placehold.it/40x40">
                 </div>
                 <div class="col col-sm-6 contact-card">
-                    <span class="name"><a ng-href="#/user/{{mission.userName}}">{{ mission.userName }}</a></span><br>
+                    <span class="name"><a ng-href="#/user/{{record.userName}}">{{ mission.userName }}</a></span><br>
                     <span class="origin-location">Cambridge, MD</span><br>
-                    <span class="vehicle-type"><a ng-href="#/vehicle/{{mission.vehicleId}}">{{ mission.vehicleText }}</a></span>
+                    <span class="vehicle-type"><a ng-href="#/vehicle/{{record.vehicleId}}">{{ mission.vehicleText }}</a></span>
                 </div>
             </div>
         </div>
@@ -28,38 +28,38 @@
         <div class="row mission-details">
             <div class="col-md-12">
                 <div class="row">
-                    <h3 class="col-sm-12 mission-location">{{ mission.summaryText }}</h3>
+                    <h3 class="col-sm-12 mission-location">{{ record.summaryText }}</h3>
                     <div id="mission-detail-islive" class="col col-sm-6">
                         <h5>Flight connection</h5>
-                        <div class="" ng-if="mission.isLive">
+                        <div class="" ng-if="record.isLive">
                             <i class="glyphicon glyphicon-refresh"></i> Live
                         </div>
-                        <div class="" ng-if="!mission.isLive">
+                        <div class="" ng-if="!record.isLive">
                             <i class="glyphicon glyphicon-ok-circle"></i> Flight ended
                         </div>
                     </div>
                     <div class="col col-sm-6">
                         <h5>Max Altitude</h5>
                         <div class="">
-                            {{mission.maxAlt | number }} <span class="small">m</span>
+                            {{record.maxAlt | number }} <span class="small">m</span>
                         </div>
                     </div>
                     <div class="col col-sm-6">
                         <h5>Max Groundspeed</h5>
                         <div class="">
-                            {{mission.maxGroundspeed | number }} <span class="small">m/s</span>
+                            {{record.maxGroundspeed | number }} <span class="small">m/s</span>
                         </div>
                     </div>
                     <div class="col col-sm-6">
                         <h5>Max Airspeed</h5>
                         <div class="">
-                            {{mission.maxAirspeed | number }} <span class="small">m/s</span>
+                            {{record.maxAirspeed | number }} <span class="small">m/s</span>
                         </div>
                     </div>
                     <div class="col col-sm-12">
                         <h5>Software version</h5>
                         <div class="">
-                            {{mission.softwareVersion}}
+                            {{record.softwareVersion}}
                         </div>
                     </div>
                 </div>

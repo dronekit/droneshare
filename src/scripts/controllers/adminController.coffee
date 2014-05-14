@@ -1,7 +1,7 @@
 class Controller
   @$inject: ['$sce', '$scope', '$log', 'adminService']
   constructor: (@sce, @scope, @log, @adminService) ->
-    @simType = "std/true/4/60"
+    @simType = "std/4/600"
     @lines = []
     @debugInfo = "(waiting for server...)"
 

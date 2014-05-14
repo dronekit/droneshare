@@ -111,15 +111,28 @@ class MissionDetailController extends DetailController
         interactive : true
     @scope.plotData = {}
 
-    # Prefetch params - FIXME - only fetch as needed?
-    #@resolvedObject.service.get_parameters(@routeParams.id).then (httpResp) =>
-      #@log.debug("Setting parameters")
-      #@parameters = httpResp.data
+class MissionParameterController extends DetailController
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService']
+  constructor: (@modal, @log, scope, routeParams, @service) ->
+    super(scope, routeParams)
 
-    #@resolvedObject.service.get_plotdata(@routeParams.id).then (httpResp) =>
-      #@log.debug("Setting parameters")
-      #@scope.plotData = httpResp.data
+    # Prefetch params - FIXME - only fetch as needed?
+    @service.get_parameters(@routeParams.id).then (httpResp) =>
+      @log.debug("Setting parameters")
+      @parameters = httpResp.data
+
+class MissionPlotController extends DetailController
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService']
+  constructor: (@modal, @log, scope, routeParams, @service) ->
+    super(scope, routeParams)
+
+    # Prefetch params - FIXME - only fetch as needed?
+    @service.get_plotdata(@routeParams.id).then (httpResp) =>
+      @log.debug("Setting plot")
+      @scope.plotData = httpResp.data
 
 angular.module('app').controller 'userDetailController', UserDetailController
 angular.module('app').controller 'vehicleDetailController', VehicleDetailController
 angular.module('app').controller 'missionDetailController', MissionDetailController
+angular.module('app').controller 'missionParameterController', MissionParameterController
+angular.module('app').controller 'missionPlotController', MissionPlotController

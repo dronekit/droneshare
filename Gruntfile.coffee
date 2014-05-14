@@ -390,6 +390,7 @@ module.exports = (grunt) ->
           'src/**/*.html'
         ]
         tasks: [
+          'coffeelint'
           'copy:app'
           'copy:dev'
           'karma'

@@ -86,8 +86,7 @@ class LiveMapController extends MapController
 
     super(scope, http)
 
-    # FIXME - Ramon, why is service now one level nested in @missionService?
-    s = @missionService.service
+    s = @missionService
 
     listeners =
       "loc": @onLive

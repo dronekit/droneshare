@@ -21,13 +21,14 @@ class DapiService
   @$inject: ['$log', '$http', '$routeParams']
   constructor: (@log, @http, routeParams) ->
     useLocalServer = routeParams.local ? false
+    #useLocalServer = true
     base = if useLocalServer
       'http://localhost:8080'
     else
       'http://nestor.3dr.com'
     path = '/api/v1/'
     @apiBase = base + path
-    @log.debug("Creating service " + @apiBase)
+    @log.debug("Creating service " + @urlBase())
     @config =
       withCredentials: true # Needed to send cookies
       useXDomain: true # needed to send cookies in POST
@@ -66,6 +67,12 @@ class RESTService extends DapiService
     @log.debug("Saving #{@endpoint}/#{id}")
     c = angular.extend(c ? {}, @config)
     @http.post("#{@urlBase()}/#{id}", obj, c)
+
+  # Dynamically create a new record
+  append: (obj, c) =>
+    @log.debug("Appending to #{@endpoint}")
+    c = angular.extend(c ? {}, @config)
+    @http.put("#{@urlBase()}", obj, c)
 
 class AuthService extends RESTService
 
@@ -136,18 +143,14 @@ class MissionService extends RESTService
   constructor: (log, http, routeParams, @atmosphere) ->
     super(log, http, routeParams)
 
-    @record = {}
-    return {
-      service: @
-      mission: {}
-      geojson: {}
-      loadGeoJson: (mission_id) ->
-        @service.get_geojson(mission_id).then (result) ->
-          @geojson = result
-      loadMission: (mission_id) ->
-        @service.getId(mission_id).then (data) ->
-          @mission =  data
-    }
+    mission: {}
+    geojson: {}
+    loadGeoJson: (mission_id) =>
+      @get_geojson(mission_id).then (result) ->
+        @geojson = result
+    loadMission: (mission_id) =>
+      @getId(mission_id).then (data) ->
+        @mission =  data
 
   endpoint: "mission"
 

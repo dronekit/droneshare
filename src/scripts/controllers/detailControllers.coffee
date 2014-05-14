@@ -31,10 +31,10 @@ class UserDetailController extends DetailController
   constructor: (@log, scope, routeParams, @service) ->
     super(scope, routeParams)
 
-  add_vehicle: () =>
-    @service.saveId(@routeParams.id + "/vehicles", {}).then (results) =>
-      # Refetch our vehicles (causing view updates)
+    @scope.$on('vehicleAdded', (event, args) =>
+      @log.debug('fetching due to add')
       @fetch_all_records()
+    )
 
 class VehicleDetailController extends DetailController
   @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService']

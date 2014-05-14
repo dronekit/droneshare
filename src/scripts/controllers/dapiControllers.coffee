@@ -73,7 +73,7 @@ class DapiController
     @fetchRecords()
 
   fetchRecords: =>
-    @service.service.get(@fetchParams ? {}).then (results) =>
+    @service.get(@fetchParams ? {}).then (results) =>
       @records = (@extendRecord(r) for r in results)
       console.log("Fetched #{@records.length} records")
 
@@ -120,9 +120,18 @@ class UserController extends DapiController
     super()
 
 class VehicleController extends DapiController
-  @$inject: ['vehicleService']
-  constructor: (@service) ->
+  @$inject: ['$scope', 'vehicleService']
+  constructor: (@scope, @service) ->
     super()
+
+  add_vehicle: () =>
+    # The JSON for this new vehicle
+    v =
+      name: "New vehicle"
+
+    @service.append(v).then (results) =>
+      # tell others they may want to refetch our vehicles
+      @scope.$emit('vehicleAdded')
 
 angular.module('app').controller 'missionController', MissionController
 angular.module('app').controller 'vehicleController', VehicleController

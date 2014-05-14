@@ -95,6 +95,7 @@ class LiveMapController extends MapController
       "end": @onMissionEnd
       "mode": @updateVehicleMessage
       "arm": @updateVehicleMessage
+      "update": @onMissionUpdate
       "mystery": @updateVehicleMessage
       "text": @updateVehicleMessage
 
@@ -114,15 +115,14 @@ class LiveMapController extends MapController
     )
 
   onLive: (data) =>
-    # FIXME - not sure if I need apply... (or how to optimize it)
     # Apply should be called around the function to be guarded... -kevinh
     @scope.$apply(() =>
       key = @vehicleKey(data.missionId)
-      @updateVehicle(key, data)
+      @updateVehicle(key, data.payload.lat, data.payload.lon)
 
-      # Grow (or create) our bounds
-      if @boundsFactory.expand(data.payload.lat, data.payload.lon)
-        @scope.bounds = @boundsFactory.bounds
+      # Grow (or create) our bounds - We don't really use this feature much any more because starting with the whole world looks better
+      #if @boundsFactory.expand(data.payload.lat, data.payload.lon)
+      #  @scope.bounds = @boundsFactory.bounds
     )
 
   onAttitude: (data) =>
@@ -138,20 +138,40 @@ class LiveMapController extends MapController
         #@log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
     )
 
-  onMissionStart: (data) ->
-    # creating empty markers is bad - causes null ref in leaflet
-    # @scope.vehicleMarkers[@vehicleKey(data.missionId)] ?= {}
+  # Oops - mission start and update message are formatted slightly differently FIXME
+  onMissionStart: (data) =>
+    @scope.$apply(() =>
+      key = @vehicleKey(data.mission.id)
+      lat = data.mission.latitude
+      lon = data.mission.longitude
+      if lat? && lon?
+        v = @updateVehicle(key, lat, lon)
+        angular.extend(v.payload, data.mission)
+    )
+
+  onMissionUpdate: (data) =>
+    @scope.$apply(() =>
+      key = @vehicleKey(data.missionId)
+      payload = data.payload
+      lat = payload.mission.latitude
+      lon = payload.mission.longitude
+      if lat? && lon?
+        v = @updateVehicle(key, lat, lon)
+        angular.extend(v.payload, payload.mission)
+    )
 
   onMissionEnd: (data) =>
     vehicleKey = @vehicleKey(data.missionId)
     delete @scope.vehicleMarkers[vehicleKey]
     delete @scope.vehiclePaths[vehicleKey]
 
-  updateVehicle: (vehicleKey, data) =>
+  # Returns the marker
+  updateVehicle: (vehicleKey, lat, lon) =>
     # We don't add new vehicles to the hashtable until fully inited (because I think angular has hooks watching for writes to @scope)
     v = @scope.vehicleMarkers[vehicleKey] ? {}
-    v.lat = data.payload.lat
-    v.lng = data.payload.lon
+    v.payload ?= {} # Provide a placeholder empty set of payload fields
+    v.lat = lat
+    v.lng = lon
     v.focus = false
     v.draggable = false
     # TODO: icons need to be better
@@ -162,14 +182,21 @@ class LiveMapController extends MapController
         iconAnchor: [17.5, 17.5] # point of the icon which will correspond to marker's location
         popupAnchor: [0, -17.5] # point from which the popup should open relative to the inconAnchor
     @scope.vehicleMarkers[vehicleKey] = v
-    @motionTracking(vehicleKey, {lat: data.payload.lat, lng: data.payload.lon})
+    @motionTracking(vehicleKey, {lat: lat, lng: lon})
+    v
 
   updateVehicleMessage: (data) =>
-    # TODO: its really ugly and its doing nothing
-    # (kevinh - if we receive a message before we know the vehicle loc just drop it because having a marker without a loc freaks out leaflet)
-    vehicleKey = @vehicleKey(data.missionId)
-    if @scope.vehicleMarkers[vehicleKey]?
-      @scope.vehicleMarkers[vehicleKey].message ?= "lat: #{@scope.vehicleMarkers[vehicleKey].lat} - lon: #{@scope.vehicleMarkers[vehicleKey].lng} - #{JSON.stringify(data.payload)}"
+    @scope.$apply(() =>
+      # TODO: its really ugly and its doing nothing
+      # (kevinh - if we receive a message before we know the vehicle loc just drop it because having a marker without a loc freaks out leaflet)
+      vehicleKey = @vehicleKey(data.missionId)
+      marker = @scope.vehicleMarkers[vehicleKey]
+      if marker?
+        # We merge the misc payload fields into one dictionary - showing the latest combination of all data
+        angular.extend(marker.payload, data.payload)
+        p = marker.payload
+        marker.message = "User: #{p.userName}, summary: #{p.summaryText} - #{p.flightDuration / 60} minutes"
+    )
 
   motionTracking: (vehicleKey, latlng) =>
     v = @scope.vehiclePaths[vehicleKey] ? { color: '#f76944', weight: 7, latlngs: []}

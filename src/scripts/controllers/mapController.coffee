@@ -157,7 +157,7 @@ class LiveMapController extends MapController
       lon = payload.mission.longitude
       if lat? && lon?
         v = @updateVehicle(key, lat, lon)
-        @updateMarkerPopup(v, data.mission)
+        @updateMarkerPopup(v, payload.mission)
     )
 
   onMissionEnd: (data) =>

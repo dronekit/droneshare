@@ -200,10 +200,11 @@ class LiveMapController extends MapController
       # We merge the misc payload fields into one dictionary - showing the latest combination of all data
       angular.extend(marker.payload, payload)
       p = marker.payload
-      marker.message = "<a href='#user/#{p.userName}'>#{p.userName}</a><br>
-        <a href='#mission/#{p.id}'>#{p.summaryText}</a><br>
-        #{Math.round(p.flightDuration / 60)} minutes<br>
-        "
+      if p.userName? && p.id? && p.summaryText?
+        marker.message = "<a href='#user/#{p.userName}'>#{p.userName}</a><br>
+          <a href='#mission/#{p.id}'>#{p.summaryText}</a><br>
+          #{Math.round(p.flightDuration / 60)} minutes<br>
+          "
 
   motionTracking: (vehicleKey, latlng) =>
     v = @scope.vehiclePaths[vehicleKey] ? { color: '#f76944', weight: 7, latlngs: []}

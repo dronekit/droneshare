@@ -146,7 +146,7 @@ class LiveMapController extends MapController
       lon = data.mission.longitude
       if lat? && lon?
         v = @updateVehicle(key, lat, lon)
-        angular.extend(v.payload, data.mission)
+        @updateMarkerPopup(v, data.mission)
     )
 
   onMissionUpdate: (data) =>
@@ -157,7 +157,7 @@ class LiveMapController extends MapController
       lon = payload.mission.longitude
       if lat? && lon?
         v = @updateVehicle(key, lat, lon)
-        angular.extend(v.payload, payload.mission)
+        @updateMarkerPopup(v, data.mission)
     )
 
   onMissionEnd: (data) =>
@@ -191,15 +191,25 @@ class LiveMapController extends MapController
       # (kevinh - if we receive a message before we know the vehicle loc just drop it because having a marker without a loc freaks out leaflet)
       vehicleKey = @vehicleKey(data.missionId)
       marker = @scope.vehicleMarkers[vehicleKey]
-      if marker?
-        # We merge the misc payload fields into one dictionary - showing the latest combination of all data
-        angular.extend(marker.payload, data.payload)
-        p = marker.payload
-        marker.message = "User: #{p.userName}, summary: #{p.summaryText} - #{p.flightDuration / 60} minutes"
+      @updateMarkerPopup(marker, data.payload)
     )
+
+  # Change our popup text as needed
+  updateMarkerPopup: (marker, payload) =>
+    if marker?
+      # We merge the misc payload fields into one dictionary - showing the latest combination of all data
+      angular.extend(marker.payload, payload)
+      p = marker.payload
+      marker.message = "<a href='#user/#{p.userName}'>#{p.userName}</a><br>
+        <a href='#mission/#{p.id}'>#{p.summaryText}</a><br>
+        #{Math.round(p.flightDuration / 60)} minutes<br>
+        "
 
   motionTracking: (vehicleKey, latlng) =>
     v = @scope.vehiclePaths[vehicleKey] ? { color: '#f76944', weight: 7, latlngs: []}
+
+    # Only keep the last 100 pts around
+    v.latlngs = v.latlngs[..99]
     v.latlngs.push(latlng)
     @scope.vehiclePaths[vehicleKey] = v
 

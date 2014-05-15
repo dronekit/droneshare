@@ -57,6 +57,24 @@ body {
     }
 }
 
+// For critical alerts we have them show in middle of screen
+.popup-middle-screen
+{
+    position: fixed;
+
+    // Setting left at 50% is bad, it isn't really centerd.  Better to rely on margin and width
+    // to center the dialog
+    // left: 50%;
+    right: 0;
+    left: 0;
+    width: 25%;
+    margin-right: auto;
+    margin-left: auto;
+
+    top: 50%;
+    z-index: 100;
+}
+
 // Set height on the user navbar high enough that avatar icon doesn't make buttons too big
 .user-navbar {
   height: 38px;

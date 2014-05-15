@@ -29,6 +29,10 @@ class DapiService
     path = '/api/v1/'
     @apiBase = base + path
     @log.debug("Creating service " + @urlBase())
+
+    # If set, this string is the human friendly error message about our last server error
+    @error = null
+
     @config =
       withCredentials: true # Needed to send cookies
       useXDomain: true # needed to send cookies in POST
@@ -40,6 +44,9 @@ class DapiService
 
   urlBase: ->
     @apiBase + @endpoint
+
+  getError: =>
+    @error
 
 class RESTService extends DapiService
   get: (params = {}) ->
@@ -129,7 +136,13 @@ class AuthService extends RESTService
     @getId("user")
     .then (results) =>
       @log.debug("login complete!")
+      @error = null
       @setLoggedIn(results)
+    , (results) =>
+      @log.error("Login check failed #{results.status}: #{results.statusText}")
+      if results.status == 0
+        @error = "DroneAPI server is offline, please try again later."
+      @setLoggedOut
 
 
 class UserService extends RESTService

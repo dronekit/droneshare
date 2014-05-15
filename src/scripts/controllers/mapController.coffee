@@ -27,6 +27,7 @@ class MapController
     @scope.defaults =
       scrollWheelZoom: true
       zoom: 10
+      minZoom: 2
     @scope.tiles = maps.threedr_default
 
 class BoundsFactory

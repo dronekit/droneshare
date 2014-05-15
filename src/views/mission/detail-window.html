@@ -1,4 +1,8 @@
 <div class="row">
+
+    <!-- FIXME - find a better way to share this alert boilerplate across views - directives? -->
+    <alert ng-repeat="alert in errors" class="popup-middle-screen"  type="danger">{{alert}}</alert>
+
     <section id="mission-detail-map" ng-controller="mapController as map" class="col-lg-10">
         <leaflet watchMarkers="true" tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
     </section>

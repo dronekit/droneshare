@@ -2,29 +2,30 @@
 
 # Common code shared by all MDS controllers
 class BaseController
-  constructor: () ->
+  constructor: (@scope) ->
     @clear_error()
     @clear_success()
 
   # protected method, allow subclasses to set error title bars
   set_error: (message) =>
-    @errors.push(message)
+    @scope.errors.push(message)
 
   clear_error: () =>
-    @errors = []
+    @scope.errors = []
 
   add_success: (message) =>
-    @successes.push(message)
+    @scope.successes.push(message)
 
   clear_success: (message) =>
-    @successes = []
+    @scope.successes = []
 
 
 
 # Provides login information and operations for the GUI - typically instantiated at a root level on the page
 class AuthController extends BaseController
   @$inject: ['$route', '$log', '$scope', '$location', 'authService']
-  constructor: (@route, @log, @scope, @location, @service) ->
+  constructor: (@route, @log, scope, @location, @service) ->
+    super(scope)
     @login = ""
     @password = ""
     @email = ""
@@ -94,14 +95,15 @@ class AuthController extends BaseController
 
 # A droneapi client that gets lits of records
 class MultiRecordController extends BaseController
-
-  constructor: () ->
+  @$inject: ['$log', '$scope']
+  constructor: (@log, @scope) ->
+    super(scope)
     @fetchRecords()
 
   fetchRecords: =>
     @service.get(@fetchParams ? {}).then (results) =>
       @records = (@extendRecord(r) for r in results)
-      console.log("Fetched #{@records.length} records")
+      @log.debug("Fetched #{@records.length} records")
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) ->
@@ -170,7 +172,9 @@ angular.module('app').controller 'authController', AuthController
 
 # A controller that shows just a single record
 class DetailController extends BaseController
-  constructor: (@scope, @routeParams) ->
+  constructor: (scope, @routeParams) ->
+    super(scope)
+
     # Useful for constructing sub urls in the HTML
     @urlBase = @service.urlId(@routeParams.id)
 
@@ -178,6 +182,13 @@ class DetailController extends BaseController
       @service.getId(@routeParams.id).then (results) =>
         @scope.record = results
         @record = results
+      , (results) =>
+        console.log("got error #{results.status} #{results.statusText}")
+        msg = if results.status == 404
+          "Record not found" # Provide slightly friendlier text for this common case
+        else
+          results.statusText
+        @set_error(msg)
 
     @fetch_record() # Prefetch at start
 

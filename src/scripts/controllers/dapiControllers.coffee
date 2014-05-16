@@ -123,13 +123,13 @@ class MultiRecordController extends BaseController
       results
 
 class MissionController extends MultiRecordController
-  @$inject: ['missionService']
-  constructor: (@service) ->
+  @$inject: ['$log', '$scope', 'missionService']
+  constructor: (log, scope, @service) ->
     @fetchParams =
       order_by: "updatedOn"
       order_dir: "desc"
       page_size: "12"
-    super()
+    super(log, scope)
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) ->
@@ -143,14 +143,14 @@ class MissionController extends MultiRecordController
     rec
 
 class UserController extends MultiRecordController
-  @$inject: ['userService']
-  constructor: (@service) ->
-    super()
+  @$inject: ['$log', '$scope', 'userService']
+  constructor: (log, scope, @service) ->
+    super(log, scope)
 
 class VehicleController extends MultiRecordController
-  @$inject: ['$scope', 'vehicleService']
-  constructor: (@scope, @service) ->
-    super()
+  @$inject: ['$log', '$scope', 'vehicleService']
+  constructor: (log, scope, @service) ->
+    super(log, scope)
 
   add_vehicle: () =>
     # The JSON for this new vehicle

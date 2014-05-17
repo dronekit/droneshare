@@ -22,7 +22,7 @@
                     <tr ng-show="!!controller.record.fullName">
                         <th>Full name</th>
                         <td>
-                            {{controller.record.fullName}}
+                            <input type="text" ng-model="controller.record.fullName" placeholder="Your full name" />
                         </td>
                     </tr>
                     <tr ng-show="!!controller.record.email">

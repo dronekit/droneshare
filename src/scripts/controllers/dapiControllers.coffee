@@ -201,15 +201,22 @@ class DetailController extends BaseController
 
     # Save our record to the server
     @submit = () =>
-      @service.putId(@routeParams.id, @record).then (results) =>
-        console.log('FIXME - success')
+      @service.putId(@routeParams.id, @get_record_for_submit()).then (results) =>
         @add_success('Updated')
-        #@scope.record = results
-        #@record = results
+        @handle_submit_response(results.data)
       , (results) =>
         @set_http_error(results)
 
     @fetch_record() # Prefetch at start
+
+  # Subclasses can override if they would like to strip content out before submitting
+  get_record_for_submit: =>
+    @record
+
+  # Normally the response to submit is used to update the local model, subclasses can override
+  handle_submit_response: (data) =>
+    @scope.record = data # FIXME - I don't think this is necessary - this is the scope...
+    @record = data
 
 class UserDetailController extends DetailController
   @$inject: ['$log', '$scope', '$routeParams', 'userService']
@@ -319,6 +326,17 @@ class MissionDetailController extends DetailController
       #}, function () {
       #  $log.info('Modal dismissed at: ' + new Date());
       #});
+
+  # Subclasses can override if they would like to strip content out before submitting
+  get_record_for_submit: =>
+    # The server doesn't understand this yet
+    delete @record.viewPrivacy
+    delete @record.createdOn
+    delete @record.updatedOn
+    @record
+
+  handle_submit_response: (data) ->
+    # We just ignore the response (for snappy gui action)
 
 class MissionParameterController extends DetailController
   @$inject: ['$log', '$scope', '$routeParams', 'missionService']

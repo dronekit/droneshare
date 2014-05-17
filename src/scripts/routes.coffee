@@ -20,7 +20,7 @@ class Config
     .when '/mission',
       templateUrl: 'views/mission/list-window.html'
     .when '/mission/:id',
-      controller: 'missionDetailController'
+      controller: 'missionDetailController as controller'
       templateUrl: 'views/mission/detail-window.html'
     .when '/parameters/:id',
       templateUrl: 'views/mission/parameters-window.html'

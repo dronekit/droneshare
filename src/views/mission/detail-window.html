@@ -1,5 +1,6 @@
 <div class="row">
 
+    <form name="form" >
     <!-- FIXME - find a better way to share this alert boilerplate across views - directives? -->
     <alert ng-repeat="alert in errors" class="popup-middle-screen"  type="danger">{{alert}}</alert>
 
@@ -23,7 +24,7 @@
                 </div>
                 <div class="col col-sm-6 contact-card">
                     <span class="name"><a ng-href="#/user/{{record.userName}}">{{ record.userName }}</a></span><br>
-                    <span class="origin-location">Cambridge, MD</span><br>
+                    <span class="origin-location">{{record.summaryText}}</span><br>
                     <span class="vehicle-type"><a ng-href="#/vehicle/{{record.vehicleId}}">{{ record.vehicleText }}</a></span>
                 </div>
             </div>
@@ -32,7 +33,7 @@
         <div class="row mission-details">
             <div class="col-md-12">
                 <div class="row">
-                    <h3 class="col-sm-12 mission-location">{{ record.summaryText }}</h3>
+                    <input ng-show="!auth.isAnonymous()" class="col-sm-12 mission-location" type="text" ng-model="record.summaryText" ng-change="controller.submit()"/>
                     <div id="mission-detail-islive" class="col col-sm-6">
                         <h5>Flight connection</h5>
                         <div class="" ng-if="record.isLive">
@@ -131,6 +132,7 @@
         </div>
 
     </section>
+    </form>
 </div>
 
 

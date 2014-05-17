@@ -21,7 +21,7 @@ class DapiService
   @$inject: ['$log', '$http', '$routeParams']
   constructor: (@log, @http, routeParams) ->
     useLocalServer = routeParams.local ? false
-    useLocalServer = true
+    #useLocalServer = true
     base = if useLocalServer
       'http://localhost:8080'
     else

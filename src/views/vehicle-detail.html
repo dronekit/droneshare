@@ -1,7 +1,7 @@
 
 <div class="row" ng-controller="vehicleDetailController as controller">
 
-    <form name="userForm" ng-submit="controller.submit()">
+    <form name="form" ng-submit="controller.submit()">
         <section class="col-lg-6">
 
             <!-- FIXME - find a way to share this boilerplate -->
@@ -31,7 +31,7 @@
                 </tbody>
             </table>
 
-            <input class="btn btn-success" type="submit" id="submit" value="Update vehicle" ng-show="userForm.$dirty" />
+            <input class="btn btn-success" type="submit" id="submit" value="Update vehicle" ng-show="form.$dirty" />
 
             <div ng-hide="controller.uploading">
               <h3>Upload new (TLOG) flight logs:</h3>

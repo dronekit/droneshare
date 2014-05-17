@@ -98,11 +98,11 @@ class AuthController extends BaseController
         @location.path("/")
         @error = null
 
-  isLoggedIn: ->
-    return if @getUser().loggedIn then true else false
+  isLoggedIn: =>
+    @getUser().loggedIn
 
-  isAnonymous: ->
-    return if @isLoggedIn() then false else true
+  isAnonymous: =>
+    !@isLoggedIn()
 
   getError: ->
     return @service.getError()

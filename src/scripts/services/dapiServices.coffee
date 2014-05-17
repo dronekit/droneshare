@@ -25,7 +25,7 @@ class DapiService
     base = if useLocalServer
       'http://localhost:8080'
     else
-      'http://nestor.3dr.com'
+      'http://api.3dr.com'
     path = '/api/v1/'
     @apiBase = base + path
     @log.debug("Creating service " + @urlBase())

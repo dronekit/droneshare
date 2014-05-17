@@ -277,9 +277,33 @@ class MissionDetailController extends DetailController
         interactive : true
     @scope.plotData = {}
 
+    # Show the data plot modal in the correct location
+    # FIXME - wouldn't it be better just to leave this as a function in the controller, and rely on the html doing controller.show_plot()
+    # rather than having to pollute the scope?
+    @scope.show_plot = () =>
+      @log.info('opening data plot')
+      dialog = @modal.open
+        templateUrl: 'views/mission/plot-modal.html'
+        #controller: 'missionPlotController as controller'
+        windowClass: 'plot-modal fade'
+
+      # FIXME - use resolve to pass in state to the child
+      #resolve: {
+      #  items: function () {
+      #    return $scope.items;
+      #  }
+      #}
+
+      # Do something like the following if we want to get results back
+      #dialog.result.then(function (selectedItem) {
+      #  $scope.selected = selectedItem;
+      #}, function () {
+      #  $log.info('Modal dismissed at: ' + new Date());
+      #});
+
 class MissionParameterController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@modal, @log, scope, routeParams, @service) ->
+  @$inject: ['$log', '$scope', '$routeParams', 'missionService']
+  constructor: (@log, scope, routeParams, @service) ->
     super(scope, routeParams)
 
     # Prefetch params - FIXME - only fetch as needed?
@@ -288,8 +312,8 @@ class MissionParameterController extends DetailController
       @parameters = httpResp.data
 
 class MissionPlotController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@modal, @log, scope, routeParams, @service) ->
+  @$inject: ['$log', '$scope', '$routeParams', 'missionService']
+  constructor: (@log, scope, routeParams, @service) ->
     super(scope, routeParams)
 
     # Prefetch params - FIXME - only fetch as needed?

@@ -21,7 +21,7 @@ class DapiService
   @$inject: ['$log', '$http', '$routeParams']
   constructor: (@log, @http, routeParams) ->
     useLocalServer = routeParams.local ? false
-    #useLocalServer = true
+    useLocalServer = true
     base = if useLocalServer
       'http://localhost:8080'
     else
@@ -70,8 +70,13 @@ class RESTService extends DapiService
     .then (results) ->
       results.data
 
-  saveId: (id, obj, c) =>
+  putId: (id, obj, c) =>
     @log.debug("Saving #{@endpoint}/#{id}")
+    c = angular.extend(c ? {}, @config)
+    @http.put("#{@urlBase()}/#{id}", obj, c)
+
+  postId: (id, obj, c) =>
+    @log.debug("Posting to #{@endpoint}/#{id}")
     c = angular.extend(c ? {}, @config)
     @http.post("#{@urlBase()}/#{id}", obj, c)
 
@@ -93,11 +98,11 @@ class AuthService extends RESTService
 
   logout: () ->
     @setLoggedOut()
-    @saveId("logout")
+    @postId("logout")
 
   create: (payload) ->
     @log.debug("Attempting create for #{payload}")
-    @saveId("create", payload)
+    @postId("create", payload)
     .success (results) =>
       @log.debug("Created in!")
       @setLoggedIn(results)
@@ -111,7 +116,7 @@ class AuthService extends RESTService
         login: loginName
         password: password
     @log.debug("Attempting login for #{loginName}")
-    @saveId("login", {}, config)
+    @postId("login", {}, config)
     .success (results) =>
       @log.debug("Logged in!")
       @setLoggedIn(results)
@@ -204,11 +209,11 @@ class AdminService extends RESTService
 
   startSim: (typ) =>
     @log.info("Service starting sim " + typ)
-    @saveId("sim/" + typ)
+    @postId("sim/" + typ)
 
   importOld: (count) =>
     @log.info("importing " + count)
-    @saveId("import/" + count)
+    @postId("import/" + count)
 
   getDebugInfo: () =>
     @getId("debugInfo")

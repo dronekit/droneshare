@@ -7,8 +7,22 @@ class BaseController
     @clear_success()
 
   # protected method, allow subclasses to set error title bars
-  set_error: (message) =>
+  add_error: (message) =>
     @scope.errors.push(message)
+
+  # protected method, allow subclasses to set error title bars
+  set_error: (message) =>
+    @clear_error()
+    @scope.errors.push(message)
+
+  # Set the error msg based on http response msg
+  set_http_error: (results) =>
+    console.log("got error #{results.status} #{results.statusText}")
+    msg = if results.status == 404
+      "Record not found" # Provide slightly friendlier text for this common case
+    else
+      results.statusText
+    @set_error(msg)
 
   clear_error: () =>
     @scope.errors = []
@@ -180,15 +194,20 @@ class DetailController extends BaseController
 
     @fetch_record = () =>
       @service.getId(@routeParams.id).then (results) =>
-        @scope.record = results
+        @scope.record = results # FIXME - I don't think this is necessary - this is the scope...
         @record = results
       , (results) =>
-        console.log("got error #{results.status} #{results.statusText}")
-        msg = if results.status == 404
-          "Record not found" # Provide slightly friendlier text for this common case
-        else
-          results.statusText
-        @set_error(msg)
+        @set_http_error(results)
+
+    # Save our record to the server
+    @submit = () =>
+      @service.putId(@routeParams.id, @record).then (results) =>
+        console.log('FIXME - success')
+        @add_success('Updated')
+        #@scope.record = results
+        #@record = results
+      , (results) =>
+        @set_http_error(results)
 
     @fetch_record() # Prefetch at start
 

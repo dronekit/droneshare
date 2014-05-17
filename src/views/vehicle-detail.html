@@ -1,59 +1,66 @@
 
 <div class="row" ng-controller="vehicleDetailController as controller">
-    <section class="col-lg-6">
 
-    <alert ng-repeat="alert in controller.errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
-    <alert ng-repeat="alert in controller.successes" type="success" close="controller.clear_success()">{{alert}}</alert>
+    <form name="userForm" ng-submit="controller.submit()">
+        <section class="col-lg-6">
 
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <th>ID</thead>
+            <!-- FIXME - find a way to share this boilerplate -->
+            <alert ng-repeat="alert in errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
+            <alert ng-repeat="alert in successes" type="success" close="controller.clear_success()">{{alert}}</alert>
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
                         <td>
-                            <a ng-href="#/user/{{controller.record.id}}"  >{{controller.record.id}}</a>
+                            <input type="text" ng-model="controller.record.name" placeholder="Name your vehicle here" />
                         </td>
                     </tr>
                     <tr>
-                        <th>Type</thead>
-                            <td>
-                                {{controller.record.vehicleType}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Autopilot</thead>
-                                <td>
-                                    {{controller.record.autopilotType}}
-                                </td>
-                            </tr>
-            </tbody>
-        </table>
+                        <th>Type</th>
+                        <td>
+                            <a href="#" tooltip-placement="right" tooltip="Automatically determined from log files">{{controller.record.vehicleType}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Autopilot</th>
+                        <td>
+                            <a href="#" tooltip-placement="right" tooltip="Automatically determined from log files">{{controller.record.autopilotType}}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-      <div ng-hide="controller.uploading">
-          <h3>Upload new flight logs:</h3>
-          <input type="file" ng-file-select="onFileSelect($files)" multiple>
-          <p/>
-          <div ng-file-drop="controller.on_file_select($files)" class="drop-box"
-          ng-show="dropSupported">Drag and drop tlogs here...</div>
-          <div ng-file-drop-available="dropSupported=true"
-          ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
-          <!-- <button ng-click="upload.abort()">Cancel Upload</button> -->
-      </div>
+            <input class="btn btn-success" type="submit" id="submit" value="Update vehicle" ng-show="userForm.$dirty" />
 
-      <div ng-show="controller.uploading">
-        <h3>Uploading...</h3>
-        <progressbar  value="controller.upload_progress" animate="true" class="progress-striped active" type="success" />
+            <div ng-hide="controller.uploading">
+              <h3>Upload new (TLOG) flight logs:</h3>
+              <input type="file" ng-file-select="onFileSelect($files)" multiple>
+              <br>
+              <div ng-file-drop="controller.on_file_select($files)" class="drop-box"
+              ng-show="dropSupported">Drag and drop tlogs here...</div>
+              <div ng-file-drop-available="dropSupported=true"
+              ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+              <!-- <button ng-click="upload.abort()">Cancel Upload</button> -->
+          </div>
+
+          <div ng-show="controller.uploading">
+            <h3>Uploading...</h3>
+            <progressbar  value="controller.upload_progress" animate="true" class="progress-striped active" type="success">
+            </progressbar>
+        </div>
+
+        <h3>Past flights</h3>
+        <div class="panel panel-default" ng-hide="!controller.record.missions.length" >
+          <ul class="list-group">
+            <li ng-repeat="mission in controller.record.missions" class="list-group-item">
+                <a ng-href="#/mission/{{mission}}">Mission {{mission}}</a>
+            </li>
+        </ul>
     </div>
 
-    <h3>Past flights</h3>
-    <div class="panel panel-default" ng-hide="!controller.record.missions.length" >
-      <ul class="list-group">
-        <li ng-repeat="mission in controller.record.missions" class="list-group-item">
-            <a ng-href="#/mission/{{mission}}">Mission {{mission}}</a>
-        </li>
-    </ul>
+</section>
+
+</form>
 </div>
-
-        </section>
-
-    </div>
 

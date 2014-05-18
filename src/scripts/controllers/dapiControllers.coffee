@@ -293,15 +293,23 @@ class MissionDetailController extends DetailController
           lng: @geojson.bbox[3]
           lat: @geojson.bbox[4]
 
+    # Show the parameters modal in the correct location
+    @show_parameters = () =>
+      @log.info('opening parameters')
+      dialog = @modal.open
+        templateUrl: '/views/mission/parameters-modal.html'
+        controller: 'missionParameterController as controller'
+        # size: 'lg'
+        windowClass: 'parameters-modal fade'
+
     # Show the data plot modal in the correct location
     @show_plot = () =>
       @log.info('opening data plot')
       dialog = @modal.open
-        #templateUrl: 'plotContent.html'
         templateUrl: '/views/mission/plot-modal.html'
         controller: 'missionPlotController as controller'
         # backdrop: 'static'
-        # windowClass: 'plot-modal fade'
+        # windowClass: 'parameters-modal fade'
 
       # FIXME - use resolve to pass in state to the child
       #resolve: {
@@ -328,10 +336,10 @@ class MissionDetailController extends DetailController
   handle_submit_response: (data) ->
     # We just ignore the response (for snappy gui action)
 
-class MissionParameterController extends DetailController
+class MissionParameterController extends BaseController
   @$inject: ['$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@log, scope, routeParams, @service) ->
-    super(scope, routeParams)
+  constructor: (@log, scope, @routeParams, @service) ->
+    super(scope)
 
     # Prefetch params - FIXME - only fetch as needed?
     @service.get_parameters(@routeParams.id).then (httpResp) =>

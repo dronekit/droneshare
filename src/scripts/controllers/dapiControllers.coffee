@@ -293,25 +293,15 @@ class MissionDetailController extends DetailController
           lng: @geojson.bbox[3]
           lat: @geojson.bbox[4]
 
-    @scope.plotOptions =
-      xaxis :
-        mode : "time"
-        timeformat : "%M:%S"
-      zoom :
-        interactive : true
-      pan :
-        interactive : true
-    @scope.plotData = {}
-
     # Show the data plot modal in the correct location
-    # FIXME - wouldn't it be better just to leave this as a function in the controller, and rely on the html doing controller.show_plot()
-    # rather than having to pollute the scope?
-    @scope.show_plot = () =>
+    @show_plot = () =>
       @log.info('opening data plot')
       dialog = @modal.open
-        templateUrl: 'views/mission/plot-modal.html'
-        #controller: 'missionPlotController as controller'
-        windowClass: 'plot-modal fade'
+        #templateUrl: 'plotContent.html'
+        templateUrl: '/views/mission/plot-modal.html'
+        controller: 'missionPlotController as controller'
+        # backdrop: 'static'
+        # windowClass: 'plot-modal fade'
 
       # FIXME - use resolve to pass in state to the child
       #resolve: {
@@ -348,12 +338,23 @@ class MissionParameterController extends DetailController
       @log.debug("Setting parameters")
       @parameters = httpResp.data
 
-class MissionPlotController extends DetailController
+class MissionPlotController extends BaseController
   @$inject: ['$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@log, scope, routeParams, @service) ->
-    super(scope, routeParams)
+  constructor: (@log, scope, @routeParams, @service) ->
+    super(scope)
+
+    @scope.plotOptions =
+      xaxis :
+        mode : "time"
+        timeformat : "%M:%S"
+      zoom :
+        interactive : true
+      pan :
+        interactive : true
+    @scope.plotData = {}
 
     # Prefetch params - FIXME - only fetch as needed?
+    @log.debug("Fetching plot data for " + @routeParams.id)
     @service.get_plotdata(@routeParams.id).then (httpResp) =>
       @log.debug("Setting plot")
       @scope.plotData = httpResp.data

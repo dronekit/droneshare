@@ -324,7 +324,7 @@ module.exports = (grunt) ->
             'ngAtmosphere': 'custom/angular-atmosphere.js'
             'angulartics': 'libs/angulartics.min.js',
             'angulartics.google.analytics': 'libs/angulartics-ga.min.js',
-            'ui.bootstrap': 'libs/ui-bootstrap-0.11.0.js',
+            'ui.bootstrap': 'libs/ui-bootstrap-tpls-0.11.0.min.js',
             'angular-flot': 'libs/angular-flot.js',
             'ngSocial': 'libs/angular-social.js',
             'angularFileUpload': 'libs/angular-file-upload.min.js'

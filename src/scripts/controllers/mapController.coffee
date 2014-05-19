@@ -196,7 +196,7 @@ class LiveMapController extends MapController
     )
 
   # Change our popup text as needed
-  updateMarkerPopup: (marker, payload) =>
+  updateMarkerPopup: (marker, payload) ->
     if marker?
       # We merge the misc payload fields into one dictionary - showing the latest combination of all data
       angular.extend(marker.payload, payload)

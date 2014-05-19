@@ -1,0 +1,8 @@
+<div>
+    <a ng-href="#/vehicle/{{vehicle.id}}"><h4>{{vehicle.summaryText}}</h4></a>
+    <ul>
+        <li ng-show="vehicle.autopilotType">{{vehicle.autopilotType}}</li>
+        <li ng-show="vehicle.vehicleType">{{vehicle.vehicleType}}</li>
+        <li>{{vehicle.missions.length}} missions flown</li>
+    </ul>
+</div>

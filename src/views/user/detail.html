@@ -61,12 +61,14 @@
                 </button>
             </h3>
 
-            <div class="panel panel-default" ng-hide="!controller.record.vehicles.length" >
-              <ul class="list-group">
-                <li ng-repeat="vehicle in controller.record.vehicles" class="list-group-item">
-                    <a ng-href="#/vehicle/{{vehicle}}">Vehicle {{vehicle}}</a>
-                </li>
-            </ul>
+            <div class="row" ng-hide="!controller.record.vehicles.length" >
+
+                <div class="col-md-4" ng-repeat="vehicle in controller.record.vehicles">
+                    <div class="row">
+                        <vehicle-summary vehicle="vehicle"></vehicle-summary>
+                    </div>
+                </div>
+            </div>
 
         </section>
     </form>

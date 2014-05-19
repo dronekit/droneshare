@@ -13,7 +13,7 @@ This application is built using AngularFS and [coffeescript](http://coffeescript
 ### Installing
 Enter the following commands in the terminal.
 
-1. `git clone git://github.com/diydrones/megadroneshare.git`
+1. `git clone git://github.com/diydrones/droneshare.git`
 2. `cd MegaDroneShare`
 3. `npm install`
 4. `grunt bower:install`
@@ -29,7 +29,7 @@ You have options.
 ### What is Coffeescript?
 
 Coffeescript is like javascript but with much less boilerplate code.  It compiles down to javascript (trivially).  If you've never used coffeescript,
-please see this [five page user guide](http://arcturo.github.io/library/coffeescript/).  If you _still_ prefer javascript: We've got ya covered.  
+please see this [five page user guide](http://arcturo.github.io/library/coffeescript/).  If you _still_ prefer javascript: We've got ya covered.
 Simply run the following grunt task.
 
 `grunt jslove` - will transpile all of the CoffeeScript files to JavaScript and throw out the Coffee.

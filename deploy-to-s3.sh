@@ -4,6 +4,7 @@ export AWS_DEFAULT_PROFILE=3dr
 aws s3 mb s3://$BUCKETNAME
 aws s3 sync --delete dist s3://$BUCKETNAME
 
+# AngularJS applications prefer to get back index.html for any bad links
 cat >s3website.json <<EOF
 {
 

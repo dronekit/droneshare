@@ -12,7 +12,7 @@ This application is built using AngularFS and [coffeescript](http://coffeescript
 Enter the following commands in the terminal.
 
 1. `git clone git://github.com/diydrones/droneshare.git`
-2. `cd MegaDroneShare`
+2. `cd droneshare`
 3. `npm install`
 4. `grunt bower:install`
 

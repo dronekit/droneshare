@@ -112,7 +112,6 @@ class MultiRecordController extends BaseController
   @$inject: ['$log', '$scope']
   constructor: (@log, @scope) ->
     super(scope)
-    @fetchRecords()
 
   fetchRecords: =>
     @service.get(@fetchParams ? {}).then (results) =>
@@ -144,6 +143,7 @@ class MissionController extends MultiRecordController
       order_dir: "desc"
       page_size: "12"
     super(log, scope)
+    @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) ->
@@ -160,11 +160,13 @@ class UserController extends MultiRecordController
   @$inject: ['$log', '$scope', 'userService']
   constructor: (log, scope, @service) ->
     super(log, scope)
+    @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
 class VehicleController extends MultiRecordController
   @$inject: ['$log', '$scope', 'vehicleService']
   constructor: (log, scope, @service) ->
     super(log, scope)
+    log.debug('Not autofetching vehicles') # FIXME - find a better way to control when/if we autofetch anything
 
   add_vehicle: () =>
     # The JSON for this new vehicle

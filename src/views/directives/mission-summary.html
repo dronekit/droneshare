@@ -1,0 +1,17 @@
+<!-- This should be a _good looking_ smallish bootstrap based box summarizing a mission object -->
+<div class="row">
+    <div class="col-md-6">
+        <a ng-href="#/mission/{{mission.id}}"><img ng-hide="!mission.mapThumbnailURL" ng-src="{{mission.mapThumbnailURL}}"></img></a>
+    </div>
+    <div class="col-md-6">
+        {{mission.dateString}}<br>
+        <span class="glyphicon glyphicon-user"> </span><a ng-href="#/user/{{mission.userName}}" ng-bind="mission.userName"/></a><br>
+        <span class="glyphicon glyphicon-globe"> </span><a ng-href="#/mission/{{mission.id}}" ng-bind="mission.text">flew</a><br>
+        <div ng-hide="!mission.flightDuration">
+            <span class="glyphicon glyphicon-time"> </span>{{mission.flightDuration / 60 | number : 0}} minutes<br>
+        </div>
+    </div>
+</div>
+
+<!-- FIXME Ramon, do you know of a better way to pad this with css? -->
+<div class="row"><br></div>

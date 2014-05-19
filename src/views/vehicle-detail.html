@@ -2,7 +2,7 @@
 <div class="row" ng-controller="vehicleDetailController as controller">
 
     <form name="form" ng-submit="controller.submit()">
-        <section class="col-lg-6">
+    <section class="col-lg-8">
 
             <!-- FIXME - find a way to share this boilerplate -->
             <alert ng-repeat="alert in errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
@@ -51,15 +51,14 @@
         </div>
 
         <h3>Past flights</h3>
-        <div class="panel panel-default" ng-hide="!controller.record.missions.length" >
-          <ul class="list-group">
-            <li ng-repeat="mission in controller.record.missions" class="list-group-item">
-                <a ng-href="#/mission/{{mission}}">Mission {{mission}}</a>
-            </li>
-        </ul>
-    </div>
+        <div class="row" ng-hide="!controller.record.missions.length" >
 
-</section>
+            <div class="col-md-4" ng-repeat="mission in controller.record.missions">
+                <mission-summary mission="mission"></mission-summary>
+            </div>
+        </div>
+
+    </section>
 
 </form>
 </div>

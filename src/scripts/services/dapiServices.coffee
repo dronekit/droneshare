@@ -38,7 +38,7 @@ class DapiService
       useXDomain: true # needed to send cookies in POST
       # FIXME - better to include in an auth header per RFC2617 Authorization: DroneApi apikey="blah.blah"
       #params:
-      #  api_key: "eb34bd67.megadroneshare"
+      #  api_key: "userkey.appkey"
       headers:
         Authorization: 'DroneApi apikey="' + apiKey + '"'
 

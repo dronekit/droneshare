@@ -46,7 +46,6 @@ class AuthController extends BaseController
     @fullName = ""
     @wantEmails = true
     @user = null
-    @error = null
     @getUser = @service.getUser
 
     @can_login = () =>
@@ -73,7 +72,16 @@ class AuthController extends BaseController
         @location.path("/") # Back to top of app
       , (reason) =>
         @log.debug("Login failed due to #{reason.statusText}")
-        @error = reason.statusText
+        @set_http_error(reason)
+      )
+
+    @do_password_reset = () =>
+      @service.password_reset(@login).then((results) =>
+        @error = null
+        @add_success('Password reset email sent...')
+      , (reason) =>
+        @log.debug("Login failed due to #{reason.statusText}")
+        @set_http_error(reason)
       )
 
     @doCreate = () =>
@@ -85,11 +93,10 @@ class AuthController extends BaseController
         wantEmails: @wantEmails
 
       @service.create(payload).then((results) =>
-        @error = null
         @location.path("/") # Back to top of app
       , (reason) =>
         @log.debug("Not created due to #{reason.statusText}")
-        @error = reason.statusText
+        @set_http_error(reason)
       )
 
     @do_logout = () =>

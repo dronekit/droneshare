@@ -21,7 +21,7 @@ class DapiService
   @$inject: ['$log', '$http', '$routeParams']
   constructor: (@log, @http, routeParams) ->
     useLocalServer = routeParams.local ? false
-    #useLocalServer = true
+    useLocalServer = true
     base = if useLocalServer
       'http://localhost:8080'
     else
@@ -123,6 +123,18 @@ class AuthService extends RESTService
     .error (results, status) =>
       @log.debug("Not logged in #{results}, #{status}")
       @setLoggedOut()
+
+  password_reset: (loginName) ->
+    @log.debug("Attempting password reset for #{loginName}")
+    @postId("pwreset/#{loginName}", {})
+
+  password_reset_confirm: (loginName, token, newPassword) ->
+    @log.debug("Attempting password confirm for #{loginName}")
+    @postId("pwreset/#{loginName}/#{token}", newPassword)
+
+  email_confirm: (loginName, token) ->
+    @log.debug("Attempting email confirm for #{loginName}")
+    @postId("emailconfirm/#{loginName}/#{token}", {})
 
   # Returns the updated user record
   setLoggedIn: (userRecord) =>

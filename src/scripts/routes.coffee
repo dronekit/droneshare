@@ -8,6 +8,8 @@ class Config
     .when '/confirm/:id/:verification',
       templateUrl: 'views/login/email-confirm.html'
     .when '/reset/:id/:verification',
+      templateUrl: 'views/login/password-reset-confirm.html'
+    .when '/reset',
       templateUrl: 'views/login/password-reset.html'
     .when '/logout',
       templateUrl: 'views/login/logout.html'

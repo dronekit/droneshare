@@ -6,3 +6,5 @@ npm-debug.log
 test-results.xml
 *.sublime-workspace
 .vimrc
+s3bucket-policy.json
+s3website.json

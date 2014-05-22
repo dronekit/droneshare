@@ -68,7 +68,6 @@ class AuthController extends BaseController
 
     @do_login = () =>
       @service.login(@login, @password).then((results) =>
-        @error = null
         @location.path("/") # Back to top of app
       , (reason) =>
         @log.debug("Login failed due to #{reason.statusText}")
@@ -77,10 +76,25 @@ class AuthController extends BaseController
 
     @do_password_reset = () =>
       @service.password_reset(@login).then((results) =>
-        @error = null
         @add_success('Password reset email sent...')
       , (reason) =>
-        @log.debug("Login failed due to #{reason.statusText}")
+        @log.debug("Password reset failed due to #{reason.statusText}")
+        @set_http_error(reason)
+      )
+
+    @do_password_reset_confirm = () =>
+      @service.password_reset_confirm(@routeParams.id, @routeParams.verification).then((results) =>
+        @add_success('Your password has been reset')
+      , (reason) =>
+        @log.debug("Password reset failed due to #{reason.statusText}")
+        @set_http_error(reason)
+      )
+
+    @do_email_confirm = () =>
+      @service.email_confirm(@routeParams.id, @routeParams.verification).then((results) =>
+        @add_success('Your email address is now confirmed')
+      , (reason) =>
+        @log.debug("Email confirm failed due to #{reason.statusText}")
         @set_http_error(reason)
       )
 
@@ -103,7 +117,6 @@ class AuthController extends BaseController
       @service.logout().then (results) =>
         # Redirect to root
         @location.path("/")
-        @error = null
 
   isLoggedIn: =>
     @getUser().loggedIn

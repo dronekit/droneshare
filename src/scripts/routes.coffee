@@ -5,6 +5,10 @@ class Config
     $routeProvider
     .when '/create',
       templateUrl: 'views/login/user-create.html'
+    .when '/confirm/:id/:verification',
+      templateUrl: 'views/login/email-confirm.html'
+    .when '/reset/:id/:verification',
+      templateUrl: 'views/login/password-reset.html'
     .when '/logout',
       templateUrl: 'views/login/logout.html'
     .when '/login',

@@ -130,7 +130,10 @@ class AuthService extends RESTService
 
   password_reset_confirm: (loginName, token, newPassword) ->
     @log.debug("Attempting password confirm for #{loginName}")
-    @postId("pwreset/#{loginName}/#{token}", newPassword)
+    @postId("pwreset/#{loginName}/#{token}", JSON.stringify(newPassword))
+    .success (results) =>
+      @log.debug("Password reset complete!")
+      @setLoggedIn(results)
 
   email_confirm: (loginName, token) ->
     @log.debug("Attempting email confirm for #{loginName}")

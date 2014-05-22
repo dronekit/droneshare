@@ -37,8 +37,8 @@ class BaseController
 
 # Provides login information and operations for the GUI - typically instantiated at a root level on the page
 class AuthController extends BaseController
-  @$inject: ['$route', '$log', '$scope', '$location', 'authService']
-  constructor: (@route, @log, scope, @location, @service) ->
+  @$inject: ['$route', '$routeParams', '$log', '$scope', '$location', 'authService']
+  constructor: (@route, @routeParams, @log, scope, @location, @service) ->
     super(scope)
     @login = ""
     @password = ""
@@ -83,8 +83,9 @@ class AuthController extends BaseController
       )
 
     @do_password_reset_confirm = () =>
-      @service.password_reset_confirm(@routeParams.id, @routeParams.verification).then((results) =>
+      @service.password_reset_confirm(@routeParams.id, @routeParams.verification, @password).then((results) =>
         @add_success('Your password has been reset')
+        @location.path("/") # Back to top of app
       , (reason) =>
         @log.debug("Password reset failed due to #{reason.statusText}")
         @set_http_error(reason)

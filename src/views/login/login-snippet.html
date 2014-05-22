@@ -4,9 +4,8 @@
     <div class="row">
         <div class="col-md-3 col-md-offset-3">
             <!-- SHOW ERROR/SUCCESS MESSAGES -->
-            <div class="alert alert-danger" ng-show="!!auth.error">
-                <span ng-bind="auth.error"></span>
-            </div>
+            <alert ng-repeat="alert in errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
+            <alert ng-repeat="alert in successes" type="success" close="controller.clear_success()">{{alert}}</alert>
 
             <h2>Please log-in</h2>
 

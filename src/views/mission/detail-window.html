@@ -13,11 +13,11 @@
             <h4 class="col-md-12">Flight Details</h4>
             <div class="col-md-12">
                 <div class="col col-sm-3 vehicle-type">
-                    <img src="http://placehold.it/40x40">
+                    <img ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
                 </div>
-                <div class="col col-sm-3 avatar">
+                <!-- <div class="col col-sm-3 avatar">
                     <img src="http://placehold.it/40x40">
-                </div>
+                </div> -->
                 <div class="col col-sm-6 contact-card">
                     <span class="name"><a ng-href="#/user/{{record.userName}}">{{ record.userName }}</a></span><br>
                     <span class="origin-location">{{record.summaryText}}</span><br>

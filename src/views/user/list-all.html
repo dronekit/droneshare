@@ -1,23 +1,23 @@
 
-        <div class="row">
-            <div class="col-lg-6">
-                <section ng-controller="userController as controller">
+<div class="row">
+    <div class="col-lg-6">
+        <section ng-controller="userController as controller">
 
-        <h2>Users</h2>
+            <h2>Users</h2>
 
-                    <div class="alert alert-danger" ng-show="!!controller.error">
-                        <h4 class="alert-heading" ng-bind="controller.error.title"></h4>
-                        <span ng-bind="controller.error.message"></span>
-                    </div>
-
-                    <div class="panel panel-default" ng-hide="!controller.records.length" >
-                      <ul class="list-group">
-                        <li ng-repeat="r in controller.records" class="list-group-item">
-                            <a ng-href="#/user/{{r.login}}" ng-bind="r.login" />
-                        </li>
-                      </ul>
-                    </div>
-                </section>
+            <div class="alert alert-danger" ng-show="!!controller.error">
+                <h4 class="alert-heading" ng-bind="controller.error.title"></h4>
+                <span ng-bind="controller.error.message"></span>
             </div>
-        </div>
+
+            <table class="table table-striped" >
+                <tbody>
+                  <div ng-repeat="r in controller.records">
+                        <user-summary user="r"></user-summary>
+                  </div>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
 

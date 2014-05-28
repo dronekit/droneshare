@@ -33,6 +33,10 @@ class BaseController
   clear_success: (message) =>
     @scope.successes = []
 
+  clear_all: () =>
+    @clear_error()
+    @clear_success()
+
 class EmailConfirmController extends BaseController
   @$inject: ['$route', '$routeParams', '$log', '$scope', '$location', 'authService']
   constructor: (@route, @routeParams, @log, scope, @location, @service) ->
@@ -221,6 +225,7 @@ class DetailController extends BaseController
     @urlBase = @service.urlId(@routeParams.id)
 
     @fetch_record = () =>
+      @clear_all()
       @service.getId(@routeParams.id).then (results) =>
         @scope.record = results # FIXME - I don't think this is necessary - this is the scope...
         @record = results
@@ -229,6 +234,7 @@ class DetailController extends BaseController
 
     # Save our record to the server
     @submit = () =>
+      @clear_all()
       @service.putId(@routeParams.id, @get_record_for_submit()).then (results) =>
         @add_success('Updated')
         @handle_submit_response(results.data)

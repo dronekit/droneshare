@@ -12,11 +12,11 @@
 We would like to thank the following open-source projects and contributors:
 
 * [AngularFun](https://github.com/CaryLandholt/AngularFun)
-* Angular-UI
-* Angular-JS
-* Bootstrap CSS
-* Flot
+* [Angular-UI](http://angular-ui.github.io/)
+* [Angular-JS](https://angularjs.org/)
+* [Bootstrap CSS](http://getbootstrap.com/)
+* [Flot](http://www.flotcharts.org/)
 * [Glyphicons](http://glyphicons.com/)
-* Leaflet
-* Mapbox
+* [Leaflet](http://leafletjs.com/)
+* [Mapbox](https://www.mapbox.com)
 

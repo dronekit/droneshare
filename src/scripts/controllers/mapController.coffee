@@ -175,10 +175,13 @@ class LiveMapController extends MapController
     v.lng = lon
     v.focus = false
     v.draggable = false
-    # TODO: icons need to be better
+    isLive = v.payload.isLive ? true # If we haven't yet received the mission object assume live
     # direction of arrow on icon should change depending on direction
     v.icon =
-        iconUrl: 'images/vehicle-marker.png'
+        iconUrl: if isLive
+          'images/vehicle-marker-active.png'
+        else
+          'images/vehicle-marker-inactive.png'
         iconSize: [35, 35] #size of the icon
         iconAnchor: [17.5, 17.5] # point of the icon which will correspond to marker's location
         popupAnchor: [0, -17.5] # point from which the popup should open relative to the inconAnchor

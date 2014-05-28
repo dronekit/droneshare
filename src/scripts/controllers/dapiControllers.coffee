@@ -33,7 +33,19 @@ class BaseController
   clear_success: (message) =>
     @scope.successes = []
 
+class EmailConfirmController extends BaseController
+  @$inject: ['$route', '$routeParams', '$log', '$scope', '$location', 'authService']
+  constructor: (@route, @routeParams, @log, scope, @location, @service) ->
+    super(scope)
+    @do_email_confirm()
 
+  do_email_confirm: () =>
+    @service.email_confirm(@routeParams.id, @routeParams.verification).then((results) =>
+      @add_success('Your email address is now confirmed')
+    , (reason) =>
+      @log.debug("Email confirm failed due to #{reason.statusText}")
+      @set_http_error(reason)
+    )
 
 # Provides login information and operations for the GUI - typically instantiated at a root level on the page
 class AuthController extends BaseController
@@ -88,14 +100,6 @@ class AuthController extends BaseController
         @location.path("/") # Back to top of app
       , (reason) =>
         @log.debug("Password reset failed due to #{reason.statusText}")
-        @set_http_error(reason)
-      )
-
-    @do_email_confirm = () =>
-      @service.email_confirm(@routeParams.id, @routeParams.verification).then((results) =>
-        @add_success('Your email address is now confirmed')
-      , (reason) =>
-        @log.debug("Email confirm failed due to #{reason.statusText}")
         @set_http_error(reason)
       )
 
@@ -202,6 +206,7 @@ angular.module('app').controller 'missionController', MissionController
 angular.module('app').controller 'vehicleController', VehicleController
 angular.module('app').controller 'userController', UserController
 angular.module('app').controller 'authController', AuthController
+angular.module('app').controller 'emailConfirmController', EmailConfirmController
 
 #
 # Detail controllers (all in this file for the time being until I find the 'angular' way to share globals)

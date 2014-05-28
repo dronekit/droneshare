@@ -1,3 +1,6 @@
-<h1>Email confirmation</h1>
+<h2>Email confirmation</h2>
 
-FIXME
+<div ng-controller="emailConfirmController as auth">
+            <alert ng-repeat="alert in errors" type="danger" close="clear_error()">{{alert}}</alert>
+            <alert ng-repeat="alert in successes" type="success" close="clear_success()">{{alert}}</alert>
+</div>

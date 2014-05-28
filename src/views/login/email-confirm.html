@@ -1,6 +1,6 @@
 <h2>Email confirmation</h2>
 
 <div ng-controller="emailConfirmController as auth">
-            <alert ng-repeat="alert in errors" type="danger" close="clear_error()">{{alert}}</alert>
-            <alert ng-repeat="alert in successes" type="success" close="clear_success()">{{alert}}</alert>
+            <alert ng-repeat="alert in errors" type="danger">{{alert}}</alert>
+            <alert ng-repeat="alert in successes" type="success">{{alert}}</alert>
 </div>

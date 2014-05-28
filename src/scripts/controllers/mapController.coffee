@@ -92,7 +92,7 @@ class LiveMapController extends MapController
     listeners =
       "loc": @onLive
       "att": @onAttitude
-      "start": @onMissionStart
+      "start": @onMissionUpdate
       "end": @onMissionEnd
       "mode": @updateVehicleMessage
       "arm": @updateVehicleMessage
@@ -137,17 +137,6 @@ class LiveMapController extends MapController
         # oops - angular-leaflet only reads options at the time the marker is created, either we need to manage our own
         # markers (probably a good idea) or we need to recreate the marker to get the new heading to show up.
         #@log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
-    )
-
-  # Oops - mission start and update message are formatted slightly differently FIXME
-  onMissionStart: (data) =>
-    @scope.$apply(() =>
-      key = @vehicleKey(data.mission.id)
-      lat = data.mission.latitude
-      lon = data.mission.longitude
-      if lat? && lon?
-        v = @updateVehicle(key, lat, lon)
-        @updateMarkerPopup(v, data.mission)
     )
 
   onMissionUpdate: (data) =>

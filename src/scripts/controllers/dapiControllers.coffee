@@ -293,8 +293,10 @@ class VehicleDetailController extends DetailController
         )
       .error((data, status, headers) =>
         @uploading = false
-        @add_error('Upload failed')
-        @log.error('upload failed: ' + result)
+        if status == 406
+          @add_error('The server found that flight boring...')
+        else
+          @add_error('Upload failed: ' + data)
       )
 
 class MissionDetailController extends DetailController

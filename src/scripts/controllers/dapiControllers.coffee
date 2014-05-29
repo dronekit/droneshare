@@ -227,8 +227,7 @@ class DetailController extends BaseController
     @fetch_record = () =>
       @clear_all()
       @service.getId(@routeParams.id).then (results) =>
-        @scope.record = results # FIXME - I don't think this is necessary - this is the scope...
-        @record = results
+        @handle_fetch_response(results)
       , (results) =>
         @set_http_error(results)
 
@@ -249,6 +248,11 @@ class DetailController extends BaseController
 
   # Normally the response to submit is used to update the local model, subclasses can override
   handle_submit_response: (data) =>
+    @scope.record = data # FIXME - I don't think this is necessary - this is the scope...
+    @record = data
+
+  # Normally the response to submit is used to update the local model, subclasses can override
+  handle_fetch_response: (data) =>
     @scope.record = data # FIXME - I don't think this is necessary - this is the scope...
     @record = data
 
@@ -300,8 +304,8 @@ class VehicleDetailController extends DetailController
       )
 
 class MissionDetailController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@modal, @log, scope, routeParams, @service) ->
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope']
+  constructor: (@modal, @log, scope, routeParams, @service, @rootScope) ->
     super(scope, routeParams)
     @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}
@@ -371,6 +375,15 @@ class MissionDetailController extends DetailController
 
   handle_submit_response: (data) ->
     # We just ignore the response (for snappy gui action)
+
+  # We update open social data so facebook shows nice content
+  handle_fetch_response: (data) ->
+    super(data)
+    @log.info('Setting root scope')
+    @rootScope.ogImage = data.mapThumbnailURL
+    @rootScope.ogDescription = data.userName + " flew their drone in " +
+      data.summaryText + " for " + Math.round(data.flightDuration / 60) + " minutes."
+    @rootScope.ogTitle = data.userName + "'s flight"
 
 class MissionParameterController extends BaseController
   @$inject: ['$log', '$scope', '$routeParams', 'missionService']

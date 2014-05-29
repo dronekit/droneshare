@@ -6,8 +6,6 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Droneshare</title>
-    <meta name="description" content="Droneshare - share your flights with friends" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="dns-prefetch" href="//api.3dr.com">
 
@@ -26,9 +24,11 @@
     </style>
 
     <!-- Icon to show on facebook etc... -->
-    <meta property="og:image" content="http://www.droneshare.com/images/fbthumb.png"/>
-    <meta property="og:description" content="Drone monitoring and sharing"/>
-    <meta property="og:title" content="Droneshare"/>
+    <title ng-bind="'Droneshare' + title">Droneshare</title>
+    <meta name="description" content="{{ogDescription}}" />
+    <meta property="og:image" content="{{ogImage}}"/>
+    <meta property="og:description" content="{{ogDescription}}"/>
+    <meta property="og:title" content="{{ogTitle}}"/>
     <meta property="og:site_name" content="Droneshare"/>
 
     <meta property="fb:app_id" content="301251750005529"/>

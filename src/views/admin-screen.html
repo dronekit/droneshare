@@ -18,6 +18,11 @@
                     <button type="submit" class="btn">Run Import</button>
                 </form>
 
+                <form class="well form" ng-submit="controller.runCommand(cmd)">
+                    <input type="text" class="input-medium" ng-model="cmd" />
+                    <button type="submit" class="btn">Run Command</button>
+                </form>
+
                 <p>Debug info: {{controller.debugInfo}} </p>
                 <!-- FIXME - doesn't work
                 <div ng-bind-html="controller.debugInfo"></div>

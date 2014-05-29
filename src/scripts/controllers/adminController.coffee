@@ -20,6 +20,9 @@ class Controller
     @importOld = (count) =>
       @adminService.importOld(count)
 
+    @runCommand = (cmd) =>
+      @adminService.postId(cmd)
+
   onLog: (data) =>
     @log.info("Logmsg: " + data)
     # Keep the last 10 log entries

@@ -24,6 +24,14 @@
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none; }
         ng\:form { display: block; }
     </style>
+
+    <!-- Icon to show on facebook etc... -->
+    <meta property="og:image" content="http://www.droneshare.com/images/fbthumb.png"/>
+    <meta property="og:description" content="Drone monitoring and sharing"/>
+    <meta property="og:title" content="Droneshare"/>
+    <meta property="og:site_name" content="Droneshare"/>
+
+    <meta property="fb:app_id" content="301251750005529"/>
 </head>
 <body class="ng-cloak">
     <ng-include src="'views/header.html'"></ng-include>
@@ -32,11 +40,10 @@
     </div>
     <ng-include src="'views/footer.html'"></ng-include>
     <script data-main="/scripts/main.js" src="/scripts/libs/require.js"></script>
-    <!--
+
     <ng-include src="'helpers/google-analytics.html'"></ng-include>
     <ng-include src="'helpers/facebook-share.html'"></ng-include>
     <ng-include src="'helpers/google-plus.html'"></ng-include>
     <ng-include src="'helpers/twitter-share.html'"></ng-include>
-    -->
 </body>
 </html>

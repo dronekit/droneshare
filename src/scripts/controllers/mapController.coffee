@@ -194,10 +194,20 @@ class LiveMapController extends MapController
       angular.extend(marker.payload, payload)
       p = marker.payload
       if p.userName? && p.id? && p.summaryText?
-        marker.message = "<a href='#user/#{p.userName}'>#{p.userName}</a><br>
-          <a href='#mission/#{p.id}'>#{p.summaryText}</a><br>
-          #{Math.round(p.flightDuration / 60)} minutes<br>
-          "
+        marker.message = """
+          <!-- Two columns -->
+          <table id="map-info-popup">
+            <td>
+              <img src="#{p.userAvatarImage}?s=40&d=mm"></img>
+            </td>
+
+            <td>
+              <a href='#user/#{p.userName}'>#{p.userName}</a><br>
+              <a href='#mission/#{p.id}'>#{p.summaryText}</a><br>
+              #{Math.round(p.flightDuration / 60)} minutes<br>
+            </td>
+          </table>
+          """
 
   motionTracking: (vehicleKey, latlng) =>
     v = @scope.vehiclePaths[vehicleKey] ? { color: '#f76944', weight: 7, latlngs: []}

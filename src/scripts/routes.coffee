@@ -24,9 +24,11 @@ class Config
     .when '/vehicle/:id',
       templateUrl: 'views/vehicle-detail.html'
     .when '/mission',
+      title: 'Recent'
       templateUrl: 'views/mission/list-window.html'
     .when '/mission/:id',
       controller: 'missionDetailController as controller'
+      title: 'Detail'
       templateUrl: 'views/mission/detail-window.html'
     .when '/parameters/:id',
       templateUrl: 'views/mission/parameters-window.html'
@@ -38,11 +40,22 @@ class Config
     .when '/admin',
       templateUrl: 'views/admin-screen.html'
     .when '/',
+      title: 'World'
       templateUrl: 'views/site.html'
     .otherwise
       redirectTo: '/'
 
 angular.module('app').config ['$routeProvider', '$locationProvider', Config]
+
+# Clever trick from http://stackoverflow.com/questions/12506329/how-to-dynamically-change-header-based-on-angularjs-partial-view
+# to let you add titles via route entries
+angular.module('app').run(['$location', '$rootScope', (location, rootScope) ->
+  rootScope.$on('$routeChangeSuccess', (event, current, previous) ->
+    rootScope.title = if current.$$route.title?
+      " - " + current.$$route.title
+    else
+      "")
+])
 
 # Raven bug tracking - FIXME - move elsewhere
 #Raven.config('https://ffe3750cae4b47189ab3395c803ab8c4@app.getsentry.com/23130', {

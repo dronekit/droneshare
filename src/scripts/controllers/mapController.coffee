@@ -197,15 +197,17 @@ class LiveMapController extends MapController
         marker.message = """
           <!-- Two columns -->
           <table id="map-info-popup">
-            <td>
-              <img src="#{p.userAvatarImage}?s=40&d=mm"></img>
-            </td>
+            <tr>
+              <td>
+                <img src="#{p.userAvatarImage}?s=40&d=mm"></img>
+              </td>
 
-            <td>
-              <a href='#user/#{p.userName}'>#{p.userName}</a><br>
-              <a href='#mission/#{p.id}'>#{p.summaryText}</a><br>
-              #{Math.round(p.flightDuration / 60)} minutes<br>
-            </td>
+              <td>
+                <a href='#user/#{p.userName}'>#{p.userName}</a><br>
+                <a href='#mission/#{p.id}'>#{p.summaryText}</a><br>
+                #{Math.round(p.flightDuration / 60)} minutes<br>
+              </td>
+            </tr>
           </table>
           """
 

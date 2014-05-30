@@ -8,8 +8,8 @@
 
     <nav id="user-nav" class="navbar-right">
         <div class="btn-group" >
-            <a href="#" class="btn btn-default navbar-btn user-navbar">World view</a>
-            <a href="#mission" class="btn btn-default navbar-btn user-navbar">Recent flights</a>
+            <a href="/" class="btn btn-default navbar-btn user-navbar">World view</a>
+            <a href="/mission" class="btn btn-default navbar-btn user-navbar">Recent flights</a>
 
 
             <!-- Buttons generated with http://www.plugolabs.com/twitter-bootstrap-button-generator-3/-->
@@ -22,8 +22,8 @@
                     {{auth.getUser().login}} <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#/user/{{auth.getUser().login}}"><span class="glyphicon glyphicon-cog"></span> My vehicles</a></li>
-                    <li><a href="#/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+                    <li><a href="/user/{{auth.getUser().login}}"><span class="glyphicon glyphicon-cog"></span> My vehicles</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
                 </ul>
             </div>
         </div>

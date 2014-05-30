@@ -203,8 +203,8 @@ class LiveMapController extends MapController
               </td>
 
               <td>
-                <a href='#user/#{p.userName}'>#{p.userName}</a><br>
-                <a href='#mission/#{p.id}'>#{p.summaryText}</a><br>
+                <a href='/user/#{p.userName}'>#{p.userName}</a><br>
+                <a href='/mission/#{p.id}'>#{p.summaryText}</a><br>
                 #{Math.round(p.flightDuration / 60)} minutes<br>
               </td>
             </tr>

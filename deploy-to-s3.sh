@@ -11,17 +11,10 @@ cat >s3website.json <<EOF
   "IndexDocument": {
     "Suffix": "index.html"
     },
-    "RoutingRules": [
-    {
-      "Condition": {
-        "HttpErrorCodeReturnedEquals": "404"
-        },
 
-        "Redirect": {
-          "ReplaceKeyWith": "index.html"
-        }
-      }
-      ]
+  "ErrorDocument": {
+    "Key": "index.html"
+    }
     }
 EOF
 

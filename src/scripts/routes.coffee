@@ -1,6 +1,6 @@
 class Config
   constructor: ($routeProvider, $locationProvider) ->
-    # No workie - FIXME $locationProvider.html5Mode(true)
+    $locationProvider.html5Mode(true)
 
     $routeProvider
     .when '/create',
@@ -51,7 +51,7 @@ angular.module('app').config ['$routeProvider', '$locationProvider', Config]
 # to let you add titles via route entries
 angular.module('app').run(['$location', '$rootScope', (location, rootScope) ->
   rootScope.$on('$routeChangeSuccess', (event, current, previous) ->
-    rootScope.title = if current.$$route.title?
+    rootScope.title = if current?$$route?title?
       " - " + current.$$route.title
     else
       "")

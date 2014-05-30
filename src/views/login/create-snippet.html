@@ -1,8 +1,7 @@
 <div class="col-md-3 col-md-offset-3">
     <!-- SHOW ERROR/SUCCESS MESSAGES -->
-    <div class="alert alert-danger" ng-show="!!auth.error">
-        <span ng-bind="auth.error"></span>
-    </div>
+    <alert ng-repeat="alert in errors" type="danger" close="clear_error()">{{alert}}</alert>
+    <alert ng-repeat="alert in successes" type="success" close="clear_success()">{{alert}}</alert>
 
     <!-- FORM -->
     <form role="form" ng-submit="auth.doCreate()">

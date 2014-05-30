@@ -24,12 +24,15 @@
         ng\:form { display: block; }
     </style>
 
-    <!-- Icon to show on facebook etc... -->
+    <!-- Icon to show on facebook etc... {{ogImage}} can't work yet because we need to precache statically -->
     <title ng-bind="'Droneshare' + title">Droneshare</title>
-    <meta name="description" content="{{ogDescription}}" />
-    <meta property="og:image" content="{{ogImage}}"/>
-    <meta property="og:description" content="{{ogDescription}}"/>
-    <meta property="og:title" content="{{ogTitle}}"/>
+    <meta name="description" content="Open-source drone sharing and control" />
+    <meta property="og:image" content="/images/screenshot.png"/>
+    <!-- <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="400" />
+    <meta property="og:image:height" content="300" /> -->
+    <meta property="og:description" content="Open-source drone sharing and control"/>
+    <meta property="og:title" content="Droneshare mission log"/>
     <meta property="og:site_name" content="Droneshare"/>
 
     <meta property="fb:app_id" content="301251750005529"/>

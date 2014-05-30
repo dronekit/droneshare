@@ -15,4 +15,7 @@ module.exports = (connect, options) ->
     app.use app.router
     routes app, options
 
+  app.get '*', (req, res) ->
+    res.sendfile('dist/index.html')
+
   [connect(app)]

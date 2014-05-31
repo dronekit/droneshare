@@ -144,11 +144,11 @@ class LiveMapController extends MapController
     @scope.$apply(() =>
       key = @vehicleKey(data.missionId)
       payload = data.payload
-      lat = payload.mission.latitude
-      lon = payload.mission.longitude
+      lat = payload.latitude
+      lon = payload.longitude
       if lat? && lon?
-        v = @updateVehicle(key, lat, lon)
-        @updateMarkerPopup(v, payload.mission)
+        v = @updateVehicle(key, lat, lon, payload)
+        @updateMarkerPopup(v, payload)
     )
 
   onMissionEnd: (data) =>
@@ -157,23 +157,29 @@ class LiveMapController extends MapController
     delete @scope.vehiclePaths[vehicleKey]
 
   # Returns the marker
-  updateVehicle: (vehicleKey, lat, lon) =>
+  updateVehicle: (vehicleKey, lat, lon, newMission) =>
     # We don't add new vehicles to the hashtable until fully inited (because I think angular has hooks watching for writes to @scope)
     v = @scope.vehicleMarkers[vehicleKey] ? {}
+
     v.payload ?= {} # Provide a placeholder empty set of payload fields
+    if newMission? # If we have a new mission use it to extend our payload
+      angular.extend(v.payload, newMission)
+
     v.lat = lat
     v.lng = lon
     v.focus = false
     v.draggable = false
-    isLive = v.payload.isLive ? true # If we haven't yet received the mission object assume live
+    mission = v.payload
+    isLive = mission?.isLive ? true # If we haven't yet received the mission object assume live
     # direction of arrow on icon should change depending on direction
 
     loginName = @authService.getUser()?.login
-    isMine = loginName == v.payload?.userName
+    isMine = loginName == mission?.userName
+    @log.debug("#{mission?.userName} #{mission?.id} vs #{loginName} isMine=#{isMine}")
     v.icon =
         iconUrl:
           if isMine
-            v.payload?.userAvatarImage + '?d=mm'
+            mission.userAvatarImage + '?d=mm'
           else if isLive
             'images/vehicle-marker-active.png'
           else

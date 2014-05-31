@@ -83,8 +83,8 @@ class LiveMapController extends MapController
     scope.center = {}
 
     # I think angular will notify me if login changes
-    scope.user = authService.getUser()
-    scope.$watch 'user', () =>
+    scope.auth = authService
+    scope.$watch 'auth.user', () =>
       @log.info("Restarting atmosphere due to username change")
       @disconnectAtmo()
       @connectAtmo()
@@ -116,7 +116,7 @@ class LiveMapController extends MapController
       "mode": @updateVehicleMessage
       "arm": @updateVehicleMessage
       "update": @onMissionUpdate
-      "user": @onMissionUpdate
+      "user": @onUserMessage
       "mystery": @updateVehicleMessage
       "text": @updateVehicleMessage
 
@@ -134,7 +134,7 @@ class LiveMapController extends MapController
   onAttitude: (data) =>
     # FIXME - not sure if I need apply... (or how to optimize it)
     # Apply should be called around the function to be guarded... -kevinh
-    @scope.$apply(() =>
+    @scope.$apply () =>
       key = @vehicleKey(data.missionId)
       v = @scope.vehicleMarkers[key]
       if v? # We only update heading if we already have an object with position
@@ -142,10 +142,20 @@ class LiveMapController extends MapController
         # oops - angular-leaflet only reads options at the time the marker is created, either we need to manage our own
         # markers (probably a good idea) or we need to recreate the marker to get the new heading to show up.
         #@log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
-    )
+
+  # This is like a mission update, but it is guaranteed to be the most recent flight for the current user
+  onUserMessage: (data) =>
+    @log.debug('handling user msg')
+    @onMissionUpdate(data) # First do a regular update
+    # Now recenter on the specified flight
+    @scope.$apply () =>
+      @scope.center =
+        lat: data.payload.latitude
+        lng: data.payload.longitude
+        zoom: 9
 
   onMissionUpdate: (data) =>
-    @scope.$apply(() =>
+    @scope.$apply () =>
       key = @vehicleKey(data.missionId)
       payload = data.payload
       lat = payload.latitude
@@ -153,7 +163,6 @@ class LiveMapController extends MapController
       if lat? && lon?
         v = @updateVehicle(key, lat, lon, payload)
         @updateMarkerPopup(v, payload)
-    )
 
   onMissionEnd: (data) =>
     vehicleKey = @vehicleKey(data.missionId)
@@ -200,13 +209,12 @@ class LiveMapController extends MapController
     v
 
   updateVehicleMessage: (data) =>
-    @scope.$apply(() =>
+    @scope.$apply () =>
       # TODO: its really ugly and its doing nothing
       # (kevinh - if we receive a message before we know the vehicle loc just drop it because having a marker without a loc freaks out leaflet)
       vehicleKey = @vehicleKey(data.missionId)
       marker = @scope.vehicleMarkers[vehicleKey]
       @updateMarkerPopup(marker, data.payload)
-    )
 
   # Change our popup text as needed
   updateMarkerPopup: (marker, payload) ->

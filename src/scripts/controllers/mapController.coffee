@@ -82,13 +82,32 @@ class LiveMapController extends MapController
     scope.bounds = {} # Angular wants to see at least an empty object (not undefined)
     scope.center = {}
 
-    # TODO: fake markers arn't workng
-    #scope.vehicleMarkers['missionId_fake'] = {lat: scope.hawaii.lat, lng: scope.hawwai.lng, focus: false, draggable: false}
+    # I think angular will notify me if login changes
+    scope.user = authService.getUser()
+    scope.$watch 'user', () =>
+      @log.info("Restarting atmosphere due to username change")
+      @disconnectAtmo()
+      @connectAtmo()
 
     super(scope, http)
 
-    s = @missionService
+    @connectAtmo()
 
+    # If we get destroyed teardown our connections
+    scope.$on("$destroy", () => @disconnectAtmo)
+
+  onLive: (data) =>
+    # Apply should be called around the function to be guarded... -kevinh
+    @scope.$apply () =>
+      key = @vehicleKey(data.missionId)
+      @updateVehicle(key, data.payload.lat, data.payload.lon)
+
+      # Grow (or create) our bounds - We don't really use this feature much any more because starting with the whole world looks better
+      #if @boundsFactory.expand(data.payload.lat, data.payload.lon)
+      #  @scope.bounds = @boundsFactory.bounds
+
+  connectAtmo: =>
+    @log.debug('live map now subscribed')
     listeners =
       "loc": @onLive
       "att": @onAttitude
@@ -101,31 +120,16 @@ class LiveMapController extends MapController
       "mystery": @updateVehicleMessage
       "text": @updateVehicleMessage
 
-    listenerIds = s.atmosphere.on(name, callback) for name, callback of listeners
-    @log.debug('live map now subscribed')
-
-    # We bounce our atmosphere link, because the server will automatically resend vehicle messages on each new connection
-    # (And our controller is not keeping a list of past connection messages - FIXME, it would be better to keep
-    # a model object to preserve such state)
+    s = @missionService
+    @listenerIds = s.atmosphere.on(name, callback) for name, callback of listeners
     s.atmosphere_connect()
 
-    scope.$on("$destroy", () =>
-      @log.debug('Unsubscribe for atmosphere notification')
-      for id of listenerIds
-        s.atmosphere.off(id)
-      s.atmosphere_disconnect()
-    )
-
-  onLive: (data) =>
-    # Apply should be called around the function to be guarded... -kevinh
-    @scope.$apply(() =>
-      key = @vehicleKey(data.missionId)
-      @updateVehicle(key, data.payload.lat, data.payload.lon)
-
-      # Grow (or create) our bounds - We don't really use this feature much any more because starting with the whole world looks better
-      #if @boundsFactory.expand(data.payload.lat, data.payload.lon)
-      #  @scope.bounds = @boundsFactory.bounds
-    )
+  disconnectAtmo: =>
+    @log.debug('Unsubscribe for atmosphere notification')
+    s = @missionService
+    for id of @listenerIds
+      s.atmosphere.off(id)
+    s.atmosphere_disconnect()
 
   onAttitude: (data) =>
     # FIXME - not sure if I need apply... (or how to optimize it)

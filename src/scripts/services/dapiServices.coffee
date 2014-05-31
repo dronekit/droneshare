@@ -21,7 +21,7 @@ class DapiService
   @$inject: ['$log', '$http', '$routeParams']
   constructor: (@log, @http, routeParams) ->
     useLocalServer = routeParams.local ? false
-    #useLocalServer = true
+    useLocalServer = true
     base = if useLocalServer
       'http://localhost:8080'
     else
@@ -185,7 +185,7 @@ class MissionService extends RESTService
     angular.extend(request, @config)
     angular.extend(request, atmosphereOptions)
     if @authService.getUser().login?
-      request.headers.login = @authService.getUser()?.login
+      request.headers.login = @authService.getUser().login
     @atmosphere.init(request)
 
   atmosphere_disconnect: () =>

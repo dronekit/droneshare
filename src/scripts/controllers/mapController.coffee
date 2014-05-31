@@ -71,8 +71,8 @@ class BoundsFactory
     dirty
 
 class LiveMapController extends MapController
-  @$inject: ['$scope', '$log', 'leafletData', '$http', 'missionService']
-  constructor: (scope, @log, leafletData, http, @missionService) ->
+  @$inject: ['$scope', '$log', 'leafletData', '$http', 'missionService', 'authService']
+  constructor: (scope, @log, leafletData, http, @missionService, @authService) ->
     scope.leafletData = leafletData
     @boundsFactory = new BoundsFactory
 
@@ -97,6 +97,7 @@ class LiveMapController extends MapController
       "mode": @updateVehicleMessage
       "arm": @updateVehicleMessage
       "update": @onMissionUpdate
+      "user": @onMissionUpdate
       "mystery": @updateVehicleMessage
       "text": @updateVehicleMessage
 
@@ -166,14 +167,24 @@ class LiveMapController extends MapController
     v.draggable = false
     isLive = v.payload.isLive ? true # If we haven't yet received the mission object assume live
     # direction of arrow on icon should change depending on direction
+
+    loginName = @authService.getUser()?.login
+    isMine = loginName == v.payload?.userName
     v.icon =
-        iconUrl: if isLive
-          'images/vehicle-marker-active.png'
-        else
-          'images/vehicle-marker-inactive.png'
+        iconUrl:
+          if isMine
+            v.payload?.userAvatarImage + '?d=mm'
+          else if isLive
+            'images/vehicle-marker-active.png'
+          else
+            'images/vehicle-marker-inactive.png'
         iconSize: [35, 35] #size of the icon
         iconAnchor: [17.5, 17.5] # point of the icon which will correspond to marker's location
         popupAnchor: [0, -17.5] # point from which the popup should open relative to the inconAnchor
+
+    if isMine # Show rounded corners on avatar icons
+      v.icon.className = "img-rounded"
+
     @scope.vehicleMarkers[vehicleKey] = v
     @motionTracking(vehicleKey, {lat: lat, lng: lon})
     v

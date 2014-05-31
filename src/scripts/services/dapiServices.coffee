@@ -172,8 +172,8 @@ class VehicleService extends RESTService
   endpoint: "vehicle"
 
 class MissionService extends RESTService
-  @$inject: ['$log', '$http', '$routeParams', 'atmosphere']
-  constructor: (log, http, routeParams, @atmosphere) ->
+  @$inject: ['$log', '$http', '$routeParams', 'atmosphere', 'authService']
+  constructor: (log, http, routeParams, @atmosphere, @authService) ->
     super(log, http, routeParams)
 
   endpoint: "mission"
@@ -184,6 +184,8 @@ class MissionService extends RESTService
 
     angular.extend(request, @config)
     angular.extend(request, atmosphereOptions)
+    if @authService.getUser().login?
+      request.headers.login = @authService.getUser()?.login
     @atmosphere.init(request)
 
   atmosphere_disconnect: () =>

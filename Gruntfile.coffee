@@ -175,9 +175,9 @@ module.exports = (grunt) ->
           captureTimeout: 5000
           colors: true
           files: [
-            'dist/scripts/libs/angular.js'
-            'dist/scripts/libs/angular-animate.js'
-            'dist/scripts/libs/angular-route.js'
+            'dist/scripts/libs/angular.min.js'
+            'dist/scripts/libs/angular-animate.min.js'
+            'dist/scripts/libs/angular-route.min.js'
             'bower_components/scripts/libs/angular-mocks.js'
             'dist/**/*.js'
             'test/**/*.{coffee,js}'
@@ -314,12 +314,12 @@ module.exports = (grunt) ->
           'libs/jquery.flot.js'
           'libs/jquery.flot.time.js'
           'libs/angular-file-upload-shim.min.js'
-          'libs/angular.js'
+          'libs/angular.min.js'
           'libs/mapbox.js'
           'NGAPP':
-            'ngAnimate': 'libs/angular-animate.js'
+            'ngAnimate': 'libs/angular-animate.min.js'
             #'ngMockE2E': 'libs/angular-mocks.js'
-            'ngRoute': 'libs/angular-route.js'
+            'ngRoute': 'libs/angular-route.min.js'
             'leaflet-directive': 'custom/angular-leaflet-directive.js'
             'ngAtmosphere': 'custom/angular-atmosphere.js'
             'angulartics': 'libs/angulartics.min.js',

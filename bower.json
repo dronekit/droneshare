@@ -18,16 +18,16 @@
   },
   "exportsOverride": {
     "angular": {
-      "scripts/libs": "angular.js{,.map}"
+      "scripts/libs": "angular.min.js{,.map}"
     },
     "angular-animate": {
-      "scripts/libs": "angular-animate.js{,.map}"
+      "scripts/libs": "angular-animate.min.js{,.map}"
     },
     "angular-mocks": {
       "scripts/libs": "angular-mocks.js"
     },
     "angular-route": {
-      "scripts/libs": "angular-route.js{,.map}"
+      "scripts/libs": "angular-route.min.js{,.map}"
     },
     "bootstrap": {
       "fonts": "dist/fonts/*.{eot,svg,ttf,woff}",

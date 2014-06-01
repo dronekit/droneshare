@@ -10,10 +10,19 @@
     <link rel="dns-prefetch" href="//api.3dr.com">
     <base href="/">
 
-    <!--[if lte IE 8]> <script src="/scripts/libs/json3.js"></script> <script src="/scripts/libs/html5shiv-printshiv.js"></script> <![endif]-->
-
-    <link rel="stylesheet" href="styles/styles.css" />
     <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+
+        <% if (config.environment && config.environment === 'prod') { %>
+            <!--[if lte IE 8]> <script src="<%= config.getHashedFile('./.temp/scripts/ie.min.js', {trim: './.temp'}) %>"></script> <![endif]-->
+
+            <link rel="stylesheet" href="<%= config.getHashedFile('./.temp/styles/styles.min.css', {trim: './.temp'}) %>" />
+            <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+        <% } else { %>
+            <!--[if lte IE 8]> <script src="/scripts/libs/json3.js"></script> <script src="/scripts/libs/html5shiv-printshiv.js"></script> <![endif]-->
+
+            <link rel="stylesheet" href="/styles/styles.css" />
+            <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+        <% } %>
 
     <!--
     <ng-include src="'helpers/clickjacking.html'"></ng-include>
@@ -43,11 +52,15 @@
         <ng:view></ng:view>
     </div>
     <ng-include src="'views/footer.html'"></ng-include>
-    <script data-main="/scripts/main.js" src="/scripts/libs/require.js"></script>
 
-    <ng-include src="'helpers/google-analytics.html'"></ng-include>
-    <ng-include src="'helpers/facebook-share.html'"></ng-include>
-    <ng-include src="'helpers/google-plus.html'"></ng-include>
-    <ng-include src="'helpers/twitter-share.html'"></ng-include>
+        <% if (config.environment && config.environment === 'prod') { %>
+            <script src="<%= config.getHashedFile('./.temp/scripts/scripts.min.js', {trim: './.temp'}) %>"></script>
+        <% } else { %>
+            <script data-main="/scripts/main.js" src="/scripts/libs/require.js"></script>
+            <ng-include src="'helpers/google-analytics.html'"></ng-include>
+            <ng-include src="'helpers/facebook-share.html'"></ng-include>
+            <ng-include src="'helpers/google-plus.html'"></ng-include>
+            <ng-include src="'helpers/twitter-share.html'"></ng-include>
+        <% } %>
 </body>
 </html>

@@ -341,13 +341,27 @@ module.exports = (grunt) ->
           '!libs/html5shiv-printshiv.{coffee,js}'
           '!libs/json3.min.{coffee,js}'
           '!libs/require.{coffee,js}'
-          '!backend/**/*.*'
         ]
         order: [
+          'custom/atmosphere.js'
+          'libs/jquery.js'
+          'libs/jquery.flot.js'
+          'libs/jquery.flot.time.js'
+          'libs/angular-file-upload-shim.min.js'
           'libs/angular.min.js'
+          'libs/mapbox.js'
           'NGAPP':
             'ngAnimate': 'libs/angular-animate.min.js'
+            #'ngMockE2E': 'libs/angular-mocks.js'
             'ngRoute': 'libs/angular-route.min.js'
+            'leaflet-directive': 'custom/angular-leaflet-directive.js'
+            'ngAtmosphere': 'custom/angular-atmosphere.js'
+            'angulartics': 'libs/angulartics.min.js',
+            'angulartics.google.analytics': 'libs/angulartics-ga.min.js',
+            'ui.bootstrap': 'libs/ui-bootstrap-tpls-0.11.0.min.js',
+            'angular-flot': 'libs/angular-flot.js',
+            'ngSocial': 'libs/angular-social.js',
+            'angularFileUpload': 'libs/angular-file-upload.min.js'
         ]
         require: '<%= shimmer.dev.require %>'
 

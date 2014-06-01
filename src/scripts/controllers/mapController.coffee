@@ -76,7 +76,8 @@ class LiveMapController extends MapController
     scope.leafletData = leafletData
     @boundsFactory = new BoundsFactory
 
-    @count = 0
+    @currentMissionId = -1 # The most recent flight we have zoomed in on
+
     scope.vehicleMarkers = {}
     scope.vehiclePaths = {}
     scope.bounds = {} # Angular wants to see at least an empty object (not undefined)
@@ -111,12 +112,20 @@ class LiveMapController extends MapController
     listeners =
       "loc": @onLive
       "att": @onAttitude
-      "start": @onMissionUpdate
       "end": @onMissionEnd
       "mode": @updateVehicleMessage
       "arm": @updateVehicleMessage
+
+      # Contains a complete update of mission state - resent occasionally by the server
       "update": @onMissionUpdate
-      "user": @onUserMessage
+
+      # Formatted the same as an update, but indicates start of a new mission (we treat both cases identically)
+      "start": @onMissionUpdate
+
+      # This is like a mission update, but it is guaranteed to be the most recent flight for the current user
+      # It is also _guaranteed_ to be sent before any start/update msgs on the stream
+      "user": @onMissionUpdate
+
       "mystery": @updateVehicleMessage
       "text": @updateVehicleMessage
 
@@ -143,17 +152,7 @@ class LiveMapController extends MapController
         # markers (probably a good idea) or we need to recreate the marker to get the new heading to show up.
         #@log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
 
-  # This is like a mission update, but it is guaranteed to be the most recent flight for the current user
-  onUserMessage: (data) =>
-    @log.debug('handling user msg')
-    @onMissionUpdate(data) # First do a regular update
-    # Now recenter on the specified flight
-    @scope.$apply () =>
-      @scope.center =
-        lat: data.payload.latitude
-        lng: data.payload.longitude
-        zoom: 9
-
+  # This is an update of mission data for a prexisting flight
   onMissionUpdate: (data) =>
     @scope.$apply () =>
       key = @vehicleKey(data.missionId)
@@ -163,11 +162,26 @@ class LiveMapController extends MapController
       if lat? && lon?
         v = @updateVehicle(key, lat, lon, payload)
         @updateMarkerPopup(v, payload)
+        if v.isMine
+          @zoomToVehicle(v)
 
   onMissionEnd: (data) =>
     vehicleKey = @vehicleKey(data.missionId)
     delete @scope.vehicleMarkers[vehicleKey]
     delete @scope.vehiclePaths[vehicleKey]
+
+  # Zoom to vehicle, if it is different from the previous targeted vehicle
+  zoomToVehicle: (vehicle) =>
+    payload = vehicle.payload
+    lat = payload.latitude
+    lon = payload.longitude
+    if payload.id != @currentMissionId
+      @log.debug("Zooming to #{payload.id}")
+      @currentMissionId = payload.id
+      @scope.center =
+        lat: lat
+        lng: lon
+        zoom: 9
 
   # Returns the marker
   updateVehicle: (vehicleKey, lat, lon, newMission) =>
@@ -187,11 +201,11 @@ class LiveMapController extends MapController
     # direction of arrow on icon should change depending on direction
 
     loginName = @authService.getUser()?.login
-    isMine = loginName == mission?.userName
-    @log.debug("#{mission?.userName} #{mission?.id} vs #{loginName} isMine=#{isMine}")
+    v.isMine = loginName == mission?.userName
+    @log.debug("#{mission?.userName} #{mission?.id} vs #{loginName} isMine=#{v.isMine}")
     v.icon =
         iconUrl:
-          if isMine
+          if v.isMine
             mission.userAvatarImage + '?d=mm'
           else if isLive
             'images/vehicle-marker-active.png'
@@ -201,7 +215,7 @@ class LiveMapController extends MapController
         iconAnchor: [17.5, 17.5] # point of the icon which will correspond to marker's location
         popupAnchor: [0, -17.5] # point from which the popup should open relative to the inconAnchor
 
-    if isMine # Show rounded corners on avatar icons
+    if v.isMine # Show rounded corners on avatar icons
       v.icon.className = "img-rounded"
 
     @scope.vehicleMarkers[vehicleKey] = v

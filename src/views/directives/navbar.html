@@ -1,11 +1,13 @@
 <div id="main-navigation" class="row navbar navbar-default" role="navigation">
-    <div id="logo" class="navbar-brand">
-        <a href="/">
-            <img src="/images/3dr.png" alt="3DR Mega Drone Share">
-        </a>
+    <div id="parent-logo" class="navbar-brand">
+        <a href="http://3drobotics.com/"><img src="/images/3drobotics.png" alt="3D Robotics"></a>
     </div>
 
-    <nav id="user-nav" class="navbar-right">
+    <div id="brand-logo" class="center-block">
+        <a href="/"><img src="/images/droneshare.png" alt="DroneShare"></a>
+    </div>
+
+    <nav id="user-nav">
         <div class="btn-group" >
             <a href="/" class="btn btn-default navbar-btn user-navbar">World view</a>
             <a href="/mission" class="btn btn-default navbar-btn user-navbar">Recent flights</a>
@@ -30,5 +32,4 @@
 
     <!-- Show error msg if server unreacable -->
     <alert class="popup-middle-screen" ng-show="auth.getError()" type="danger">{{auth.getError()}}</alert>
-
 </div>

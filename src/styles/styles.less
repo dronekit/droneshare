@@ -5,7 +5,6 @@
 @navbar-color: #f5f5f5;
 @navbar-active-hover-bg: #fabf2e;
 
-@navbar-height: 80px;
 @navbar-border-radius: 0;
 @navbar-default-color: @navbar-color;
 @navbar-default-bg: @base-blue;
@@ -26,13 +25,31 @@ body {
     background-color: #eee;
 }
 
-#main-navigation {
+header .navbar {
+    border: none;
     margin-bottom: 0;
 }
 
-#logo {
-    padding: 17px 15px 0;
+#main-navigation {
+    min-height: 80px;
+    position: relative;
+}
+
+.navbar-brand {
     height: 55px;
+}
+#brand-logo {
+    width: 210px;
+    height: 55px;
+    padding-top: 15px;
+}
+#parent-logo {
+    padding: 0;
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 146px;
+    height: 21px;
 }
 
 //
@@ -74,6 +91,9 @@ body {
 }
 
 #user-nav {
+    position: absolute;
+    right: 15px;
+    top: 15px;
     ul.list-inline {
         margin-bottom: 0;
         line-height: 80px;

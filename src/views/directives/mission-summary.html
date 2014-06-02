@@ -6,7 +6,7 @@
     </div>
     <div class="clearfix mission-info">
         <div class="col-md-3">
-            <img ng-src="{{mission.userAvatarImage}}?s=40&d=mm" class="img-rounded" />
+            <img ng-show="{{mission.userAvatarImage}}" ng-src="{{mission.userAvatarImage}}?s=40&d=mm" class="img-rounded" />
         </div>
         <div class="col-md-9">
             <h6><a ng-href="/user/{{mission.userName}}" ng-bind="mission.userName"></a></h6>

@@ -1,17 +1,21 @@
-<!-- This should be a _good looking_ smallish bootstrap based box summarizing a mission object -->
-<div class="row">
-    <div class="col-md-6">
-        <a ng-href="#/mission/{{mission.id}}"><img ng-hide="!mission.mapThumbnailURL" ng-src="{{mission.mapThumbnailURL}}"></img></a>
+<div class="col-md-12 mission-summary-card">
+    <div class="mission-thumbnail">
+        <a ng-href="#/mission/{{mission.id}}">
+            <img ng-hide="!mission.mapThumbnailURL" ng-src="{{mission.mapThumbnailURL}}" />
+        </a>
     </div>
-    <div class="col-md-6">
-        {{mission.dateString}}<br>
-        <span class="glyphicon glyphicon-user"> </span><a ng-href="/user/{{mission.userName}}" ng-bind="mission.userName"/></a><br>
-        <span class="glyphicon glyphicon-globe"> </span><a ng-href="/mission/{{mission.id}}" ng-bind="mission.summaryText">flew</a><br>
-        <div ng-hide="!mission.flightDuration">
-            <span class="glyphicon glyphicon-time"> </span>{{mission.flightDuration / 60 | number : 0}} minutes<br>
+    <div class="clearfix mission-info">
+        <div class="col-md-3">
+            <img ng-src="{{mission.userAvatarImage}}?s=40&d=mm" class="img-rounded" />
+        </div>
+        <div class="col-md-9">
+            <h6><a ng-href="/user/{{mission.userName}}" ng-bind="mission.userName"></a></h6>
+
+            <ul class="list-unstyled">
+                <li>in <a ng-href="/mission/{{mission.id}}" ng-bind="mission.summaryText">flew</a></li>
+                <li>{{mission.dateString}}</li>
+                <li ng-hide="!mission.flightDuration">Flight time: {{mission.flightDuration / 120 | duration}}</li>
+            </ul>
         </div>
     </div>
 </div>
-
-<!-- FIXME Ramon, do you know of a better way to pad this with css? -->
-<div class="row"><br></div>

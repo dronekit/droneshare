@@ -8,25 +8,18 @@
     </div>
 
     <nav id="user-nav">
-        <div class="btn-group" >
-            <a href="/" class="btn btn-default navbar-btn user-navbar">World view</a>
-            <a href="/mission" class="btn btn-default navbar-btn user-navbar">Recent flights</a>
+        <a ng-show="auth.isAnonymous()" href="#login" class="btn btn-info navbar-btn user-navbar">Log In</a>
+        <a ng-show="auth.isAnonymous()" href="#create" class="btn btn-primary navbar-btn user-navbar">Sign Up</a>
 
-
-            <!-- Buttons generated with http://www.plugolabs.com/twitter-bootstrap-button-generator-3/-->
-            <a ng-show="auth.isAnonymous()" href="#login" class="btn btn-success navbar-btn user-navbar"><span class="glyphicon glyphicon-off"></span> Login / Sign-up</a>
-
-            <div class="btn-group dropdown" ng-show="auth.isLoggedIn()">
-                <!--  -->
-                <a href="#" class="btn btn-default dropdown-toggle navbar-btn user-navbar" data-toggle="dropdown">
-                    <img ng-src="{{auth.getUser().avatarImage}}?s=24&d=mm" class="img-rounded"/>
-                    {{auth.getUser().login}} <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="/user/{{auth.getUser().login}}"><span class="glyphicon glyphicon-cog"></span> My vehicles</a></li>
-                    <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
-                </ul>
-            </div>
+        <div class="dropdown" ng-show="auth.isLoggedIn()">
+            <a href="#" class="btn btn-default dropdown-toggle navbar-btn user-navbar" data-toggle="dropdown">
+                <img ng-src="{{auth.getUser().avatarImage}}?s=24&d=mm" class="img-rounded"/>
+                {{auth.getUser().login}} <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/user/{{auth.getUser().login}}"><span class="glyphicon glyphicon-cog"></span> My vehicles</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+            </ul>
         </div>
     </nav>
 

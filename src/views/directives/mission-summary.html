@@ -1,7 +1,7 @@
 <div class="col-md-12 mission-summary-card">
     <div class="mission-thumbnail">
         <a ng-href="#/mission/{{mission.id}}">
-            <img ng-hide="!mission.mapThumbnailURL" ng-src="{{mission.mapThumbnailURL}}" />
+            <mapbox-static-map ng-hide="!mission.mapThumbnailURL" latitude="mission.latitude" longitude="mission.longitude" icon="mission.vehicleText | toMapIcon" width="240" height="100"></mapbox-static-map>
         </a>
     </div>
     <div class="clearfix mission-info">

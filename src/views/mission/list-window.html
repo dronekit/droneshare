@@ -1,28 +1,26 @@
+<div class="row">
+    <div class="container">
+        <div class="col-lg-12">
+            <section ng-controller="missionController as controller">
+                <h2>Recent Flights:</h2>
+                <!--
+                    <form class="well form-search" ng-submit="controller.insertPerson(controller.person)">
+                        <p>
+                            <span class="label label-info">Heads up!</span>
+                            <span class="text-info">Try adding a duplicate name.</span>
+                        </p>
 
-		<div class="row">
-			<div class="col-lg-8">
-				<section ng-controller="missionController as controller">
-
-        <h2>Recent Missions</h2>
-<!--
-					<form class="well form-search" ng-submit="controller.insertPerson(controller.person)">
-						<p>
-							<span class="label label-info">Heads up!</span>
-							<span class="text-info">Try adding a duplicate name.</span>
-						</p>
-
-						<input type="text" class="input-medium" ng-model="controller.person.name" placeholder="Name" />
-						<input type="text" class="input-small" ng-model="controller.person.age" placeholder="Age" />
-						<button type="submit" class="btn"><i class="glyphicon glyphicon-plus"></i> Add Person</button>
-					</form>
--->
-
-                    <div class="row" ng-hide="!controller.records.length" >
-
-                        <div class="col-md-4" ng-repeat="mission in controller.records">
-                            <mission-summary mission="mission"></mission-summary>
-                        </div>
+                        <input type="text" class="input-medium" ng-model="controller.person.name" placeholder="Name" />
+                        <input type="text" class="input-small" ng-model="controller.person.age" placeholder="Age" />
+                        <button type="submit" class="btn"><i class="glyphicon glyphicon-plus"></i> Add Person</button>
+                    </form>
+                -->
+                <div class="row" ng-hide="!controller.records.length" >
+                    <div class="col-md-4" ng-repeat="mission in controller.records">
+                        <mission-summary mission="mission"></mission-summary>
                     </div>
-				</section>
-			</div>
-		</div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

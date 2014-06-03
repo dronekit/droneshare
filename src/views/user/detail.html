@@ -1,5 +1,5 @@
-
-<div class="row" ng-controller="userDetailController as controller">
+<div class="row">
+<section id="recent-flights" class="container" ng-controller="userDetailController as controller">
 
 <form name="userForm" ng-submit="controller.submit()">
 
@@ -61,7 +61,7 @@
                 </button>
             </h3>
 
-            <div class="row" ng-hide="!controller.record.vehicles.length" >
+            <div class="row" style="margin-left:0;" ng-hide="!controller.record.vehicles.length" >
 
                 <div class="col-md-4" ng-repeat="vehicle in controller.record.vehicles">
                     <div class="row">
@@ -74,3 +74,5 @@
     </form>
 </div>
 
+</section>
+</div>

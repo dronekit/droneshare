@@ -12,9 +12,11 @@
         <a ng-show="auth.isAnonymous()" href="#create" class="btn btn-primary navbar-btn user-navbar">Sign Up</a>
 
         <div class="dropdown" ng-show="auth.isLoggedIn()">
-            <a href="#" class="btn btn-default dropdown-toggle navbar-btn user-navbar" data-toggle="dropdown">
-                <img ng-src="{{auth.getUser().avatarImage}}?s=24&d=mm" class="img-rounded"/>
+            <a href="#" class="btn dropdown-toggle navbar-btn user-navbar" data-toggle="dropdown">
+                <img ng-src="{{auth.getUser().avatarImage}}?s=36&d=mm" class="img-rounded"/>
+                <div class="user-nav-name">
                 {{auth.getUser().login}} <b class="caret"></b>
+                </div>
             </a>
             <ul class="dropdown-menu">
                 <li><a href="/user/{{auth.getUser().login}}"><span class="glyphicon glyphicon-cog"></span> My vehicles</a></li>
@@ -28,10 +30,10 @@
 </div>
 <div id="layout-navigation" class="row">
     <div class="container">
-        <div id="navigation" class="col-lg-6 center-block">
-            <a href="/" class="col-lg-4 btn btn-default navbar-btn user-navbar">Map</a>
-            <a href="/mission" class="col-lg-4 btn btn-default navbar-btn user-navbar">Flights</a>
-            <a href="/about" class="col-lg-4 btn btn-default navbar-btn user-navbar">About</a>
+        <div id="navigation" class="center-block">
+            <a href="/"         class="btn btn-default navbar-btn user-navbar">Map</a>
+            <a href="/mission"  class="btn btn-default navbar-btn user-navbar">Flights</a>
+            <a href="/about"    class="btn btn-default navbar-btn user-navbar">About</a>
         </div>
     </div>
 </div>

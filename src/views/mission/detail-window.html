@@ -4,11 +4,11 @@
     <!-- FIXME - find a better way to share this alert boilerplate across views - directives? -->
     <alert ng-repeat="alert in errors" class="popup-middle-screen"  type="danger">{{alert}}</alert>
 
-    <section id="mission-detail-map" ng-controller="mapController as map" class="col-lg-10">
+    <section id="mission-detail-map" ng-controller="mapController as map" class="col-lg-9">
         <leaflet watchMarkers="true" tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
     </section>
 
-    <section id="mission-detail-data" class="col-lg-2">
+    <section id="mission-detail-data" class="col-lg-3">
         <div class="row mission-summary">
             <h4 class="col-md-12">Flight Details</h4>
             <div class="col-md-12">
@@ -29,100 +29,103 @@
         <div class="row mission-details">
             <div class="col-md-12">
                 <div class="row">
-                    <input ng-hide="auth.isAnonymous()" class="col-sm-12 mission-location" type="text" ng-model="record.summaryText" ng-change="controller.submit()"/>
-                    <div id="mission-detail-islive" class="col col-sm-6">
-                        <h5>Flight connection</h5>
-                        <div class="" ng-if="record.isLive">
-                            <i class="glyphicon glyphicon-refresh"></i> Live
+                        <div class="big_nums">
+                        <input ng-hide="auth.isAnonymous()" class="col-sm-12 mission-location" type="text" ng-model="record.summaryText" ng-change="controller.submit()"/>
                         </div>
-                        <div class="" ng-if="!record.isLive">
-                            <i class="glyphicon glyphicon-ok-circle"></i> Flight ended
+                        
+                    <!--<div id="mission-detail-islive" class="col col-sm-6">-->
+                        <div class="flight-live" ng-if="record.isLive">
+                            <i class="glyphicon glyphicon-refresh"></i> Flight is live
                         </div>
-                    </div>
-                    <div class="col col-sm-6">
-                        <h5>Max Altitude</h5>
-                        <div class="">
+                        <div class="flight-live" ng-if="!record.isLive">
+                            <i class="glyphicon glyphicon-ok-circle"></i> Flight has ended
+                        </div>
+                        
+                    <!--</div>-->
+                    <!--<div class="col col-sm-6">-->
+                        <div ng-hide="!mission.flightDuration">
+                            <h5>Flight time:</h5>
+                            <div class="big_nums">
+                            {{mission.flightDuration / 120 | duration}}
+                            </div>
+                        </div>
+                        
+                        <h5>Alt:</h5>
+                        <div class="big_nums">
                             {{record.maxAlt | number }} <span class="small">m</span>
                         </div>
-                    </div>
-                    <div class="col col-sm-6">
-                        <h5>Max Groundspeed</h5>
-                        <div class="">
+                    <!--</div>-->
+                    <!--<div class="col col-sm-6">-->
+                        <h5>Speed:</h5>
+                        <div class="big_nums">
                             {{record.maxGroundspeed | number }} <span class="small">m/s</span>
                         </div>
-                    </div>
-                    <div class="col col-sm-6">
-                        <h5>Max Airspeed</h5>
-                        <div class="">
+                    <!--</div>-->
+                    <!--<div class="col col-sm-6">-->
+                        <h5>Airspeed:</h5>
+                        <div class="big_nums">
                             {{record.maxAirspeed | number }} <span class="small">m/s</span>
                         </div>
-                    </div>
-                    <div class="col col-sm-12">
+                    <!--</div>-->
+                    <!--<div class="col col-sm-12">-->
                         <h5>Software version</h5>
                         <div class="">
                             {{record.softwareVersion}}
                         </div>
-                    </div>
+                    <!--</div>-->
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-sm-12">
                         <div class="btn-group">
                                 <label class="btn btn-primary" ng-click="controller.show_plot()">Plot</label>
 
                                 <label class="btn btn-primary" ng-click="controller.show_parameters()">Parameters</label>
                         </div>
-                    </div>
                 </div>
             </div>
 
-
             <div class="col-md-12">
                 <div class="row downloads">
-                    <div class="col-sm-12">
-                        <!-- FIXME - find a way to tunnel this through angular so we can attach our app key -->
-                        <ul class="list-unstyled">
-                            <li>
-                                Downloads:
-                            </li>
-                            <li>
-                                <a ng-href="{{urlBase}}/messages.tlog"><i class="glyphicon glyphicon-download"></i> Download TLOG</a>
-                            </li>
-                            <li>
-                                <a ng-href="{{urlBase}}/messages.kmz"><span class="glyphicon glyphicon-download"></span> Download KML</a>
-                            </li>
-                            <li>
-                                <a ng-href="{{urlBase}}/parameters.complete" download="vehicle.param"><span class="glyphicon glyphicon-download"></span> Download Parameters</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <!-- FIXME - find a way to tunnel this through angular so we can attach our app key -->
+                    <ul class="list-unstyled">
+                        <li>
+                            Downloads:
+                        </li>
+                        <li>
+                            <a ng-href="{{urlBase}}/messages.tlog"><i class="glyphicon glyphicon-download"></i> Download TLOG</a>
+                        </li>
+                        <li>
+                            <a ng-href="{{urlBase}}/messages.kmz"><span class="glyphicon glyphicon-download"></span> Download KML</a>
+                        </li>
+                        <li>
+                            <a ng-href="{{urlBase}}/parameters.complete" download="vehicle.param"><span class="glyphicon glyphicon-download"></span> Download Parameters</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
             <div class="col-sm-12">
                 <div class="row social">
-                    <div class="col-sm-12">
-                        <h5>Share:</h5>
-                        <span class="list-inline">
-                            <div class="fb-share-button social-button" data-type="button"></div>
-                            <!-- <li class="facebook">
-                                <a href="#"><img src="/images/fb-share.jpg"></a>
-                            </li> -->
+                    <h5>Share:</h5>
+                    <span class="list-inline">
+                        <div class="fb-share-button social-button" data-type="button"></div>
+                        <!-- <li class="facebook">
+                            <a href="#"><img src="/images/fb-share.jpg"></a>
+                        </li> -->
 
-                            <!-- <g:plus action="share"></g:plus> -->
-                            <div class="g-plus social-button" data-action="share" data-annotation="none"></div>
-                            <!-- <li class="google-plus">
-                                <a href="#"><img src="/images/google-plus-share.jpg"></a>
-                            </li> -->
+                        <!-- <g:plus action="share"></g:plus> -->
+                        <div class="g-plus social-button" data-action="share" data-annotation="none"></div>
+                        <!-- <li class="google-plus">
+                            <a href="#"><img src="/images/google-plus-share.jpg"></a>
+                        </li> -->
 
-                            <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="droneshare" data-count="none"></a>
-                            <!-- <li class="twitter">
-                                <a href="#"><img src="/images/twitter-share.jpg"></a>
-                            </li> -->
-                        </span>
-                    </div>
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="droneshare" data-count="none"></a>
+                        <!-- <li class="twitter">
+                            <a href="#"><img src="/images/twitter-share.jpg"></a>
+                        </li> -->
+                    </span>
                 </div>
             </div>
 

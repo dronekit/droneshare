@@ -21,6 +21,8 @@ class Config
       templateUrl: 'views/user/detail.html'
     .when '/vehicle',
       templateUrl: 'views/vehicle-list.html'
+    .when '/about',
+      templateUrl: 'views/about.html'
     .when '/vehicle/:id',
       templateUrl: 'views/vehicle-detail.html'
     .when '/mission',

@@ -25,13 +25,13 @@
                             <input type="text" ng-model="controller.record.fullName" placeholder="Your full name" />
                         </td>
                     </tr>
-                    <tr ng-show="!!controller.record.email">
+                    <tr ng-show="controller.isMeOrAdmin()" ng-show="!!controller.record.email">
                         <th>Email</th>
                         <td>
                             {{controller.record.email}}
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-show="controller.isMeOrAdmin()" >
                         <th>Password</th>
                         <td>
                             <input type="password" ng-model="controller.record.password" placeholder="Type new password here" />

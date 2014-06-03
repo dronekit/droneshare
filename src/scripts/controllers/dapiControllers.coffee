@@ -257,14 +257,23 @@ class DetailController extends BaseController
     @record = data
 
 class UserDetailController extends DetailController
-  @$inject: ['$log', '$scope', '$routeParams', 'userService']
-  constructor: (@log, scope, routeParams, @service) ->
+  @$inject: ['$log', '$scope', '$routeParams', 'userService', 'authService']
+  constructor: (@log, scope, routeParams, @service, @authService) ->
     super(scope, routeParams)
 
     @scope.$on('vehicleAdded', (event, args) =>
       @log.debug('fetching due to add')
       @fetch_record()
     )
+
+    # Is this user the same as me?
+    @isMe = () =>
+      me = @authService.getUser()
+      me.loggedIn && (@record?.login == me.login)
+
+    # Is this user the same as me or am I at least an admin?
+    @isMeOrAdmin = () =>
+      @isMe() || @authService.getUser()?.isAdmin
 
 class VehicleDetailController extends DetailController
   @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService']

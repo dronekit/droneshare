@@ -1,4 +1,8 @@
 @import "bootstrap.less";
+/*.container {
+    width: 970px !important; 
+}*/
+
 @base-blue: #2db4eb;
 @border-blue: #45cbf1;
 
@@ -68,11 +72,16 @@ header .navbar {
     background: -ms-linear-gradient(top, #00a4e1 0%,#009ad6 22%,#0096d1 27%,#018dca 49%,#0175b0 100%);
     background: linear-gradient(to bottom, #00a4e1 0%,#009ad6 22%,#0096d1 27%,#018dca 49%,#0175b0 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a4e1', endColorstr='#0175b0',GradientType=0 );
+    
+}
+
+#layout-navigation .container {
+    text-align: center;
 }
 
 #layout-navigation .btn {
     border: none;
-    padding: 0 40px;
+    padding: 0 20px;
     border-radius: 0;
     color: #fff;
     margin: 0;
@@ -121,8 +130,8 @@ header .navbar {
 .drop-box {
     background: #F8F8F8;
     border: 5px dashed #DDD;
-    width: 200px;
-    height: 65px;
+    width: 255px;
+    height: 130px;
     text-align: center;
     padding-top: 35px;
 }
@@ -133,12 +142,30 @@ header .navbar {
 
 #user-nav {
     position: absolute;
-    right: 15px;
-    top: 15px;
+    right: 30px;
+    top: 10px;
     ul.list-inline {
         margin-bottom: 0;
         line-height: 80px;
         height: 80px;
+    }
+    .dropdown{
+        a{
+            color: #fff;        
+        }
+    }
+    .dropdown-menu{
+        a{
+            color: #666;        
+        }
+    }
+    
+    .img-rounded{
+        border-radius:3px;
+    }
+    .user-nav-name{
+        display: inline;
+        margin-left: 10px;
     }
 }
 
@@ -233,7 +260,8 @@ mission-detail {
 
 #recent-flights {
     h2 {
-        margin-bottom: 30px;
+        margin-top: 50px;
+        margin-bottom: 50px;
         color: #626466;
         font-weight: normal;
     }
@@ -247,15 +275,24 @@ mission-detail {
         background-color: #7dd1ea;
     }
     .mission-info {
+        padding: 0;
+        padding-top:10px;
         background-color: #fff;
         font-size: 10px;
         color: #636363;
         min-height: 110px;
         h6 {
-            font-size: 14px;
+            padding-top:0;
+            margin-top:0;
+            margin-bottom:0;
+            font-size: 16px;
             a {
                 color: #1899d6;
+                /*color: #636363; */
             }
+        }
+        a {
+            color: #636363;
         }
     }
 }
@@ -290,6 +327,7 @@ mission-detail {
         min-height: 75px;
         h5 {
             font-size: 11px;
+            margin: 0px;
         }
         .small {
             font-size: 50%;
@@ -298,4 +336,26 @@ mission-detail {
     #mission-detail-islive {
         font-size: 14px;
     }
+    .row {
+        margin-left: 0;
+        padding-left: 10px;
+        padding-bottom: 20px;
+    }
+    .big_nums {
+        font-size: 24px;
+        margin-top: -10px;
+    }
+    flight-live{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+
+.vehicle_summary{
+    padding-left:18px;
+}
+
+p {
+        color:#666;
 }

@@ -25,7 +25,10 @@ class DapiService
     base = if useLocalServer
       'http://localhost:8080'
     else
-      'http://api.3dr.com'
+      'http://api.droneshare.com'
+      # Normally api.3drobotics.com is recommended, but if you'd like cookies used for your application's login info
+      # you can create a CNAME under your domain that points to api.3drobotics.com and reference the CNAME here.
+
     path = '/api/v1/'
     @apiBase = base + path
     @log.debug("Creating service " + @urlBase())

@@ -10,9 +10,9 @@
 
     <section id="mission-detail-data" class="col-lg-3">
         <div class="row mission-summary">
-            <h4 class="col-md-12">Flight Details</h4>
+            <h5 class="col-md-12">Flight Details</h5>
             <div class="col-md-12">
-                <div class="col col-sm-3 vehicle-type">
+                <div class="col col-sm-2 vehicle-type">
                     <img ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
                 </div>
                 <!-- <div class="col col-sm-3 avatar">
@@ -22,55 +22,56 @@
                     <span class="name"><a ng-href="/user/{{record.userName}}">{{ record.userName }}</a></span><br>
                     <span class="origin-location">{{record.summaryText}}</span><br>
                     <span class="vehicle-type"><a ng-href="/vehicle/{{record.vehicleId}}">{{ record.vehicleText }}</a></span>
+    
+                    <!--<div id="mission-detail-islive" class="col col-sm-6">-->
+                    <div class="flight-live" ng-if="record.isLive">
+                        <!--<i class="glyphicon glyphicon-refresh"></i>--> Flight is live!
+                    </div>
+                    <div class="flight-live" ng-if="!record.isLive">
+                        <!--<i class="glyphicon glyphicon-ok-circle"></i>--> Flight has ended
+                    </div>
                 </div>
+                
             </div>
         </div>
 
         <div class="row mission-details">
             <div class="col-md-12">
                 <div class="row">
-                        <div class="big_nums">
+                        <!--<div class="big_nums">
                         <input ng-hide="auth.isAnonymous()" class="col-sm-12 mission-location" type="text" ng-model="record.summaryText" ng-change="controller.submit()"/>
-                        </div>
+                        </div>-->
                         
-                    <!--<div id="mission-detail-islive" class="col col-sm-6">-->
-                        <div class="flight-live" ng-if="record.isLive">
-                            <i class="glyphicon glyphicon-refresh"></i> Flight is live
-                        </div>
-                        <div class="flight-live" ng-if="!record.isLive">
-                            <i class="glyphicon glyphicon-ok-circle"></i> Flight has ended
-                        </div>
                         
                     <!--</div>-->
                     <!--<div class="col col-sm-6">-->
                         <div ng-hide="!mission.flightDuration">
-                            <h5>Flight time:</h5>
+                            <h6>Flight time:</h6>
                             <div class="big_nums">
                             {{mission.flightDuration / 120 | duration}}
                             </div>
                         </div>
                         
-                        <h5>Alt:</h5>
+                        <h6>Alt:</h6>
                         <div class="big_nums">
                             {{record.maxAlt | number }} <span class="small">m</span>
                         </div>
                     <!--</div>-->
                     <!--<div class="col col-sm-6">-->
-                        <h5>Speed:</h5>
+                        <h6>Speed:</h6>
                         <div class="big_nums">
                             {{record.maxGroundspeed | number }} <span class="small">m/s</span>
                         </div>
                     <!--</div>-->
                     <!--<div class="col col-sm-6">-->
-                        <h5>Airspeed:</h5>
+                        <h6>Airspeed:</h6>
                         <div class="big_nums">
                             {{record.maxAirspeed | number }} <span class="small">m/s</span>
                         </div>
                     <!--</div>-->
                     <!--<div class="col col-sm-12">-->
-                        <h5>Software version</h5>
-                        <div class="">
-                            {{record.softwareVersion}}
+                        <div ng-hide="!record.softwareVersion">
+                        <h6>Software version {{record.softwareVersion}}</h6>
                         </div>
                     <!--</div>-->
                 </div>

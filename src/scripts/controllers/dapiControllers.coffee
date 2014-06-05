@@ -328,8 +328,8 @@ class VehicleDetailController extends DetailController
       me.loggedIn && (@record?.userId == me.id)
 
 class MissionDetailController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope']
-  constructor: (@modal, @log, scope, routeParams, @service, @rootScope) ->
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService']
+  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService) ->
     super(scope, routeParams)
     @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}
@@ -356,6 +356,10 @@ class MissionDetailController extends DetailController
         northEast:
           lng: @geojson.bbox[3]
           lat: @geojson.bbox[4]
+
+    @isMine = () =>
+      me = @authService.getUser()
+      me.loggedIn && (@record?.userName == me.login)
 
     # Show the parameters modal in the correct location
     @show_parameters = () =>

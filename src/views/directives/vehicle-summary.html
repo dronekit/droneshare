@@ -1,7 +1,6 @@
-<!-- This should be a _good looking_ smallish bootstrap based box summarizing a vehicle object -->
-<div>
+<div class="vehicle-list-item">
     <a ng-href="/vehicle/{{vehicle.id}}"><h4>{{vehicle.summaryText}}!</h4></a>
-    <ul class ="vehicle_summary">
+    <ul class="list-unstyled">
         <li ng-show="vehicle.autopilotType">{{vehicle.autopilotType}}</li>
         <li ng-show="vehicle.vehicleType">{{vehicle.vehicleType}}</li>
         <li>{{vehicle.missions.length}} missions flown</li>

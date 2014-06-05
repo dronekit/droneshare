@@ -4,32 +4,23 @@
     <!-- FIXME - find a better way to share this alert boilerplate across views - directives? -->
     <alert ng-repeat="alert in errors" class="popup-middle-screen"  type="danger">{{alert}}</alert>
 
-    <section id="mission-detail-map" ng-controller="mapController as map" class="col-lg-9">
+    <section id="mission-detail-map" ng-controller="mapController as map" class="col-sm-10">
         <leaflet watchMarkers="true" tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
     </section>
 
-    <section id="mission-detail-data" class="col-lg-3">
+    <section id="mission-detail-data" class="col-sm-2 col-fixed">
         <div class="row mission-summary">
-            <h5 class="col-md-12">Flight Details</h5>
-            <div class="col-md-12">
-                <div class="col col-sm-2 vehicle-type">
+            <div class="col-xs-12">
+                <div class="col col-xs-3 vehicle-type">
                     <img ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
                 </div>
                 <!-- <div class="col col-sm-3 avatar">
                     <img src="http://placehold.it/40x40">
                 </div> -->
-                <div class="col col-sm-6 contact-card">
+                <div class="col col-xs-9 contact-card">
                     <span class="name"><a ng-href="/user/{{record.userName}}">{{ record.userName }}</a></span><br>
-                    <span class="origin-location">{{record.summaryText}}</span><br>
                     <span class="vehicle-type"><a ng-href="/vehicle/{{record.vehicleId}}">{{ record.vehicleText }}</a></span>
     
-                    <!--<div id="mission-detail-islive" class="col col-sm-6">-->
-                    <div class="flight-live" ng-if="record.isLive">
-                        <!--<i class="glyphicon glyphicon-refresh"></i>--> Flight is live!
-                    </div>
-                    <div class="flight-live" ng-if="!record.isLive">
-                        <!--<i class="glyphicon glyphicon-ok-circle"></i>--> Flight has ended
-                    </div>
                 </div>
                 
             </div>
@@ -38,11 +29,23 @@
         <div class="row mission-details">
             <div class="col-md-12">
                 <div class="row">
-                        <!--<div class="big_nums">
-                        <input ng-hide="auth.isAnonymous()" class="col-sm-12 mission-location" type="text" ng-model="record.summaryText" ng-change="controller.submit()"/>
-                        </div>-->
+
+                        <div class="" ng-show="controller.isMeOrAdmin()">
+                        <input ng-hide="auth.isAnonymous()" class="col-sm-12 " type="text" ng-model="record.summaryText" ng-change="controller.submit()"/>
+                        </div>
+
+                        <div class="mission-location" ng-show="!controller.isMeOrAdmin()">
+                        {{record.summaryText}}
+                        </div>
                         
-                        
+                        <!--<div id="mission-detail-islive" class="col col-sm-6">-->
+                        <div class="flight-live" ng-if="record.isLive">
+                            <!--<i class="glyphicon glyphicon-refresh"></i>--> Flight is live!
+                        </div>
+                        <div class="flight-live" ng-if="!record.isLive">
+                            <!--<i class="glyphicon glyphicon-ok-circle"></i>--> Flight has ended
+                        </div>
+
                     <!--</div>-->
                     <!--<div class="col col-sm-6">-->
                         <div ng-hide="!mission.flightDuration">

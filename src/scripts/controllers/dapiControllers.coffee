@@ -248,13 +248,16 @@ class DetailController extends BaseController
 
   # Normally the response to submit is used to update the local model, subclasses can override
   handle_submit_response: (data) =>
-    @scope.record = data # FIXME - I don't think this is necessary - this is the scope...
-    @record = data
+    @assign_record(data)
 
   # Normally the response to submit is used to update the local model, subclasses can override
   handle_fetch_response: (data) =>
+    @assign_record(data)
+
+  assign_record: (data) ->
     @scope.record = data # FIXME - I don't think this is necessary - this is the scope...
     @record = data
+    @original_record = angular.copy(@record) # deep copy to compare against
 
 class UserDetailController extends DetailController
   @$inject: ['$log', '$scope', '$routeParams', 'userService', 'authService']
@@ -274,6 +277,14 @@ class UserDetailController extends DetailController
     # Is this user the same as me or am I at least an admin?
     @isMeOrAdmin = () =>
       @isMe() || @authService.getUser()?.isAdmin
+
+    @scope.showEditForm = ->
+      $('#user-details-form').toggleClass('hidden')
+
+    # reset form
+    @closeEditForm = ->
+      @record = angular.copy(@original_record) # reset record to original values
+      @scope.showEditForm()
 
 class VehicleDetailController extends DetailController
   @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService']

@@ -1,81 +1,98 @@
 <div class="row">
-<section id="recent-flights" class="container" ng-controller="userDetailController as controller">
-
-<form name="userForm" ng-submit="controller.submit()">
-
-<!-- FIXME - find a way to share this boilerplate -->
-<alert ng-repeat="alert in errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
-<alert ng-repeat="alert in successes" type="success" close="controller.clear_success()">{{alert}}</alert>
-
-        <section class="col-lg-6">
-
-            <h2>{{controller.record.fullName}}</h2>
-
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <th>Username</th>
-                        <td>
-                            {{controller.record.login}}
-                        </td>
-                    </tr>
-                    <tr ng-show="!!controller.record.fullName">
-                        <th>Full name</th>
-                        <td ng-show="controller.isMeOrAdmin()">
-                            <input type="text" ng-model="controller.record.fullName" placeholder="Your full name" />
-                        </td>
-                        <td ng-show="!controller.isMeOrAdmin()">
-                            {{controller.record.fullName}}
-                        </td>
-                    </tr>
-                    <tr ng-show="controller.isMeOrAdmin()" ng-show="!!controller.record.email">
-                        <th>Email</th>
-                        <td>
-                            {{controller.record.email}}
-                        </td>
-                    </tr>
-                    <tr ng-show="controller.isMeOrAdmin()">
-                        <th>Password</th>
-                        <td>
-                            <input type="password" ng-model="controller.record.password" placeholder="Type new password here" />
-                        </td>
-                    </tr>
-                    <tr ng-show="!!controller.record.password">
-                        <th>Old password (confirmation)</th>
-                        <td>
-                            <input type="password" ng-model="controller.record.oldPassword" placeholder="Type old password here" />
-                        </td>
-                    </tr>
-                    <tr ng-show="!!controller.record.avatarImage">
-                        <th>Avatar</th>
-                        <td>
-                            <a ng-href="{{controller.record.profileURL}}"><img ng-src="{{controller.record.avatarImage}}?d=mm" class="img-rounded"/></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <input class="btn btn-success" type="submit" id="submit" value="Update account" ng-show="userForm.$dirty" />
-
-            <h3 ng-controller="vehicleController as vcontroller">Vehicles
-
-                <button type="button" class="btn btn-default btn-primary btn" ng-click="vcontroller.add_vehicle()">
-                    <span class="glyphicon glyphicon-plus"></span> New vehicle
-                </button>
-            </h3>
-
-            <div class="row" style="margin-left:0;" ng-hide="!controller.record.vehicles.length" >
-
-                <div class="col-md-4" ng-repeat="vehicle in controller.record.vehicles">
-                    <div class="row">
-                        <vehicle-summary vehicle="vehicle"></vehicle-summary>
+    <section id="user-details" class="container" ng-controller="userDetailController as controller">
+        <div class="row">
+            <div class="col-lg-12 user-card">
+                <div class="row">
+                    <div class="avatar col-lg-2">
+                        <img ng-src="{{controller.record.avatarImage}}?d=mm&size=95" class="img-rounded"/>
+                    </div>
+                    <div class="user-details col-lg-10">
+                        <h1>{{controller.record.fullName}}</h1>
+                        <ul class="list-unstyled">
+                            <li ng-show="controller.isMeOrAdmin()" class="location">{{controller.record.email}}</li>
+                            <li ng-show="controller.isMeOrAdmin()" class="edit-profile"><a ng-click="showEditForm()" href="" id="edit-profile">Edit Profile</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>
 
-        </section>
-    </form>
-</div>
+        <div class="row">
+            <div class="col-lg-12 hidden" id="user-details-form">
 
-</section>
+                <form name="userForm" ng-submit="controller.submit()">
+
+                    <!-- FIXME - find a way to share this boilerplate -->
+                    <alert ng-repeat="alert in errors" type="danger" close="controller.clear_error()">{{alert}}</alert>
+                    <alert ng-repeat="alert in successes" type="success" close="controller.clear_success()">{{alert}}</alert>
+
+
+                    <h2>{{controller.record.fullName}}</h2>
+
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th>Username</th>
+                            <td>
+                                <a ng-href="/user/{{controller.record.login}}"  >{{controller.record.login}}</a>
+                            </td>
+                        </tr>
+                        <tr ng-show="!!controller.record.fullName">
+                            <th>Full name</th>
+                            <td>
+                                <input type="text" ng-model="controller.record.fullName" placeholder="Your full name" />
+                            </td>
+                        </tr>
+                        <tr ng-show="controller.isMeOrAdmin()" ng-show="!!controller.record.email">
+                            <th>Email</th>
+                            <td>
+                                {{controller.record.email}}
+                            </td>
+                        </tr>
+                        <tr ng-show="controller.isMeOrAdmin()" >
+                            <th>Password</th>
+                            <td>
+                                <input type="password" ng-model="controller.record.password" placeholder="Type new password here" />
+                            </td>
+                        </tr>
+                        <tr ng-show="!!controller.record.password">
+                            <th>Old password (confirmation)</th>
+                            <td>
+                                <input type="password" ng-model="controller.record.oldPassword" placeholder="Type old password here" />
+                            </td>
+                        </tr>
+                        <tr ng-show="!!controller.record.avatarImage">
+                            <th>Avatar</th>
+                            <td>
+                                <a ng-href="{{controller.record.profileURL}}"><img ng-src="{{controller.record.avatarImage}}?d=mm" class="img-rounded"/></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <input class="btn btn-success" type="submit" id="submit" value="Update account" ng-show="userForm.$dirty" />
+                    <button type="button" class="btn btn-warn" ng-click="controller.closeEditForm()">Close</button>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="my-vehicles" class="col-lg-6 user-item-list" ng-controller="vehicleController as vcontroller">
+                <h3>My Vehicles</h3>
+                <button type="button" class="btn btn-primary" ng-click="vcontroller.add_vehicle()">
+                    <span class="glyphicon glyphicon-plus"></span> Add New
+                </button>
+
+                <div class="vehicle-list" ng-hide="!controller.record.vehicles.length" >
+                    <div class="col-md-12" ng-repeat="vehicle in controller.record.vehicles">
+                        <div class="row">
+                            <vehicle-summary vehicle="vehicle"></vehicle-summary>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
 </div>

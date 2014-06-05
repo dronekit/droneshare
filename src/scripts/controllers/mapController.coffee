@@ -237,12 +237,17 @@ class LiveMapController extends MapController
       angular.extend(marker.payload, payload)
       p = marker.payload
       if p.userName? && p.id? && p.summaryText?
+        avatarImg = if p.userAvatarImage?
+          """<img src="#{p.userAvatarImage}?s=40&d=mm"></img>"""
+        else
+          ""
+
         marker.message = """
           <!-- Two columns -->
           <table id="map-info-popup">
             <tr>
               <td>
-                <img src="#{p.userAvatarImage}?s=40&d=mm"></img>
+                #{avatarImg}
               </td>
 
               <td>

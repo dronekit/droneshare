@@ -287,8 +287,8 @@ class UserDetailController extends DetailController
       @scope.showEditForm()
 
 class VehicleDetailController extends DetailController
-  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService']
-  constructor: (@upload, @log, scope, routeParams, @service) ->
+  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService', 'authService']
+  constructor: (@upload, @log, scope, routeParams, @service, @authService) ->
     super(scope, routeParams)
 
     @uploading = false
@@ -322,6 +322,10 @@ class VehicleDetailController extends DetailController
         else
           @add_error('Upload failed: ' + data)
       )
+
+    @isMine = () =>
+      me = @authService.getUser()
+      me.loggedIn && (@record?.userId == me.id)
 
 class MissionDetailController extends DetailController
   @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope']

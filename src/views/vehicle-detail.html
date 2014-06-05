@@ -18,32 +18,32 @@
                     <div class="row form-group">
                         <label class="col-sm-4 control-label" for="name">Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" ng-model="controller.record.name" placeholder="Name your vehicle here" name="name" size="20" />
+                            <input ng-disabled="!controller.isMine()" type="text" class="form-control" ng-model="controller.record.name" placeholder="Name your vehicle here" name="name" size="20" />
                         </div>
                     </div>
 
                     <div class="row form-group">
                         <label class="col-sm-4 control-label" for="type">Type</label>
                         <div class="col-sm-8">
-                            <input disabled type="text" class="form-control" ng-model="controller.record.vehicleType" tooltip-placement="right" tooltip="Automatically determined from log files" name="type" size="20" />
+                            <input ng-disabled="!controller.isMine()" type="text" class="form-control" ng-model="controller.record.vehicleType" tooltip-placement="right" tooltip="Automatically determined from log files" name="type" size="20" />
                         </div>
                     </div>
 
                     <div class="row form-group">
                         <label class="col-sm-4 control-label" for="autopilot">Autopilot</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" ng-model="controller.record.autopilotType" tooltip-placement="right" tooltip="Automatically determined from log files" name="autopilotType" size="20" />
+                            <input ng-disabled="!controller.isMine()" type="text" class="form-control" ng-model="controller.record.autopilotType" tooltip-placement="right" tooltip="Automatically determined from log files" name="autopilotType" size="20" />
                         </div>
                     </div>
 
-                    <div class="row form-group">
+                    <div ng-show="controller.isMine()" class="row form-group">
                         <label class="col-sm-4 control-label" for="privacy">Privacy</label>
                         <div class="col-sm-8">
                             <access-code-dropdown field="privacy" code="controller.record.viewPrivacy"></access-code-dropdown>
                         </div>
                     </div>
 
-                    <div class="row form-group">
+                    <div ng-show="controller.isMine()" class="row form-group">
                         <label class="col-sm-4 control-label" for="web-control">Web control</label>
                         <div class="col-sm-8">
                             <access-code-dropdown field="web-control" code="controller.record.controlPrivacy"></access-code-dropdown>
@@ -53,7 +53,7 @@
                 </div>
 
 
-                <div class="col-lg-6">
+                <div ng-show="controller.isMine()" class="col-lg-6">
                     <div ng-hide="controller.uploading">
 
                         <div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">

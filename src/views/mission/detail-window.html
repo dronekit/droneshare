@@ -12,7 +12,7 @@
         <div class="row mission-summary">
             <div class="col-xs-12">
                 <div class="col col-xs-3 vehicle-type">
-                    <img ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
+                    <img ng-show="mission.userAvatarImage" ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
                 </div>
                 <!-- <div class="col col-sm-3 avatar">
                     <img src="http://placehold.it/40x40">
@@ -20,9 +20,9 @@
                 <div class="col col-xs-9 contact-card">
                     <span class="name"><a ng-href="/user/{{record.userName}}">{{ record.userName }}</a></span><br>
                     <span class="vehicle-type"><a ng-href="/vehicle/{{record.vehicleId}}">{{ record.vehicleText }}</a></span>
-    
+
                 </div>
-                
+
             </div>
         </div>
 
@@ -37,7 +37,7 @@
                         <div class="mission-location" ng-show="!controller.isMeOrAdmin()">
                         {{record.summaryText}}
                         </div>
-                        
+
                         <!--<div id="mission-detail-islive" class="col col-sm-6">-->
                         <div class="flight-live" ng-if="record.isLive">
                             <!--<i class="glyphicon glyphicon-refresh"></i>--> Flight is live!
@@ -54,7 +54,7 @@
                             {{mission.flightDuration / 120 | duration}}
                             </div>
                         </div>
-                        
+
                         <h6>Alt:</h6>
                         <div class="big_nums">
                             {{record.maxAlt | number }} <span class="small">m</span>

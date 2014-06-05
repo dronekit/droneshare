@@ -8,11 +8,11 @@
         <leaflet watchMarkers="true" tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
     </section>
 
-    <section id="mission-detail-data" class="col-sm-2 col-fixed" ng-cloak>
+    <section id="mission-detail-data" class="col-sm-2 col-fixed" ng-show="!!record">
         <div class="row mission-summary">
             <div class="col-xs-12">
                 <div class="col col-xs-3 vehicle-type">
-                    <img ng-show="mission.userAvatarImage" ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
+                    <img ng-show="!!record.userAvatarImage" ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
                 </div>
                 <!-- <div class="col col-sm-3 avatar">
                     <img src="http://placehold.it/40x40">

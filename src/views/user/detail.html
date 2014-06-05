@@ -16,13 +16,16 @@
                     <tr>
                         <th>Username</th>
                         <td>
-                            <a ng-href="/user/{{controller.record.login}}"  >{{controller.record.login}}</a>
+                            {{controller.record.login}}
                         </td>
                     </tr>
                     <tr ng-show="!!controller.record.fullName">
                         <th>Full name</th>
-                        <td>
+                        <td ng-show="controller.isMeOrAdmin()">
                             <input type="text" ng-model="controller.record.fullName" placeholder="Your full name" />
+                        </td>
+                        <td ng-show="!controller.isMeOrAdmin()">
+                            {{controller.record.fullName}}
                         </td>
                     </tr>
                     <tr ng-show="controller.isMeOrAdmin()" ng-show="!!controller.record.email">
@@ -31,7 +34,7 @@
                             {{controller.record.email}}
                         </td>
                     </tr>
-                    <tr ng-show="controller.isMeOrAdmin()" >
+                    <tr ng-show="controller.isMeOrAdmin()">
                         <th>Password</th>
                         <td>
                             <input type="password" ng-model="controller.record.password" placeholder="Type new password here" />

@@ -24,6 +24,10 @@
 @btn-info-bg: @base-blue;
 @btn-info-border: #fff;
 
+@text-grey: #666;
+@text-blue: #45cbf1;
+
+
 .alpha { padding-left: 0; }
 .omega { padding-right: 0; }
 
@@ -298,6 +302,7 @@ mission-detail {
 }
 
 .mission-summary {
+    margin-top: 20px;
     margin-bottom: 15px;
     .col {
         padding-right: 0;
@@ -309,12 +314,13 @@ mission-detail {
     }
     .contact-card {
 
-        font-size: 11px;
         .name {
-            color: @base-blue;
+            font-size: 14px;
+            color: @text-grey;
         }
         .vehicle-type {
-            color: #9a9a9a;
+            font-size: 12px;
+            color: @text-grey;
         }
     }
 }
@@ -322,14 +328,18 @@ mission-detail {
 .mission-details {
     background-color: #fff;
     min-height: 745px;
-    padding-top:20px;
+    padding-top:10px;
     margin-top:20px;
     color:#666;
     
+    .flight-live{
+        font-size: 12px;
+        margin-bottom:1.5em;
+    }
     .mission-location {
-        color: @base-blue;
-        font-size: 21px;
-        margin: 10px 0 0 0;
+        color: @text-grey;
+        font-size: 18px;
+        margin: 10px 10px 0 0;
     }
     
     h5 {

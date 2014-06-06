@@ -85,7 +85,7 @@
                         <div class="btn-group">
                                 <label class="btn btn-primary" ng-click="controller.show_plot()">Plot</label>
 
-                                <label class="btn btn-primary" ng-click="controller.show_parameters()">Parameters</label>
+                                <label class="btn btn-primary" ng-disabled="record.numParameters < 1" ng-click="controller.show_parameters()" >Parameters</label>
                         </div>
                 </div>
             </div>
@@ -104,7 +104,9 @@
                             <a ng-href="{{urlBase}}/messages.kmz"><span class="glyphicon glyphicon-download"></span> Download KML</a>
                         </li>
                         <li>
-                            <a ng-href="{{urlBase}}/parameters.complete" download="vehicle.param"><span class="glyphicon glyphicon-download"></span> Download Parameters</a>
+                            <a tooltip="This logfile did not include parameters." tooltip-placement="bottom" ng-show="record.numParameters < 1"><span class="glyphicon glyphicon-download"></span> Download Parameters</a>
+
+                            <a ng-href="{{urlBase}}/parameters.complete" download="vehicle.param" ng-show="record.numParameters >= 1"><span class="glyphicon glyphicon-download"></span> Download Parameters</a>
                         </li>
                     </ul>
                 </div>

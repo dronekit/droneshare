@@ -5,40 +5,43 @@
 <!--[if gt IE 8]><!--> <html class="no-js" xmlns:ng="http://angularjs.org" xmlns:app="ignored"> <!--<![endif]-->
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="dns-prefetch" href="//api.3dr.com">
     <base href="/">
-    <link rel="shortcut icon" href="/images/icon.png">
-
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
-
-
-    <!--[if lte IE 8]> <script src="/scripts/libs/json3.js"></script> <script src="/scripts/libs/html5shiv-printshiv.js"></script> <![endif]-->
-
-    <link rel="stylesheet" href="/styles/styles.css" />
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
-
-    <!--
-    <ng-include src="'helpers/clickjacking.html'"></ng-include>
-    -->
-
-    <style>
-    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none; }
-    ng\:form { display: block; }
-    </style>
-
-    <!-- Icon to show on facebook etc... {{ogImage}} can't work yet because we need to precache statically -->
     <title ng-bind="'Droneshare' + title">Droneshare</title>
     <meta name="description" content="Open-source drone sharing and control" />
-    <meta property="og:image" content="/images/screenshot.png"/>
-    <!-- <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="400" />
-    <meta property="og:image:height" content="300" /> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="dns-prefetch" href="//api.droneshare.com">
+    <link rel="shortcut icon" href="/images/icon.png">
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+
+    <% if (config.environment && config.environment === 'prod') { %>
+        <!--[if lte IE 8]> <script src="<%= config.getHashedFile('./.temp/scripts/ie.min.js', {trim: './.temp'}) %>"></script> <![endif]-->
+        <link rel="stylesheet" href="<%= config.getHashedFile('./.temp/styles/styles.min.css', {trim: './.temp'}) %>" />
+        <script>
+            window.logos = {
+                parent: "<%= config.getHashedFile('./.temp/images/3drobotics.png', {trim: './.temp'}) %>",
+                son: "<%= config.getHashedFile('./.temp/images/droneshare.png', {trim: './.temp'}) %>"
+            };
+        </script>
+    <% } else { %>
+        <!--[if lte IE 8]> <script src="/scripts/libs/json3.js"></script> <script src="/scripts/libs/html5shiv-printshiv.js"></script> <![endif]-->
+        <link rel="stylesheet" href="/styles/styles.css" />
+        <script> window.logos = { parent: '/images/3drobotics.png', son: '/images/droneshare.png' }; </script>
+    <% } %>
+
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none; }
+        ng\:form { display: block; }
+    </style>
+
+    <% if (config.environment && config.environment === 'prod') { %>
+        <meta property="og:image" content="<%= config.getHashedFile('./.temp/images/screenshot.png', {trim: './.temp'}) %>"/>
+    <% } else { %>
+        <meta property="og:image" content="/images/screenshot.png"/>
+    <% } %>
     <meta property="og:description" content="Open-source drone sharing and control"/>
     <meta property="og:title" content="Droneshare mission log"/>
     <meta property="og:site_name" content="Droneshare"/>
-
     <meta property="fb:app_id" content="301251750005529"/>
 </head>
 <body class="ng-cloak">
@@ -48,12 +51,16 @@
         <ng:view></ng:view>
     </div>
 
-    <ng-include src="'views/footer.html'"></ng-include>
+    <ng-include src="'/views/footer.html'"></ng-include>
 
-    <script data-main="/scripts/main.js" src="/scripts/libs/require.js"></script>
-    <ng-include src="'helpers/google-analytics.html'"></ng-include>
-    <ng-include src="'helpers/facebook-share.html'"></ng-include>
-    <ng-include src="'helpers/google-plus.html'"></ng-include>
-    <ng-include src="'helpers/twitter-share.html'"></ng-include>
+    <% if (config.environment && config.environment === 'prod') { %>
+        <script src="<%= config.getHashedFile('./.temp/scripts/scripts.min.js', {trim: './.temp'}) %>"></script>
+        <ng-include src="'/helpers/google-analytics.html'"></ng-include>
+    <% } else { %>
+        <script data-main="/scripts/main.js" src="/scripts/libs/require.js"></script>
+    <% } %>
+    <ng-include src="'/helpers/facebook-share.html'"></ng-include>
+    <ng-include src="'/helpers/google-plus.html'"></ng-include>
+    <ng-include src="'/helpers/twitter-share.html'"></ng-include>
 </body>
 </html>

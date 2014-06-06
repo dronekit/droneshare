@@ -1,31 +1,32 @@
 {
-  "name": "AngularFun",
-  "description": "AngularJS Reference Architecture",
-  "version": "2.1.7",
+  "name": "Droneshare",
+  "description": "Open-source drone sharing and control",
+  "version": "1.0.0",
   "author": {
-    "name": "Cary Landholt",
-    "email": "cary@landholt.com",
-    "url": "https://github.com/CaryLandholt"
+    "name": "Kevin Hester",
+    "email": "kevin@3drobotics.com",
+    "url": "https://github.com/geeksville"
   },
   "contributors": [
     {
-      "name": "David Bochenski",
-      "email": "david@bochenski.co.uk",
-      "url": "https://github.com/Bochenski"
+      "name": "Ramon Roche",
+      "email": "ramon@3drobotics.com",
+      "url": "https://github.com/mrpollo"
     },
     {
-      "name": "Jan Philipp",
-      "email": "knallisworld@googlemail.com",
-      "url": "https://github.com/knalli"
+      "name": "Jason Short",
+      "email": "jason@3drobotics.com",
+      "url": "https://github.com/jason4short"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/CaryLandholt/AngularFun.git"
+    "url": "https://github.com/diydrones/droneshare.git"
   },
   "dependencies": {
     "coffee-script": "~1.7.1",
     "express": "~3.5.1",
+    "express-cors": "0.0.3",
     "grunt": "~0.4.4",
     "grunt-bower-task": "~0.3.4",
     "grunt-coffeelint": "~0.0.8",
@@ -33,7 +34,7 @@
     "grunt-contrib-coffee": "~0.10.1",
     "grunt-contrib-connect": "~0.7.1",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-imagemin": "~0.6.1",
+    "grunt-contrib-imagemin": "^0.7.1",
     "grunt-contrib-less": "~0.11.0",
     "grunt-contrib-requirejs": "~0.4.3",
     "grunt-contrib-uglify": "~0.4.0",
@@ -43,9 +44,8 @@
     "grunt-prompt": "~1.1.0",
     "karma-junit-reporter": "~0.2.1",
     "load-grunt-tasks": "~0.4.0",
-    "time-grunt": "~0.3.1",
-    "express-cors": "0.0.3",
-    "optipng-bin": "^0.3.8"
+    "optipng-bin": "^0.3.8",
+    "time-grunt": "~0.3.1"
   },
   "engines": {
     "node": "0.8.x",

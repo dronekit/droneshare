@@ -236,7 +236,7 @@ class LiveMapController extends MapController
       # We merge the misc payload fields into one dictionary - showing the latest combination of all data
       angular.extend(marker.payload, payload)
       p = marker.payload
-      if p.userName? && p.id? && p.vehicleText?
+      if p.userName? && p.id? && p.summaryText?
         avatarImg = if p.userAvatarImage?
           """<img src="#{p.userAvatarImage}?s=40&d=mm"></img>"""
         else
@@ -258,6 +258,8 @@ class LiveMapController extends MapController
             </tr>
           </table>
           """
+      else
+        @log.warn("Skipping popup generation - not enough vehicle data")
 
   motionTracking: (vehicleKey, latlng) =>
     v = @scope.vehiclePaths[vehicleKey] ? { color: '#f76944', weight: 7, latlngs: []}

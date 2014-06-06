@@ -236,7 +236,7 @@ class LiveMapController extends MapController
       # We merge the misc payload fields into one dictionary - showing the latest combination of all data
       angular.extend(marker.payload, payload)
       p = marker.payload
-      if p.userName? && p.id? && p.summaryText?
+      if p.userName? && p.id? && p.vehicleText?
         avatarImg = if p.userAvatarImage?
           """<img src="#{p.userAvatarImage}?s=40&d=mm"></img>"""
         else

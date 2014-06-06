@@ -259,7 +259,7 @@ class LiveMapController extends MapController
           </table>
           """
       else
-        @log.warn("Skipping popup generation - not enough vehicle data")
+        @log.error("Skipping popup generation - not enough vehicle data")
 
   motionTracking: (vehicleKey, latlng) =>
     v = @scope.vehiclePaths[vehicleKey] ? { color: '#f76944', weight: 7, latlngs: []}

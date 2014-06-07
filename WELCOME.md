@@ -9,16 +9,24 @@
 * If you are making a new application (i.e. forking Droneshare or starting from scratch).  Please register
 your developer key [here](https://developer.3drobotics.com).
 
-# Thanks
+# Contributors
+
+The following developers have contributed substantial work in making this application better.  We would like to thank them for their efforts.
+
+* @mrpollo - Many fixes to make this application work better
+* @jason4short - UX guidance and fixes
+* @geeksville - Primary author (thus far)
+
+# Supporting projects
 
 We would like to thank the following open-source projects and contributors:
 
-* [AngularFun](https://github.com/CaryLandholt/AngularFun)
-* [Angular-UI](http://angular-ui.github.io/)
-* [Angular-JS](https://angularjs.org/)
-* [Bootstrap CSS](http://getbootstrap.com/)
-* [Flot](http://www.flotcharts.org/)
-* [Glyphicons](http://glyphicons.com/)
-* [Leaflet](http://leafletjs.com/)
-* [Mapbox](https://www.mapbox.com)
+* [AngularFun](https://github.com/CaryLandholt/AngularFun) - a great template project for starting AngularJS based applications.
+* [Angular-JS](https://angularjs.org/) - The web framework from Google that this application is built upon
+* [Angular-UI](http://angular-ui.github.io/) - Various look & feel enhancements for AngularJS
+* [Bootstrap CSS](http://getbootstrap.com/) - The ubiquitous CSS library
+* [Flot](http://www.flotcharts.org/) - Used for the data plot views
+* [Glyphicons](http://glyphicons.com/) - Provided some of the icons in this application
+* [Leaflet](http://leafletjs.com/) - An open source mapping framework
+* [Mapbox](https://www.mapbox.com) - A commercial provider of Leaflet extensions and mapping services
 

@@ -2,7 +2,7 @@
 
 Build Status: [![Dependency Status](https://www.codeship.io/projects/bdded4a0-a3ed-0131-b562-3a2ddf12dbeb/status)](https://www.codeship.io/projects/18633)
 
-The new version of droneshare - built upon the DroneAPI.
+The new version of droneshare - built upon the DroneAPI.  Please see our [welcome letter](WELCOME.md).
 
 ## Developers guide
 

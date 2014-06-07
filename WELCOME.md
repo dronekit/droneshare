@@ -6,6 +6,8 @@
 * For license information see [LICENSE](LICENSE)
 * For instructions on building see [README.md](README.md)
 * Questions? Just ask on our [discussion group](https://groups.google.com/forum/#!aboutgroup/drone-platform)
+* If you are making a new application (i.e. forking Droneshare or starting from scratch).  Please register
+your developer key [here](https://developer.3drobotics.com).
 
 # Thanks
 

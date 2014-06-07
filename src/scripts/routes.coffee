@@ -4,46 +4,46 @@ class Config
 
     $routeProvider
     .when '/create',
-      templateUrl: 'views/login/user-create.html'
+      templateUrl: '/views/login/user-create.html'
     .when '/confirm/:id/:verification',
-      templateUrl: 'views/login/email-confirm.html'
+      templateUrl: '/views/login/email-confirm.html'
     .when '/reset/:id/:verification',
-      templateUrl: 'views/login/password-reset-confirm.html'
+      templateUrl: '/views/login/password-reset-confirm.html'
     .when '/reset',
-      templateUrl: 'views/login/password-reset.html'
+      templateUrl: '/views/login/password-reset.html'
     .when '/logout',
-      templateUrl: 'views/login/logout.html'
+      templateUrl: '/views/login/logout.html'
     .when '/login',
-      templateUrl: 'views/login/login-window.html'
+      templateUrl: '/views/login/login-window.html'
     .when '/user',
-      templateUrl: 'views/user/list-all.html'
+      templateUrl: '/views/user/list-all.html'
     .when '/user/:id',
-      templateUrl: 'views/user/detail.html'
+      templateUrl: '/views/user/detail.html'
     .when '/vehicle',
-      templateUrl: 'views/vehicle-list.html'
+      templateUrl: '/views/vehicle-list.html'
     .when '/about',
-      templateUrl: 'views/about.html'
+      templateUrl: '/views/about.html'
     .when '/vehicle/:id',
-      templateUrl: 'views/vehicle-detail.html'
+      templateUrl: '/views/vehicle-detail.html'
     .when '/mission',
       title: 'Recent'
-      templateUrl: 'views/mission/list-window.html'
+      templateUrl: '/views/mission/list-window.html'
     .when '/mission/:id',
       controller: 'missionDetailController as controller'
       title: 'Detail'
-      templateUrl: 'views/mission/detail-window.html'
+      templateUrl: '/views/mission/detail-window.html'
     .when '/parameters/:id',
-      templateUrl: 'views/mission/parameters-window.html'
+      templateUrl: '/views/mission/parameters-window.html'
     .when '/plot/:id',
-      templateUrl: 'views/mission/plot-window.html'
+      templateUrl: '/views/mission/plot-window.html'
       #controller: 'missionDetailController'
     .when '/github/:id',
       controller: 'gitHubController'
     .when '/admin',
-      templateUrl: 'views/admin-screen.html'
+      templateUrl: '/views/admin-screen.html'
     .when '/',
       title: 'World'
-      templateUrl: 'views/site.html'
+      templateUrl: '/views/site.html'
     .otherwise
       redirectTo: '/'
 

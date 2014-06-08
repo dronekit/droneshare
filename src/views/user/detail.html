@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12 user-card">
                 <div class="row">
-                    <div class="avatar col-lg-2">
+                    <div ng-hide="!controller.record.avatarImage" class="avatar col-lg-2">
                         <img ng-src="{{controller.record.avatarImage}}?d=mm&size=95" class="img-rounded"/>
                     </div>
                     <div class="user-details col-lg-10">

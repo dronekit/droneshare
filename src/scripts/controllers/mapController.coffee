@@ -237,8 +237,14 @@ class LiveMapController extends MapController
       angular.extend(marker.payload, payload)
       p = marker.payload
       if p.userName? && p.id? && p.summaryText?
+        # Some fields might be missing
         avatarImg = if p.userAvatarImage?
           """<img src="#{p.userAvatarImage}?s=40&d=mm"></img>"""
+        else
+          ""
+
+        durationString = if p.flightDuration?
+          "#{Math.round(p.flightDuration / 60)} minutes<br>"
         else
           ""
 
@@ -253,7 +259,7 @@ class LiveMapController extends MapController
               <td>
                 <a href='/user/#{p.userName}'>#{p.userName}</a><br>
                 <a href='/mission/#{p.id}'>#{p.summaryText}</a><br>
-                #{Math.round(p.flightDuration / 60)} minutes<br>
+                #{durationString}
               </td>
             </tr>
           </table>

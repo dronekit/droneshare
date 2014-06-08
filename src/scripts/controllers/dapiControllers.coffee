@@ -168,7 +168,7 @@ class MissionController extends MultiRecordController
   @$inject: ['$log', '$scope', 'missionService']
   constructor: (log, scope, @service) ->
     @fetchParams =
-      order_by: "updatedAt"
+      order_by: "createdAt"
       order_dir: "desc"
       page_size: "12"
     super(log, scope)

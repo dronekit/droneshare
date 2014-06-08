@@ -14,7 +14,7 @@ your developer key [here](https://developer.3drobotics.com).
 The following developers have contributed substantial work in making this application better.  We would like to thank them for their efforts.
 
 * [Ramon Roche](https://github.com/mrpollo) - Many fixes to make this application work better
-* [Jason Short](https://github.com/jason4short)- UX guidance and fixes
+* [Jason Short](https://github.com/jason4short) - UX guidance and fixes
 * [Kevin Hester](https://github.com/geeksville) - Primary author (thus far)
 
 # Supporting projects

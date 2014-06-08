@@ -71,8 +71,8 @@ class BoundsFactory
     dirty
 
 class LiveMapController extends MapController
-  @$inject: ['$scope', '$log', 'leafletData', '$http', 'missionService', 'authService']
-  constructor: (scope, @log, leafletData, http, @missionService, @authService) ->
+  @$inject: ['$scope', '$log', 'leafletData', '$http', 'missionService', 'authService', '$window']
+  constructor: (scope, @log, leafletData, http, @missionService, @authService, @window) ->
     scope.leafletData = leafletData
     @boundsFactory = new BoundsFactory
 
@@ -208,9 +208,9 @@ class LiveMapController extends MapController
           if v.isMine
             mission.userAvatarImage + '?d=mm'
           else if isLive
-            'images/vehicle-marker-active.png'
+            @window.logos.vehicleMarkerActive
           else
-            'images/vehicle-marker-inactive.png'
+            @window.logos.vehicleMarkerInactive
         iconSize: [35, 35] #size of the icon
         iconAnchor: [17.5, 17.5] # point of the icon which will correspond to marker's location
         popupAnchor: [0, -17.5] # point from which the popup should open relative to the inconAnchor

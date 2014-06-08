@@ -20,7 +20,9 @@
         <script>
             window.logos = {
                 parent: "<%= config.getHashedFile('./.temp/images/3drobotics.png', {trim: './.temp'}) %>",
-                son: "<%= config.getHashedFile('./.temp/images/droneshare.png', {trim: './.temp'}) %>"
+                son: "<%= config.getHashedFile('./.temp/images/droneshare.png', {trim: './.temp'}) %>",
+                vehicleMarkerActive: "<%= config.getHashedFile('./.temp/images/vehicle-marker-active.png', {trim: './.temp'}) %>",
+                vehicleMarkerInactive: "<%= config.getHashedFile('./.temp/images/vehicle-marker-inactive.png', {trim: './.temp'}) %>"
             };
         </script>
     <% } else { %>

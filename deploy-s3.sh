@@ -21,6 +21,8 @@ if [ $SERVERNAME = production ]; then
     esac
 fi
 
+grunt prod
+
 BUCKETNAME=$SERVERNAME.droneshare.com
 export AWS_DEFAULT_PROFILE=3dr
 aws s3 mb s3://$BUCKETNAME || true

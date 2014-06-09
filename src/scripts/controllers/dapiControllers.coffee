@@ -179,10 +179,6 @@ class MissionController extends MultiRecordController
     date = new Date(rec.createdOn)
     rec.dateString = date.toDateString()
     rec.text = rec.summaryText ? "Mission #{rec.id}"
-
-    # Temp hack - server has some records encoded with "near " at the beginning
-    # Remove this after next DB rebuild
-    rec.text = rec.text.replace(/(?:near )?(.*)/, '$1')
     rec
 
 class UserController extends MultiRecordController
@@ -407,6 +403,11 @@ class MissionDetailController extends DetailController
   # We update open social data so facebook shows nice content
   handle_fetch_response: (data) ->
     super(data)
+
+    # FIXME - unify these fixups with the regular mission record fetch - should be in the service instead!
+    date = new Date(data.createdOn)
+    data.dateString = date.toDateString()
+
     @log.info('Setting root scope')
     @rootScope.ogImage = data.mapThumbnailURL
     @rootScope.ogDescription = data.userName + " flew their drone in " +

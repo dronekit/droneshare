@@ -4,10 +4,11 @@ apiKey = "eb34bd67.megadroneshare"
 atmosphereOptions =
   contentType : 'application/json'
   transport : 'websocket'
-  reconnectInterval : 5000
+  connectTimeout : 10000 # 10s timeout before fallback to streaming
+  reconnectInterval : 30000
   enableXDR: true
   timeout : 60000
-  fallbackTransport: 'jsonp' # Server might have issues with 'long-polling'
+  fallbackTransport: 'streaming' # Server might has issues with 'long-polling'
   headers:
     api_key: apiKey
   #onError: (resp) =>

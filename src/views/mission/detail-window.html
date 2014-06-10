@@ -25,7 +25,7 @@
 
                 <!-- This is the dropdown menu of owner specific operations (delete etc) -->
                 <div class="btn-group col col-xs-1" dropdown ng-show="controller.isMine()" is-open="status.isopen">
-                  <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+                  <button type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled">
                     <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -89,7 +89,7 @@
                 </div>
             </div>
 
-<!-- FIXME - something busted showing modal dialogs reliably
+            <!-- The plot/parameters button bar - sometimes these modals show up empty in debug mode - but seem to work in production -->
             <div class="col-md-12">
                 <div class="row">
                         <div class="btn-group">
@@ -99,7 +99,6 @@
                         </div>
                 </div>
             </div>
--->
 
             <div class="col-md-12">
                 <div class="row downloads">

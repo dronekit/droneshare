@@ -214,7 +214,7 @@ angular.module('app').controller 'emailConfirmController', EmailConfirmControlle
 
 # A controller that shows just a single record
 class DetailController extends BaseController
-  constructor: (scope, @routeParams) ->
+  constructor: (scope, @routeParams, @window) ->
     super(scope)
 
     # Useful for constructing sub urls in the HTML
@@ -250,7 +250,8 @@ class DetailController extends BaseController
     @record
 
   # Subclasses can override if they want to do something after deletion
-  handle_delete_response: () ->
+  handle_delete_response: () =>
+    @window.history.back() # Our page probably just went away - go back to where we came from
 
   # Normally the response to submit is used to update the local model, subclasses can override
   handle_submit_response: (data) =>
@@ -266,9 +267,9 @@ class DetailController extends BaseController
     @original_record = angular.copy(@record) # deep copy to compare against
 
 class UserDetailController extends DetailController
-  @$inject: ['$log', '$scope', '$routeParams', 'userService', 'authService']
-  constructor: (@log, scope, routeParams, @service, @authService) ->
-    super(scope, routeParams)
+  @$inject: ['$log', '$scope', '$routeParams', 'userService', 'authService', '$window']
+  constructor: (@log, scope, routeParams, @service, @authService, window) ->
+    super(scope, routeParams, window)
 
     @scope.$on('vehicleAdded', (event, args) =>
       @log.debug('fetching due to add')
@@ -293,9 +294,9 @@ class UserDetailController extends DetailController
       @scope.showEditForm()
 
 class VehicleDetailController extends DetailController
-  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService', 'authService', '$location']
-  constructor: (@upload, @log, scope, routeParams, @service, @authService, @location) ->
-    super(scope, routeParams)
+  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService', 'authService', '$window' ]
+  constructor: (@upload, @log, scope, routeParams, @service, @authService, window) ->
+    super(scope, routeParams, window)
 
     @uploading = false
     @upload_progress = 0
@@ -333,14 +334,10 @@ class VehicleDetailController extends DetailController
       me = @authService.getUser()
       me.loggedIn && (@record?.userId == me.id)
 
-  # Subclasses can override if they want to do something after deletion
-  handle_delete_response: () =>
-    @location.path("/user/" + @authService.getUser().login)
-
 class MissionDetailController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService']
-  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService) ->
-    super(scope, routeParams)
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService', '$window']
+  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService, window) ->
+    super(scope, routeParams, window)
     @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}
     @scope.bounds = {}

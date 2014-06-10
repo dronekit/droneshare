@@ -17,12 +17,21 @@
                 <!-- <div class="col col-sm-3 avatar">
                     <img src="http://placehold.it/40x40">
                 </div> -->
-                <div class="col col-xs-9 contact-card">
+                <div class="col col-xs-7 contact-card">
                     <span class="name"><a ng-href="/user/{{record.userName}}">{{ record.userName }}</a></span><br>
                     <span class="vehicle-type"><a ng-href="/vehicle/{{record.vehicleId}}">{{ record.vehicleText }}</a></span>
 
                 </div>
 
+                <!-- This is the dropdown menu of owner specific operations (delete etc) -->
+                <div class="btn-group col col-xs-1" dropdown ng-show="controller.isMine()" is-open="status.isopen">
+                  <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+                    <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li><a href="" ng-click="controller.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+                  </ul>
+                </div>
             </div>
         </div>
 

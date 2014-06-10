@@ -8,7 +8,8 @@ atmosphereOptions =
   reconnectInterval : 30000
   enableXDR: true
   timeout : 60000
-  fallbackTransport: 'streaming' # Server might has issues with 'long-polling'
+  pollingInterval : 5000
+  fallbackTransport: 'long-polling' # Server might has issues with 'long-polling'
   headers:
     api_key: apiKey
   #onError: (resp) =>

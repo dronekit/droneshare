@@ -220,6 +220,13 @@ class DetailController extends BaseController
     # Useful for constructing sub urls in the HTML
     @urlBase = @service.urlId(@routeParams.id)
 
+    @delete = () =>
+      @clear_all()
+      @service.delete(@routeParams.id).then (results) =>
+        @handle_delete_response()
+      , (results) =>
+        @set_http_error(results)
+
     @fetch_record = () =>
       @clear_all()
       @service.getId(@routeParams.id).then (results) =>
@@ -241,6 +248,9 @@ class DetailController extends BaseController
   # Subclasses can override if they would like to strip content out before submitting
   get_record_for_submit: =>
     @record
+
+  # Subclasses can override if they want to do something after deletion
+  handle_delete_response: () ->
 
   # Normally the response to submit is used to update the local model, subclasses can override
   handle_submit_response: (data) =>
@@ -283,8 +293,8 @@ class UserDetailController extends DetailController
       @scope.showEditForm()
 
 class VehicleDetailController extends DetailController
-  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService', 'authService']
-  constructor: (@upload, @log, scope, routeParams, @service, @authService) ->
+  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService', 'authService', '$location']
+  constructor: (@upload, @log, scope, routeParams, @service, @authService, @location) ->
     super(scope, routeParams)
 
     @uploading = false
@@ -322,6 +332,10 @@ class VehicleDetailController extends DetailController
     @isMine = () =>
       me = @authService.getUser()
       me.loggedIn && (@record?.userId == me.id)
+
+  # Subclasses can override if they want to do something after deletion
+  handle_delete_response: () =>
+    @location.path("/user/" + @authService.getUser().login)
 
 class MissionDetailController extends DetailController
   @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService']

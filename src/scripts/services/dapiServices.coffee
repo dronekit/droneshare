@@ -85,6 +85,11 @@ class RESTService extends DapiService
     c = angular.extend(c ? {}, @config)
     @http.post("#{@urlBase()}/#{id}", obj, c)
 
+  delete: (id, c) =>
+    @log.debug("Deleting #{@endpoint}/#{id}")
+    c = angular.extend(c ? {}, @config)
+    @http.delete("#{@urlBase()}/#{id}", c)
+
   # Dynamically create a new record
   append: (obj, c) =>
     @log.debug("Appending to #{@endpoint}")

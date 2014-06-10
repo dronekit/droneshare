@@ -54,21 +54,30 @@
 
 
                 <div ng-show="controller.isMine()" class="col-lg-6" ng-cloak>
-                    <div ng-hide="controller.uploading">
+                    <div class="row">
+                        <div ng-hide="controller.uploading">
 
-                        <div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
-                            <input type="file" ng-file-select="onFileSelect($files)" multiple>
+                            <div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
+                                <input type="file" ng-file-select="onFileSelect($files)" multiple>
+                            </div>
+
+                            <div ng-file-drop="controller.on_file_select($files)" class="drop-box" ng-show="dropSupported">
+                                Drag and drop flight logs (tlogs) here to upload
+                            </div>
+
                         </div>
 
-                        <div ng-file-drop="controller.on_file_select($files)" class="drop-box" ng-show="dropSupported">
-                            Drag and drop flight logs (tlogs) here to upload
+                        <div ng-show="controller.uploading">
+                            <h5>Uploading...</h5>
+                            <progressbar  value="controller.upload_progress" animate="true" class="progress-striped active" type="success"></progressbar>
                         </div>
-
                     </div>
 
-                    <div ng-show="controller.uploading">
-                        <h5>Uploading...</h5>
-                        <progressbar  value="controller.upload_progress" animate="true" class="progress-striped active" type="success"></progressbar>
+                    <div class="row">
+                        <br/> <!-- FIXME - how to better make vertical space? -->
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="controller.delete()">
+                            <span class="glyphicon glyphicon-trash"></span> Delete Vehicle
+                        </button>
                     </div>
                 </div>
 

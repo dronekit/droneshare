@@ -325,7 +325,7 @@ class VehicleDetailController extends DetailController
       .error((data, status, headers) =>
         @uploading = false
         if status == 406
-          @add_error('The server found that flight boring...')
+          @add_error('No location data found in that file...')
         else
           @add_error('Upload failed: ' + data)
       )

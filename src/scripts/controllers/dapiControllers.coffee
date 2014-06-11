@@ -324,10 +324,7 @@ class VehicleDetailController extends DetailController
         )
       .error((data, status, headers) =>
         @uploading = false
-        if status == 406
-          @add_error('No location data found in that file...')
-        else
-          @add_error('Upload failed: ' + data)
+        @add_error(data.message)
       )
 
     @isMine = () =>

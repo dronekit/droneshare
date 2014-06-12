@@ -126,6 +126,9 @@ class LiveMapController extends MapController
       # It is also _guaranteed_ to be sent before any start/update msgs on the stream
       "user": @onMissionUpdate
 
+      # Server sends this if a message gets deleted
+      "delete": @onMissionDelete
+
       "mystery": @updateVehicleMessage
       "text": @updateVehicleMessage
 
@@ -164,6 +167,11 @@ class LiveMapController extends MapController
         @updateMarkerPopup(v, payload)
         if v.isMine
           @zoomToVehicle(v)
+
+  onMissionDelete: (data) =>
+    @scope.$apply () =>
+      key = @vehicleKey(data.missionId)
+      delete @scope.vehicleMarkers[key]
 
   onMissionEnd: (data) =>
     vehicleKey = @vehicleKey(data.missionId)

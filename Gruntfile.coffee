@@ -174,28 +174,29 @@ module.exports = (grunt) ->
           ]
           captureTimeout: 5000
           colors: true
-          files: [
-            'dist/scripts/libs/angular.min.js'
-            'dist/scripts/libs/angular-animate.min.js'
-            'dist/scripts/libs/angular-route.min.js'
-            'bower_components/scripts/libs/angular-mocks.js'
-            'dist/**/*.js'
-            'test/**/*.{coffee,js}'
-          ]
           frameworks: [
             'jasmine'
           ]
-          junitReporter:
-            outputFile: 'test-results.xml'
           keepalive: false
           logLevel: 'INFO'
           port: 9876
-          preprocessors:
-            '**/*.coffee': 'coffee'
           reporters: [
             'dots'
-            'junit'
             'progress'
+          ]
+          preprocessors: {
+            '**/*.coffee': 'coffee'
+          }
+          files: [
+            {pattern: 'dist/scripts/libs/angular.min.js', watched: false, served: true, included: true}
+            {pattern: 'dist/scripts/libs/angular*.min.js', watched: false, served: true, included: true}
+            {pattern: 'test/fixtures/*.json', watched: false, served: true, included: false}
+            {pattern: 'bower_components/scripts/libs/angular-mocks.js', watched: false, served: true, included: true}
+            {pattern: 'dist/scripts/libs/mapbox.js', watched: false, served: true, included: true}
+            {pattern: 'dist/scripts/libs/jquery.js', watched: false, served: true, included: true}
+            {pattern: 'bower_components/scripts/libs/jasmine-jquery.js', watched: false, served: true, included: true}
+            {pattern: 'dist/**/*.js', watched: false, served: true, included: true}
+            {pattern: 'test/**/*.coffee', watched: true, served: true, included: true}
           ]
           runnerPort: 9100
           singleRun: true

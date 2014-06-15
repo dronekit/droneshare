@@ -21,6 +21,8 @@ if [ $SERVERNAME = production ]; then
     esac
 fi
 
+# Kill any running dev server, then start a prod build
+skill grunt
 grunt prod
 
 BUCKETNAME=$SERVERNAME.droneshare.com

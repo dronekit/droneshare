@@ -6,15 +6,17 @@
     </div>
     <div class="clearfix mission-info">
         <div class="col-md-3">
-            <img ng-show="mission.userAvatarImage" ng-src="{{mission.userAvatarImage}}?s=40&d=mm" class="img-rounded" />
+            <a ng-href="/user/{{mission.userName}}"><img ng-show="mission.userAvatarImage" ng-src="{{mission.userAvatarImage}}?s=40&d=mm" class="img-rounded" /></a>
         </div>
         <div class="col-md-9">
             <h6><a ng-href="/user/{{mission.userName}}" ng-bind="mission.userName"></a></h6>
 
             <ul class="list-unstyled">
-                <li>in <a ng-href="/mission/{{mission.id}}" ng-bind="mission.summaryText">flew</a></li>
-                <li>{{mission.dateString}}</li>
-                <li ng-hide="!mission.flightDuration">Flight time: {{mission.flightDuration | duration}}</li>
+                <a ng-href="/mission/{{mission.id}}">
+                    <li>{{mission.summaryText}}</li>
+                    <li>{{mission.dateString}}</li>
+                    <li ng-hide="!mission.flightDuration">Flight time: {{mission.flightDuration | duration}}</li>
+                </a>
             </ul>
         </div>
     </div>

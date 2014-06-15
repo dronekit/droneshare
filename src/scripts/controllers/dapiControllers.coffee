@@ -176,6 +176,8 @@ class MissionController extends MultiRecordController
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) ->
+    # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
+    # a way to share this code!
     date = new Date(rec.createdOn)
     rec.dateString = date.toDateString()
     rec.text = rec.summaryText ? "Mission #{rec.id}"
@@ -330,6 +332,17 @@ class VehicleDetailController extends DetailController
     @isMine = () =>
       me = @authService.getUser()
       me.loggedIn && (@record?.userId == me.id)
+
+  # Normally the response to submit is used to update the local model, subclasses can override
+  handle_fetch_response: (data) =>
+    for rec in data.missions
+      # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
+      # a way to share this code!
+      date = new Date(rec.createdOn)
+      rec.dateString = date.toDateString()
+      rec.text = rec.summaryText ? "Mission #{rec.id}"
+
+    super(data)
 
 class MissionDetailController extends DetailController
   @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService', '$window']

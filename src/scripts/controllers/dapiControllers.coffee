@@ -164,6 +164,13 @@ class MultiRecordController extends BaseController
     .then (results) ->
       results
 
+# Find a better way to share this code between mission, vehicle, etc...
+fixupMission = (rec) ->
+  date = new Date(rec.createdOn)
+  rec.dateString = date.toDateString() + " - " + date.toLocaleTimeString()
+  rec.text = rec.summaryText ? "Mission #{rec.id}"
+  rec
+
 class MissionController extends MultiRecordController
   @$inject: ['$log', '$scope', 'missionService']
   constructor: (log, scope, @service) ->
@@ -178,10 +185,7 @@ class MissionController extends MultiRecordController
   extendRecord: (rec) ->
     # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
     # a way to share this code!
-    date = new Date(rec.createdOn)
-    rec.dateString = date.toDateString()
-    rec.text = rec.summaryText ? "Mission #{rec.id}"
-    rec
+    fixupMission(rec)
 
 class UserController extends MultiRecordController
   @$inject: ['$log', '$scope', 'userService']
@@ -338,9 +342,7 @@ class VehicleDetailController extends DetailController
     for rec in data.missions
       # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
       # a way to share this code!
-      date = new Date(rec.createdOn)
-      rec.dateString = date.toDateString()
-      rec.text = rec.summaryText ? "Mission #{rec.id}"
+      fixupMission(rec)
 
     super(data)
 
@@ -426,8 +428,7 @@ class MissionDetailController extends DetailController
     super(data)
 
     # FIXME - unify these fixups with the regular mission record fetch - should be in the service instead!
-    date = new Date(data.createdOn)
-    data.dateString = date.toDateString()
+    fixupMission(data)
 
     @log.info('Setting root scope')
     @rootScope.ogImage = data.mapThumbnailURL

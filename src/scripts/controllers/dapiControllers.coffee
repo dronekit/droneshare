@@ -445,6 +445,11 @@ class MissionParameterController extends BaseController
     @service.get_parameters(@routeParams.id).then (httpResp) =>
       @log.debug("Setting parameters")
       @parameters = httpResp.data
+      @hasBad = false
+      for p in @parameters
+        @hasBad = @hasBad || !(p.rangeOk ? true)
+        if p.rangeOk?
+          p.style = if p.rangeOk then "param-good" else "param-bad"
 
 class MissionPlotController extends BaseController
   @$inject: ['$log', '$scope', '$routeParams', 'missionService']

@@ -213,6 +213,12 @@ class MissionService extends RESTService
     .success (results) ->
       results.data
 
+  get_analysis: (id) ->
+    c = angular.extend({}, @config)
+    @http.get("#{@urlBase()}/#{id}/analysis.json", c)
+    .success (results) ->
+      results.data
+
   get_geojson: (id) ->
     c = angular.extend({}, @config)
     @http.get("#{@urlBase()}/#{id}/messages.geo.json", c)

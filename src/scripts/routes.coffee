@@ -34,6 +34,8 @@ class Config
       templateUrl: '/views/mission/detail-window.html'
     .when '/parameters/:id',
       templateUrl: '/views/mission/parameters-window.html'
+    .when '/analysis/:id',
+      templateUrl: '/views/mission/analysis-window.html'
     .when '/plot/:id',
       templateUrl: '/views/mission/plot-window.html'
       #controller: 'missionDetailController'

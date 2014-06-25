@@ -398,19 +398,11 @@ class MissionDetailController extends DetailController
         # backdrop: 'static'
         # windowClass: 'parameters-modal fade'
 
-      # FIXME - use resolve to pass in state to the child
-      #resolve: {
-      #  items: function () {
-      #    return $scope.items;
-      #  }
-      #}
-
-      # Do something like the following if we want to get results back
-      #dialog.result.then(function (selectedItem) {
-      #  $scope.selected = selectedItem;
-      #}, function () {
-      #  $log.info('Modal dismissed at: ' + new Date());
-      #});
+    @show_analysis = () =>
+      @log.info('opening analysis')
+      dialog = @modal.open
+        templateUrl: '/views/mission/analysis-modal.html'
+        controller: 'missionAnalysisController as controller'
 
   # Subclasses can override if they would like to strip content out before submitting
   get_record_for_submit: =>
@@ -466,15 +458,25 @@ class MissionPlotController extends BaseController
         interactive : true
     @scope.plotData = {}
 
-    # Prefetch params - FIXME - only fetch as needed?
     @log.debug("Fetching plot data for " + @routeParams.id)
     @service.get_plotdata(@routeParams.id).then (httpResp) =>
       @log.debug("Setting plot")
       @scope.plotData = httpResp.data
+
+class MissionAnalysisController extends BaseController
+  @$inject: ['$log', '$scope', '$routeParams', 'missionService']
+  constructor: (@log, scope, @routeParams, @service) ->
+    super(scope)
+
+    @log.debug("Fetching analysis data for " + @routeParams.id)
+    @service.get_analysis(@routeParams.id).then (httpResp) =>
+      @log.debug("Setting analysis")
+      @scope.report = httpResp.data
 
 angular.module('app').controller 'userDetailController', UserDetailController
 angular.module('app').controller 'vehicleDetailController', VehicleDetailController
 angular.module('app').controller 'missionDetailController', MissionDetailController
 angular.module('app').controller 'missionParameterController', MissionParameterController
 angular.module('app').controller 'missionPlotController', MissionPlotController
+angular.module('app').controller 'missionAnalysisController', MissionAnalysisController
 

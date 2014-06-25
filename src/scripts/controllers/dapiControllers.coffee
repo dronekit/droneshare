@@ -469,9 +469,14 @@ class MissionAnalysisController extends BaseController
     super(scope)
 
     @log.debug("Fetching analysis data for " + @routeParams.id)
-    @service.get_analysis(@routeParams.id).then (httpResp) =>
+    @service.get_analysis(@routeParams.id)
+    .success (httpResp) =>
       @log.debug("Setting analysis")
-      @scope.report = httpResp.data
+      @scope.report = httpResp
+    .error (httpResp, status) =>
+      @log.error("Error in analysis")
+      if status == 410 # data unavailable
+        @scope.errorMessage = httpResp.message
 
 angular.module('app').controller 'userDetailController', UserDetailController
 angular.module('app').controller 'vehicleDetailController', VehicleDetailController

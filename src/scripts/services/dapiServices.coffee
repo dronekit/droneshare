@@ -222,8 +222,6 @@ class MissionService extends RESTService
   get_geojson: (id) ->
     c = angular.extend({}, @config)
     @http.get("#{@urlBase()}/#{id}/messages.geo.json", c)
-    .then (results) ->
-      results.data
 
 # Server admin operations - not useful to users/developers
 class AdminService extends RESTService

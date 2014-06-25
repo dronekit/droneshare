@@ -8,8 +8,11 @@ mistakes or be unable to analyze some flights.  If you are interested in improvi
 we welcome any contributions.
 </alert>
 
+<alert type="danger" ng-show="errorMessage">
+{{errorMessage}}
+</alert>
 
-<table class="table table-striped" >
+<table class="table table-striped" ng-hide="errorMessage">
     <thead>
         <tr>
             <td>Status</td>

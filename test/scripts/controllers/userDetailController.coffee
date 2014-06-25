@@ -31,4 +31,4 @@ describe "userDetailController", ->
 
       # force check of admin
       spyOn(@userDetailController, 'isMe').and.returnValue(false)
-      expect(@userDetailController.isMeOrAdmin()).toBeTruthy()
+      expect(@userDetailController.isMeOrAdmin()).not.toBeTruthy()

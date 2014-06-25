@@ -112,7 +112,7 @@ class LiveMapController extends MapController
     listeners =
       "loc": @onLive
       "att": @onAttitude
-      "end": @onMissionEnd
+      "stop": @onMissionDelete
       "mode": @updateVehicleMessage
       "arm": @updateVehicleMessage
 
@@ -172,11 +172,6 @@ class LiveMapController extends MapController
     @scope.$apply () =>
       key = @vehicleKey(data.missionId)
       delete @scope.vehicleMarkers[key]
-
-  onMissionEnd: (data) =>
-    vehicleKey = @vehicleKey(data.missionId)
-    delete @scope.vehicleMarkers[vehicleKey]
-    delete @scope.vehiclePaths[vehicleKey]
 
   # Zoom to vehicle, if it is different from the previous targeted vehicle
   zoomToVehicle: (vehicle) =>

@@ -55,7 +55,6 @@
     "grunt-contrib-jasmine": "^0.6.5",
     "karma-coffee-preprocessor": "^0.2.1",
     "karma-jasmine": "^0.2.2",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "karma-safari-launcher": "^0.1.1"
+    "karma-phantomjs-launcher": "^0.1.4"
   }
 }

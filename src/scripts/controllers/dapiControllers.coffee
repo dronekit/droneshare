@@ -422,6 +422,9 @@ class MissionDetailController extends DetailController
     # FIXME - unify these fixups with the regular mission record fetch - should be in the service instead!
     fixupMission(data)
 
+    if !data.latitude?
+      @set_error('This mission did not include location data')
+
     @log.info('Setting root scope')
     @rootScope.ogImage = data.mapThumbnailURL
     @rootScope.ogDescription = data.userName + " flew their drone in " +

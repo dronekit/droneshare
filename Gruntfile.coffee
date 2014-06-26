@@ -512,6 +512,7 @@ module.exports = (grunt) ->
     'clean:working'
     'coffeelint'
     'copy:app'
+    'ngTemplateCache'
     'shimmer:dev'
     'coffee:app'
     'less'

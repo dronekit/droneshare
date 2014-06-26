@@ -2,12 +2,14 @@ describe "missionDetailController", ->
   beforeEach module 'app'
   beforeEach inject ($rootScope, $controller, _$httpBackend_) ->
     loadJSONFixtures 'user.json'
-    loadJSONFixtures 'vehicle.json'
+    loadJSONFixtures 'mission.json'
     loadJSONFixtures 'messages.geo.json'
+
     @scope = $rootScope.$new()
     @user = getJSONFixture 'user.json'
     @mission = getJSONFixture 'mission.json'
     @geojson = getJSONFixture 'messages.geo.json'
+
     routeParamsStub = jasmine.createSpy('routeParamsStub')
     routeParamsStub.id = 218
 

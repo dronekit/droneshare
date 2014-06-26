@@ -3,7 +3,7 @@
   "notes": "Imported from Droneshare",
   "isLive": false,
   "viewPrivacy": "DEFAULT",
-  "vehicleId": 16,
+  "vehicleId": 218,
   "maxAlt": 29.72,
   "maxGroundspeed": 0.029999999329447746,
   "maxAirspeed": 0.029999999329447746,
@@ -14,11 +14,11 @@
   "softwareGit": "",
   "createdOn": "2014-05-08T18:49Z",
   "updatedOn": "2014-06-17T17:11Z",
-  "summaryText": "Gardabaer, Reykjavík, Iceland",
+  "summaryText": "San Diego, California, United States",
   "mapThumbnailURL": "http://api.tiles.mapbox.com/v3/kevin3dr.hokdl9ko/pin-s-heliport+f44(-21.9295,64.1300,2)/-21.9295,64.1300,2/140x100.png",
   "viewURL": "http://www.droneshare.com/mission/100",
-  "vehicleText": "Imported from Droneshare",
-  "userName": "hafsteinn",
+  "vehicleText": "quadcopter",
+  "userName": "mrpollo",
   "numParameters": 331,
   "vehicleType": "quadcopter"
 }

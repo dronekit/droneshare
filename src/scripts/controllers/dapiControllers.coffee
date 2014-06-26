@@ -357,7 +357,7 @@ class MissionDetailController extends DetailController
 
     @service.get_geojson(@routeParams.id).then (result) =>
       @log.debug("Setting geojson")
-      @geojson = result
+      @geojson = result.data
       @scope.geojson =
         data: @geojson
         style:

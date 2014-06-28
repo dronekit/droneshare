@@ -1,6 +1,23 @@
 
 apiKey = "eb34bd67.megadroneshare"
 
+# A deep merge of two objects (as opposed to the shallow merge from angular.extend)
+merge = (obj1, obj2) ->
+  result = {} # (kinda non ideomatic, but oh well)
+
+  for k, v of obj1
+    newv = if (k of obj2) && (typeof v == "object")
+      merge(v, obj2[k]) # if an object merge
+    else
+      v
+    result[k] = newv
+
+  for k, v of obj2 # add missing keys
+    if !(k of result)
+      result[k] = v
+
+  result
+
 atmosphereOptions =
   contentType : 'application/json'
   transport : 'websocket'
@@ -82,7 +99,7 @@ class RESTService extends DapiService
 
   postId: (id, obj, c) =>
     @log.debug("Posting to #{@endpoint}/#{id}")
-    c = angular.extend(c ? {}, @config)
+    c = merge(c ? {}, @config)
     @http.post("#{@urlBase()}/#{id}", obj, c)
 
   delete: (id, c) =>
@@ -122,11 +139,11 @@ class AuthService extends RESTService
     config =
       headers:
         'Content-Type': 'application/x-www-form-urlencoded'
-      params:
-        login: loginName
-        password: password
     @log.debug("Attempting login for #{loginName}")
-    @postId("login", {}, config)
+    data = $.param
+      login: loginName
+      password: password
+    @postId("login", data, config)
     .success (results) =>
       @log.debug("Logged in!")
       @setLoggedIn(results)

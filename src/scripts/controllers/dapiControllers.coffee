@@ -347,8 +347,8 @@ class VehicleDetailController extends DetailController
     super(data)
 
 class MissionDetailController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService', '$window']
-  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService, window) ->
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService', '$window', '$sce']
+  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService, window, @sce) ->
     super(scope, routeParams, window)
     @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}
@@ -404,6 +404,12 @@ class MissionDetailController extends DetailController
         templateUrl: '/views/mission/analysis-modal.html'
         controller: 'missionAnalysisController as controller'
 
+    @show_doarama = () =>
+      @log.info('opening doarama')
+      dialog = @modal.open
+        templateUrl: '/views/mission/doarama-modal.html'
+        controller: 'missionDetailController as controller'
+
   # Subclasses can override if they would like to strip content out before submitting
   get_record_for_submit: =>
     # The server doesn't understand this yet
@@ -416,7 +422,7 @@ class MissionDetailController extends DetailController
     # We just ignore the response (for snappy gui action)
 
   # We update open social data so facebook shows nice content
-  handle_fetch_response: (data) ->
+  handle_fetch_response: (data) =>
     super(data)
 
     # FIXME - unify these fixups with the regular mission record fetch - should be in the service instead!
@@ -430,6 +436,12 @@ class MissionDetailController extends DetailController
     @rootScope.ogDescription = data.userName + " flew their drone in " +
       data.summaryText + " for " + Math.round(data.flightDuration / 60) + " minutes."
     @rootScope.ogTitle = data.userName + "'s flight"
+
+    # We need to tell angular to allow access to this external URL as trusted
+    if data.doaramaURL?
+      url = data.doaramaURL + "&name=#{encodeURIComponent(data.userName)}&avatar=#{encodeURIComponent(data.userAvatarImage)}"
+      url = @sce.trustAsResourceUrl(url)
+      @scope.doaramaURL = url
 
 class MissionParameterController extends BaseController
   @$inject: ['$log', '$scope', '$routeParams', 'missionService']

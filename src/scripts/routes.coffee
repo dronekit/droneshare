@@ -36,6 +36,8 @@ class Config
       templateUrl: '/views/mission/parameters-window.html'
     .when '/analysis/:id',
       templateUrl: '/views/mission/analysis-window.html'
+    .when '/doarama/:id',
+      templateUrl: '/views/mission/doarama-window.html'
     .when '/plot/:id',
       templateUrl: '/views/mission/plot-window.html'
       #controller: 'missionDetailController'

@@ -410,7 +410,8 @@ class MissionDetailController extends DetailController
       yOffset = 300
       x = (@window.screenX || @window.screenLeft || 0) + (xOffset || 0)
       y = (@window.screenY || @window.screenTop || 0) + (yOffset || 0)
-      @window.open(@scope.doaramaURL, 'doaramaWindow', "width=940,height=420,scrollbars=no,left=#{x},top=#{y}")
+      name = 'doarama' + @record.id
+      @window.open(@scope.doaramaURL, name, "width=940,height=420,scrollbars=no,left=#{x},top=#{y}")
 
   # Subclasses can override if they would like to strip content out before submitting
   get_record_for_submit: =>
@@ -441,7 +442,8 @@ class MissionDetailController extends DetailController
 
     # We need to tell angular to allow access to this external URL as trusted
     if data.doaramaURL?
-      url = data.doaramaURL + "&name=#{encodeURIComponent(data.userName)}&avatar=#{encodeURIComponent(data.userAvatarImage)}"
+      avatar = encodeURIComponent(data.userAvatarImage)
+      url = data.doaramaURL + "&name=#{encodeURIComponent(data.userName)}&avatar=#{avatar}"
       # no need to do this if we are just opening regular windows url = @sce.trustAsResourceUrl(url)
       @log.info("Doarama at #{url}")
       @scope.doaramaURL = url

@@ -199,7 +199,7 @@ module.exports = (grunt) ->
             {pattern: 'test/**/*.coffee', watched: true, served: true, included: true}
           ]
           runnerPort: 9100
-          singleRun: true
+          singleRun: !grunt.option('watch')
 
     # Compile LESS (.less) files to CSS (.css)
     less:

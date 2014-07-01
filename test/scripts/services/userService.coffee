@@ -9,7 +9,7 @@ describe "userService", ->
       order_dir: "desc"
       page_size: "12"
 
-    @urlBase = 'http://api.droneshare.com/api/v1'
+    @urlBase = 'https://api.3drobotics.com/api/v1'
 
   it 'should get missions', inject ['$httpBackend', 'missionService', ($httpBackend, missionService) ->
     loadJSONFixtures('missions.json')

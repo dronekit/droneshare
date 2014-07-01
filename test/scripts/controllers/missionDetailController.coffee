@@ -14,11 +14,11 @@ describe "missionDetailController", ->
     routeParamsStub.id = 218
 
     @userDetailController = $controller('missionDetailController', { '$scope': @scope, '$routeParams': routeParamsStub })
-    @urlBase = 'http://api.droneshare.com/api/v1'
+    @urlBase = 'https://api.3drobotics.com/api/v1'
     @httpBackend = _$httpBackend_
-    @httpBackend.expectGET("#{@urlBase}/auth/user").respond 200, @user
-    @httpBackend.expectGET("#{@urlBase}/mission/#{routeParamsStub.id}").respond 200, @mission
-    @httpBackend.expectGET("#{@urlBase}/mission/#{routeParamsStub.id}/messages.geo.json").respond 200, @geojson
+    @httpBackend.whenGET("#{@urlBase}/auth/user").respond 200, @user
+    @httpBackend.whenGET("#{@urlBase}/mission/#{routeParamsStub.id}").respond 200, @mission
+    @httpBackend.whenGET("#{@urlBase}/mission/#{routeParamsStub.id}/messages.geo.json").respond 200, @geojson
 
   it 'gets mission record by params', ->
     expect(@scope.record).toBeUndefined()
@@ -44,7 +44,7 @@ describe "missionDetailController", ->
       expect(@scope.bounds.northEast.lat).toEqual @geojson.bbox[4]
 
   describe 'handle_fetch_response', ->
-    it 'gets formats date to present tu users', ->
+    it 'gets formats date to present to users', ->
       @scope.$apply()
       @httpBackend.flush()
       expect(@scope.record.dateString).toEqual (new Date(@mission.createdOn)).toDateString()

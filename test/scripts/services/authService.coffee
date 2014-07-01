@@ -73,7 +73,7 @@ describe "authService", ->
       @httpBackend.whenGET("#{@urlBase}/auth/user").respond 401, {}
 
     it 'posts user credentials to API', ->
-      @httpBackend.expectPOST("#{@urlBase}/auth/login?login=mrpollo&password=password").respond @user
+      @httpBackend.expectPOST("#{@urlBase}/auth/login").respond @user
 
       spyOn(@authService, 'postId').and.callThrough()
       @authService.login 'mrpollo', 'password'
@@ -87,7 +87,7 @@ describe "authService", ->
     # but after careful review its not POSTing data as form-urlendcode
     # instead is doing app/js with utf8
     xit 'posts user credentials to API with a form content type', ->
-      @httpBackend.expectPOST("#{@urlBase}/auth/login?login=mrpollo&password=password", {}, (headers) ->
+      @httpBackend.expectPOST("#{@urlBase}/auth/login", {}, (headers) ->
         return headers['Content-Type'] == 'application/x-wwww-form-urlencoded'
       ).respond @user
 

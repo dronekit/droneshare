@@ -1,0 +1,1880 @@
+[{
+  "id": "ACRO_RP_P",
+  "value": "4.5",
+  "doc": "Converts pilot roll and pitch into a desired rate of rotation in ACRO and SPORT mode.  Higher values mean faster rate of rotation.",
+  "rangeOk": true,
+  "range": [
+    1,
+    10
+  ]
+},
+{
+  "id": "AHRS_COMP_BETA",
+  "value": "0.1",
+  "doc": "This controls the time constant for the cross-over frequency used to fuse AHRS (airspeed and heading) and GPS data to estimate ground velocity. Time constant is 0.1/beta. A larger time constant will use GPS data less and a small time constant will use air data less.",
+  "rangeOk": true,
+  "range": [
+    0.0010000000474974513,
+    0.5
+  ]
+},
+{
+  "id": "AHRS_GPS_DELAY",
+  "value": "1",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "AHRS_GPS_GAIN",
+  "value": "1.0",
+  "doc": "This controls how how much to use the GPS to correct the attitude. This should never be set to zero for a plane as it would result in the plane losing control in turns. For a plane please use the default value of 1.0.",
+  "rangeOk": true,
+  "range": [
+    0,
+    1
+  ]
+},
+{
+  "id": "AHRS_GPS_MINSATS",
+  "value": "6",
+  "doc": "Minimum number of satellites visible to use GPS for velocity based corrections attitude correction. This defaults to 6, which is about the point at which the velocity numbers from a GPS become too unreliable for accurate correction of the accelerometers.",
+  "rangeOk": true,
+  "range": [
+    0,
+    10
+  ]
+},
+{
+  "id": "AHRS_GPS_USE",
+  "value": "Enabled",
+  "doc": "This controls whether to use dead-reckoning or GPS based navigation. If set to 0 then the GPS won't be used for navigation, and only dead reckoning will be used. A value of zero should never be used for normal flight.",
+  "rangeOk": true
+},
+{
+  "id": "AHRS_ORIENTATION",
+  "value": "None",
+  "doc": "Overall board orientation relative to the standard orientation for the board type. This rotates the IMU and compass readings to allow the board to be oriented in your vehicle at any 90 or 45 degree angle. This option takes affect on next boot. After changing you will need to re-level your vehicle.",
+  "rangeOk": true
+},
+{
+  "id": "AHRS_RP_P",
+  "value": "0.1",
+  "doc": "This controls how fast the accelerometers correct the attitude",
+  "rangeOk": true,
+  "range": [
+    0.10000000149011612,
+    0.4000000059604645
+  ]
+},
+{
+  "id": "AHRS_TRIM_X",
+  "value": "-0.013165592",
+  "doc": "Compensates for the roll angle difference between the control board and the frame. Positive values make the vehicle roll right.",
+  "rangeOk": true,
+  "range": [
+    -0.1745000034570694,
+    0.1745000034570694
+  ]
+},
+{
+  "id": "AHRS_TRIM_Y",
+  "value": "0.008393635",
+  "doc": "Compensates for the pitch angle difference between the control board and the frame. Positive values make the vehicle pitch up/back.",
+  "rangeOk": true,
+  "range": [
+    -0.1745000034570694,
+    0.1745000034570694
+  ]
+},
+{
+  "id": "AHRS_TRIM_Z",
+  "value": "0.0",
+  "doc": "Not Used",
+  "rangeOk": true,
+  "range": [
+    -0.1745000034570694,
+    0.1745000034570694
+  ]
+},
+{
+  "id": "AHRS_WIND_MAX",
+  "value": "0",
+  "doc": "This sets the maximum allowable difference between ground speed and airspeed. This allows the plane to cope with a failing airspeed sensor. A value of zero means to use the airspeed as is.",
+  "rangeOk": true,
+  "range": [
+    0,
+    127
+  ]
+},
+{
+  "id": "AHRS_YAW_P",
+  "value": "0.1",
+  "doc": "This controls the weight the compass or GPS has on the heading. A higher value means the heading will track the yaw source (GPS or compass) more rapidly.",
+  "rangeOk": true,
+  "range": [
+    0.10000000149011612,
+    0.4000000059604645
+  ]
+},
+{
+  "id": "ANGLE_MAX",
+  "value": "3000",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "ANGLE_RATE_MAX",
+  "value": "18000",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "ARMING_CHECK",
+  "value": "All",
+  "doc": "Checks prior to arming motor. This is a bitmask of checks that will be performed befor allowing arming. The default is no checks, allowing arming at any time. You can select whatever checks you prefer by adding together the values of each check type to set this parameter. For example, to only allow arming when you have GPS lock and manual RC control you would set ARMING_CHECK to 72.",
+  "rangeOk": true
+},
+{
+  "id": "BATT_AMP_OFFSET",
+  "value": "0.0",
+  "doc": "Voltage offset at zero current on current sensor",
+  "rangeOk": true
+},
+{
+  "id": "BATT_AMP_PERVOLT",
+  "value": "18.0018",
+  "doc": "Number of amps that a 1V reading on the current sensor corresponds to. On the APM2 or Pixhawk using the 3DR Power brick this should be set to 17. For the Pixhawk with the 3DR 4in1 ESC this should be 17.",
+  "rangeOk": true
+},
+{
+  "id": "BATT_CAPACITY",
+  "value": "8000",
+  "doc": "Capacity of the battery in mAh when full",
+  "rangeOk": true
+},
+{
+  "id": "BATT_CURR_PIN",
+  "value": "Pixhawk",
+  "doc": "Setting this to 0 ~ 13 will enable battery current sensing on pins A0 ~ A13. For the 3DR power brick on APM2.5 it should be set to 12. On the PX4 it should be set to 101. On the Pixhawk powered from the PM connector it should be set to 3.",
+  "rangeOk": true
+},
+{
+  "id": "BATT_MONITOR",
+  "value": "Voltage and Current",
+  "doc": "Controls enabling monitoring of the battery's voltage and current",
+  "rangeOk": true
+},
+{
+  "id": "BATT_VOLT_MULT",
+  "value": "10.1",
+  "doc": "Used to convert the voltage of the voltage sensing pin (BATT_VOLT_PIN) to the actual battery's voltage (pin_voltage * VOLT_MULT). For the 3DR Power brick on APM2 or Pixhawk, this should be set to 10.1. For the Pixhawk with the 3DR 4in1 ESC this should be 12.02. For the PX4 using the PX4IO power supply this should be set to 1.",
+  "rangeOk": true
+},
+{
+  "id": "BATT_VOLT_PIN",
+  "value": "Pixhawk",
+  "doc": "Setting this to 0 ~ 13 will enable battery current sensing on pins A0 ~ A13. For the 3DR power brick on APM2.5 it should be set to 13. On the PX4 it should be set to 100. On the Pixhawk powered from the PM connector it should be set to 2.",
+  "rangeOk": true
+},
+{
+  "id": "BRD_PWM_COUNT",
+  "value": "Four PWMs",
+  "doc": "Number of auxillary PWMs to enable",
+  "rangeOk": true
+},
+{
+  "id": "CH7_OPT",
+  "value": "Do Nothing",
+  "doc": "Select which function if performed when CH7 is above 1800 pwm",
+  "rangeOk": true
+},
+{
+  "id": "CH8_OPT",
+  "value": "Do Nothing",
+  "doc": "Select which function if performed when CH8 is above 1800 pwm",
+  "rangeOk": true
+},
+{
+  "id": "CIRCLE_RADIUS",
+  "value": "10",
+  "doc": "Defines the radius of the circle the vehicle will fly when in Circle flight mode",
+  "rangeOk": true,
+  "range": [
+    0,
+    10000
+  ]
+},
+{
+  "id": "CIRCLE_RATE",
+  "value": "20.0",
+  "doc": "Circle mode's turn rate in deg/sec.  Positive to turn clockwise, negative for counter clockwise",
+  "rangeOk": true,
+  "range": [
+    -90,
+    90
+  ]
+},
+{
+  "id": "COMPASS_DEC",
+  "value": "-0.25730625",
+  "doc": "An angle to compensate between the true north and magnetic north",
+  "rangeOk": true,
+  "range": [
+    -3.1419999599456787,
+    3.1419999599456787
+  ]
+},
+{
+  "id": "COMPASS_EXTERNAL",
+  "value": "External",
+  "doc": "Configure compass so it is attached externally. This is auto-detected on PX4 and Pixhawk, but must be set correctly on an APM2. Set to 1 if the compass is externally connected. When externally connected the COMPASS_ORIENT option operates independently of the AHRS_ORIENTATION board orientation option",
+  "rangeOk": true
+},
+{
+  "id": "COMPASS_LEARN",
+  "value": "Disabled",
+  "doc": "Enable or disable the automatic learning of compass offsets",
+  "rangeOk": true
+},
+{
+  "id": "COMPASS_MOT2_X",
+  "value": "0.0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "COMPASS_MOT2_Y",
+  "value": "0.0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "COMPASS_MOT2_Z",
+  "value": "0.0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "COMPASS_OFS2_X",
+  "value": "396.65448",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "COMPASS_OFS2_Y",
+  "value": "-512.1607",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "COMPASS_OFS2_Z",
+  "value": "-316.85712",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "COMPASS_OFS_X",
+  "value": "-95.06943",
+  "doc": "Offset to be added to the compass x-axis values to compensate for metal in the frame",
+  "rangeOk": true,
+  "range": [
+    -400,
+    400
+  ]
+},
+{
+  "id": "COMPASS_OFS_Y",
+  "value": "5.237011",
+  "doc": "Offset to be added to the compass y-axis values to compensate for metal in the frame",
+  "rangeOk": true,
+  "range": [
+    -400,
+    400
+  ]
+},
+{
+  "id": "COMPASS_OFS_Z",
+  "value": "-71.02694",
+  "doc": "Offset to be added to the compass z-axis values to compensate for metal in the frame",
+  "rangeOk": true,
+  "range": [
+    -400,
+    400
+  ]
+},
+{
+  "id": "COMPASS_USE",
+  "value": "Enabled",
+  "doc": "Enable or disable the use of the compass (instead of the GPS) for determining heading",
+  "rangeOk": true
+},
+{
+  "id": "ESC",
+  "value": "Normal Start-up",
+  "doc": "Controls whether ArduCopter will enter ESC calibration on the next restart.  Do not adjust this parameter manually.",
+  "rangeOk": true
+},
+{
+  "id": "FENCE_ACTION",
+  "value": "Report Only",
+  "doc": "What action should be taken when fence is breached",
+  "rangeOk": true
+},
+{
+  "id": "FENCE_ALT_MAX",
+  "value": "30.0",
+  "doc": "Maximum altitude allowed before geofence triggers",
+  "rangeOk": true,
+  "range": [
+    10,
+    1000
+  ]
+},
+{
+  "id": "FENCE_ENABLE",
+  "value": "Enabled",
+  "doc": "Allows you to enable (1) or disable (0) the fence functionality",
+  "rangeOk": true
+},
+{
+  "id": "FENCE_MARGIN",
+  "value": "2.0",
+  "doc": "Distance that autopilot's should maintain from the fence to avoid a breach",
+  "rangeOk": true,
+  "range": [
+    1,
+    10
+  ]
+},
+{
+  "id": "FENCE_RADIUS",
+  "value": "120.0",
+  "doc": "Circle fence radius which when breached will cause an RTL",
+  "rangeOk": true,
+  "range": [
+    30,
+    10000
+  ]
+},
+{
+  "id": "FENCE_TYPE",
+  "value": "Altitude and Circle",
+  "doc": "Enabled fence types held as bitmask",
+  "rangeOk": true
+},
+{
+  "id": "FLOW_ENABLE",
+  "value": "Disabled",
+  "doc": "Setting this to Enabled(1) will enable optical flow. Setting this to Disabled(0) will disable optical flow",
+  "rangeOk": true
+},
+{
+  "id": "FLTMODE1",
+  "value": "Stabilize",
+  "doc": "Flight mode when Channel 5 pwm is <= 1230",
+  "rangeOk": true
+},
+{
+  "id": "FLTMODE2",
+  "value": "Stabilize",
+  "doc": "Flight mode when Channel 5 pwm is >1230, <= 1360",
+  "rangeOk": true
+},
+{
+  "id": "FLTMODE3",
+  "value": "Stabilize",
+  "doc": "Flight mode when Channel 5 pwm is >1360, <= 1490",
+  "rangeOk": true
+},
+{
+  "id": "FLTMODE4",
+  "value": "Loiter",
+  "doc": "Flight mode when Channel 5 pwm is >1490, <= 1620",
+  "rangeOk": true
+},
+{
+  "id": "FLTMODE5",
+  "value": "Stabilize",
+  "doc": "Flight mode when Channel 5 pwm is >1620, <= 1749",
+  "rangeOk": true
+},
+{
+  "id": "FLTMODE6",
+  "value": "AltHold",
+  "doc": "Flight mode when Channel 5 pwm is >=1750",
+  "rangeOk": true
+},
+{
+  "id": "FRAME",
+  "value": "X",
+  "doc": "Controls motor mixing for multicopters.  Not used for Tri or Traditional Helicopters.",
+  "rangeOk": true
+},
+{
+  "id": "FS_BATT_ENABLE",
+  "value": "Land",
+  "doc": "Controls whether failsafe will be invoked when battery voltage or current runs low",
+  "rangeOk": true
+},
+{
+  "id": "FS_BATT_MAH",
+  "value": "0.0",
+  "doc": "Battery capacity remaining to trigger failsafe. Set to 0 to disable battery remaining failsafe. If the battery remaining drops below this level then the copter will RTL",
+  "rangeOk": true
+},
+{
+  "id": "FS_BATT_VOLTAGE",
+  "value": "13.6",
+  "doc": "Battery voltage to trigger failsafe. Set to 0 to disable battery voltage failsafe. If the battery voltage drops below this voltage then the copter will RTL",
+  "rangeOk": true
+},
+{
+  "id": "FS_GCS_ENABLE",
+  "value": "Disabled",
+  "doc": "Controls whether failsafe will be invoked (and what action to take) when connection with Ground station is lost for at least 5 seconds",
+  "rangeOk": true
+},
+{
+  "id": "FS_GPS_ENABLE",
+  "value": "Land",
+  "doc": "Controls what action will be taken if GPS signal is lost for at least 5 seconds",
+  "rangeOk": true
+},
+{
+  "id": "FS_THR_ENABLE",
+  "value": "Enabled always RTL",
+  "doc": "The throttle failsafe allows you to configure a software failsafe activated by a setting on the throttle input channel",
+  "rangeOk": true
+},
+{
+  "id": "FS_THR_VALUE",
+  "value": "975",
+  "doc": "The PWM level on channel 3 below which throttle sailsafe triggers",
+  "rangeOk": true,
+  "range": [
+    925,
+    1100
+  ]
+},
+{
+  "id": "GND_ABS_PRESS",
+  "value": "100395.77",
+  "doc": "calibrated ground pressure in Pascals",
+  "rangeOk": true
+},
+{
+  "id": "GND_ALT_OFFSET",
+  "value": "0",
+  "doc": "altitude offset in meters added to barometric altitude. This is used to allow for automatic adjustment of the base barometric altitude by a ground station equipped with a barometer. The value is added to the barometric altitude read by the aircraft. It is automatically reset to 0 when the barometer is calibrated on each reboot or when a preflight calibration is performed.",
+  "rangeOk": true,
+  "range": [
+    -128,
+    127
+  ]
+},
+{
+  "id": "GND_TEMP",
+  "value": "10.330751",
+  "doc": "calibrated ground temperature in degrees Celsius",
+  "rangeOk": true
+},
+{
+  "id": "GPSGLITCH_ACCEL",
+  "value": "1000.0",
+  "doc": "GPS glitch protection's max vehicle acceleration assumption",
+  "rangeOk": true,
+  "range": [
+    100,
+    2000
+  ]
+},
+{
+  "id": "GPSGLITCH_ENABLE",
+  "value": "Enabled",
+  "doc": "Allows you to enable (1) or disable (0) gps glitch protection",
+  "rangeOk": true
+},
+{
+  "id": "GPSGLITCH_RADIUS",
+  "value": "200.0",
+  "doc": "GPS glitch protection radius within which all new positions are accepted",
+  "rangeOk": true,
+  "range": [
+    100,
+    2000
+  ]
+},
+{
+  "id": "GPS_HDOP_GOOD",
+  "value": "200",
+  "doc": "GPS Hdop value at or below this value represent a good position.  Used for pre-arm checks",
+  "rangeOk": true,
+  "range": [
+    100,
+    900
+  ]
+},
+{
+  "id": "INS_ACC2SCAL_X",
+  "value": "1.0355247",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "INS_ACCOFFS_X",
+  "value": "-0.037851002",
+  "doc": "Accelerometer offsets of X axis. This is setup using the acceleration calibration or level operations",
+  "rangeOk": true,
+  "range": [
+    -300,
+    300
+  ]
+},
+{
+  "id": "INS_GYROFFS_Y",
+  "value": "0.092113115",
+  "doc": "Gyro sensor offsets of Y axis. This is setup on each boot during gyro calibrations",
+  "rangeOk": true
+},
+{
+  "id": "INS_GYROFFS_Z",
+  "value": "0.0058433237",
+  "doc": "Gyro sensor offsets of Z axis. This is setup on each boot during gyro calibrations",
+  "rangeOk": true
+},
+{
+  "id": "INS_MPU6K_FILTER",
+  "value": "Default",
+  "doc": "Filter frequency to ask the MPU6000 to apply to samples. This can be set to a lower value to try to cope with very high vibration levels in aircraft. The default value on ArduPlane, APMrover2 and ArduCopter is 20Hz. This option takes effect on the next reboot or gyro initialisation",
+  "rangeOk": true
+},
+{
+  "id": "LAND_SPEED",
+  "value": "50",
+  "doc": "The descent speed for the final stage of landing in cm/s",
+  "rangeOk": true,
+  "range": [
+    30,
+    200
+  ]
+},
+{
+  "id": "LOG_BITMASK",
+  "value": "Default",
+  "doc": "2 byte bitmap of log types to enable",
+  "rangeOk": true
+},
+{
+  "id": "LOITER_LAT_I",
+  "value": "0.5",
+  "doc": "Loiter latitude rate controller I gain.  Corrects long-term difference in desired speed and actual speed in the latitude direction",
+  "rangeOk": true,
+  "range": [
+    0.019999999552965164,
+    1
+  ]
+},
+{
+  "id": "LOITER_LAT_P",
+  "value": "1.0",
+  "doc": "Loiter latitude rate controller P gain.  Converts the difference between desired speed and actual speed into a lean angle in the latitude direction",
+  "rangeOk": true,
+  "range": [
+    0.10000000149011612,
+    6
+  ]
+},
+{
+  "id": "LOITER_LON_I",
+  "value": "0.5",
+  "doc": "Loiter longitude rate controller I gain.  Corrects long-term difference in desired speed and actual speed in the longitude direction",
+  "rangeOk": true,
+  "range": [
+    0.019999999552965164,
+    1
+  ]
+},
+{
+  "id": "LOITER_LON_P",
+  "value": "1.0",
+  "doc": "Loiter longitude rate controller P gain.  Converts the difference between desired speed and actual speed into a lean angle in the longitude direction",
+  "rangeOk": true,
+  "range": [
+    0.10000000149011612,
+    6
+  ]
+},
+{
+  "id": "MAG_ENABLE",
+  "value": "Enabled",
+  "doc": "Setting this to Enabled(1) will enable the compass. Setting this to Disabled(0) will disable the compass",
+  "rangeOk": true
+},
+{
+  "id": "MNT_ANGMAX_PAN",
+  "value": "4500",
+  "doc": "Maximum physical pan (yaw) angular position of the mount",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_ANGMAX_ROL",
+  "value": "4500",
+  "doc": "Maximum physical roll angular position of the mount",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_ANGMAX_TIL",
+  "value": "4500",
+  "doc": "Maximum physical tilt (pitch) angular position of the mount",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_ANGMIN_PAN",
+  "value": "-4500",
+  "doc": "Minimum physical pan (yaw) angular position of mount.",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_ANGMIN_ROL",
+  "value": "-4500",
+  "doc": "Minimum physical roll angular position of mount.",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_ANGMIN_TIL",
+  "value": "-4500",
+  "doc": "Minimum physical tilt (pitch) angular position of mount.",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_CONTROL_X",
+  "value": "0.0",
+  "doc": "Mount roll angle when in MavLink or RC control operation mode",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_CONTROL_Y",
+  "value": "0.0",
+  "doc": "Mount tilt/pitch angle when in MavLink or RC control operation mode",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_CONTROL_Z",
+  "value": "0.0",
+  "doc": "Mount pan/yaw angle when in MavLink or RC control operation mode",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_JSTICK_SPD",
+  "value": "0",
+  "doc": "0 for position control, small for low speeds, 100 for max speed. A good general value is 10 which gives a movement speed of 3 degrees per second.",
+  "rangeOk": true,
+  "range": [
+    0,
+    100
+  ]
+},
+{
+  "id": "MNT_MODE",
+  "value": "RC_targeting",
+  "doc": "Camera or antenna mount operation mode",
+  "rangeOk": true
+},
+{
+  "id": "MNT_NEUTRAL_X",
+  "value": "0.0",
+  "doc": "Mount roll angle when in neutral position",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_NEUTRAL_Y",
+  "value": "0.0",
+  "doc": "Mount tilt/pitch angle when in neutral position",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_NEUTRAL_Z",
+  "value": "0.0",
+  "doc": "Mount pan/yaw angle when in neutral position",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_RC_IN_PAN",
+  "value": "Disabled",
+  "doc": "0 for none, any other for the RC channel to be used to control pan (yaw) movements",
+  "rangeOk": true
+},
+{
+  "id": "MNT_RC_IN_ROLL",
+  "value": "Disabled",
+  "doc": "0 for none, any other for the RC channel to be used to control roll movements",
+  "rangeOk": true
+},
+{
+  "id": "MNT_RC_IN_TILT",
+  "value": "Disabled",
+  "doc": "0 for none, any other for the RC channel to be used to control tilt (pitch) movements",
+  "rangeOk": true
+},
+{
+  "id": "MNT_RETRACT_X",
+  "value": "0.0",
+  "doc": "Mount roll angle when in retracted position",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_RETRACT_Y",
+  "value": "0.0",
+  "doc": "Mount tilt/pitch angle when in retracted position",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_RETRACT_Z",
+  "value": "0.0",
+  "doc": "Mount yaw/pan angle when in retracted position",
+  "rangeOk": true,
+  "range": [
+    -18000,
+    17999
+  ]
+},
+{
+  "id": "MNT_STAB_PAN",
+  "value": "Disabled",
+  "doc": "enable pan/yaw stabilisation relative to Earth",
+  "rangeOk": true
+},
+{
+  "id": "MNT_STAB_ROLL",
+  "value": "Disabled",
+  "doc": "enable roll stabilisation relative to Earth",
+  "rangeOk": true
+},
+{
+  "id": "MNT_STAB_TILT",
+  "value": "Disabled",
+  "doc": "enable tilt/pitch stabilisation relative to Earth",
+  "rangeOk": true
+},
+{
+  "id": "MOT_SPIN_ARMED",
+  "value": "VerySlow",
+  "doc": "Controls whether motors always spin when armed (must be below THR_MIN)",
+  "rangeOk": true
+},
+{
+  "id": "MOT_TCRV_ENABLE",
+  "value": "Enable",
+  "doc": "Controls whether a curve is used to linearize the thrust produced by the motors",
+  "rangeOk": true
+},
+{
+  "id": "MOT_TCRV_MAXPCT",
+  "value": "93",
+  "doc": "Set to the lowest pwm position that produces the maximum thrust of the motors.  Most motors produce maximum thrust below the maximum pwm value that they accept.",
+  "rangeOk": true,
+  "range": [
+    50,
+    100
+  ]
+},
+{
+  "id": "MOT_TCRV_MIDPCT",
+  "value": "52",
+  "doc": "Set the pwm position that produces half the maximum thrust of the motors",
+  "rangeOk": true,
+  "range": [
+    20,
+    80
+  ]
+},
+{
+  "id": "OF_PIT_D",
+  "value": "0.12",
+  "doc": "Optical Flow based loiter controller pitch axis D gain.  Compensates for short-term change in speed in the pitch direction",
+  "rangeOk": true,
+  "range": [
+    0.10000000149011612,
+    0.14000000059604645
+  ]
+},
+{
+  "id": "OF_PIT_I",
+  "value": "0.5",
+  "doc": "Optical Flow based loiter controller pitch axis I gain.  Corrects long-term position error by more persistently pitching left or right",
+  "rangeOk": true,
+  "range": [
+    0.25,
+    0.75
+  ]
+},
+{
+  "id": "OF_PIT_P",
+  "value": "2.5",
+  "doc": "Optical Flow based loiter controller pitch axis P gain.  Converts the position error from the target point to a pitch angle",
+  "rangeOk": true,
+  "range": [
+    2,
+    3
+  ]
+},
+{
+  "id": "OF_RLL_D",
+  "value": "0.12",
+  "doc": "Optical Flow based loiter controller roll axis D gain.  Compensates for short-term change in speed in the roll direction",
+  "rangeOk": true,
+  "range": [
+    0.10000000149011612,
+    0.14000000059604645
+  ]
+},
+{
+  "id": "OF_RLL_IMAX",
+  "value": "100",
+  "doc": "Optical Flow based loiter controller roll axis I gain maximum.  Constrains the maximum roll angle that the I term will generate",
+  "rangeOk": true,
+  "range": [
+    0,
+    4500
+  ]
+},
+{
+  "id": "PILOT_VELZ_MAX",
+  "value": "250",
+  "doc": "The maximum vertical velocity the pilot may request in cm/s",
+  "rangeOk": true,
+  "range": [
+    50,
+    500
+  ]
+},
+{
+  "id": "RATE_PIT_IMAX",
+  "value": "500",
+  "doc": "Pitch axis rate controller I gain maximum.  Constrains the maximum motor output that the I gain will output",
+  "rangeOk": true,
+  "range": [
+    0,
+    500
+  ]
+},
+{
+  "id": "RC11_DZ",
+  "value": "0",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC11_FUNCTION",
+  "value": "Disabled",
+  "doc": "Setting this to Disabled(0) will setup this output for control by auto missions or MAVLink servo set commands. any other value will enable the corresponding function",
+  "rangeOk": true
+},
+{
+  "id": "RC11_TRIM",
+  "value": "1500",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC12_MAX",
+  "value": "1900",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC12_MIN",
+  "value": "1100",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC12_TRIM",
+  "value": "1500",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC1_DZ",
+  "value": "30",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC1_MAX",
+  "value": "2016",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC1_MIN",
+  "value": "991",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC1_REV",
+  "value": "Normal",
+  "doc": "Reverse servo operation. Set to 1 for normal (forward) operation. Set to -1 to reverse this channel.",
+  "rangeOk": true
+},
+{
+  "id": "RC1_TRIM",
+  "value": "1503",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC2_DZ",
+  "value": "30",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC2_MAX",
+  "value": "2016",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC2_MIN",
+  "value": "996",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC2_REV",
+  "value": "Normal",
+  "doc": "Reverse servo operation. Set to 1 for normal (forward) operation. Set to -1 to reverse this channel.",
+  "rangeOk": true
+},
+{
+  "id": "RC2_TRIM",
+  "value": "1486",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC3_DZ",
+  "value": "30",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC3_MAX",
+  "value": "2017",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC3_MIN",
+  "value": "992",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC3_REV",
+  "value": "Normal",
+  "doc": "Reverse servo operation. Set to 1 for normal (forward) operation. Set to -1 to reverse this channel.",
+  "rangeOk": true
+},
+{
+  "id": "RC3_TRIM",
+  "value": "992",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC4_DZ",
+  "value": "40",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC4_MAX",
+  "value": "2017",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC4_MIN",
+  "value": "992",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC4_REV",
+  "value": "Normal",
+  "doc": "Reverse servo operation. Set to 1 for normal (forward) operation. Set to -1 to reverse this channel.",
+  "rangeOk": true
+},
+{
+  "id": "RC4_TRIM",
+  "value": "1504",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC5_DZ",
+  "value": "0",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC5_FUNCTION",
+  "value": "Disabled",
+  "doc": "Setting this to Disabled(0) will setup this output for control by auto missions or MAVLink servo set commands. any other value will enable the corresponding function",
+  "rangeOk": true
+},
+{
+  "id": "RC5_MAX",
+  "value": "2016",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC5_MIN",
+  "value": "991",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC5_REV",
+  "value": "Normal",
+  "doc": "Reverse servo operation. Set to 1 for normal (forward) operation. Set to -1 to reverse this channel.",
+  "rangeOk": true
+},
+{
+  "id": "RC5_TRIM",
+  "value": "993",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC6_DZ",
+  "value": "0",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC6_FUNCTION",
+  "value": "Disabled",
+  "doc": "Setting this to Disabled(0) will setup this output for control by auto missions or MAVLink servo set commands. any other value will enable the corresponding function",
+  "rangeOk": true
+},
+{
+  "id": "RC6_MAX",
+  "value": "2016",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC6_MIN",
+  "value": "991",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC6_REV",
+  "value": "Normal",
+  "doc": "Reverse servo operation. Set to 1 for normal (forward) operation. Set to -1 to reverse this channel.",
+  "rangeOk": true
+},
+{
+  "id": "RC6_TRIM",
+  "value": "992",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC7_DZ",
+  "value": "0",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC7_FUNCTION",
+  "value": "Disabled",
+  "doc": "Setting this to Disabled(0) will setup this output for control by auto missions or MAVLink servo set commands. any other value will enable the corresponding function",
+  "rangeOk": true
+},
+{
+  "id": "RC7_MAX",
+  "value": "2017",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC7_MIN",
+  "value": "991",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC7_REV",
+  "value": "Normal",
+  "doc": "Reverse servo operation. Set to 1 for normal (forward) operation. Set to -1 to reverse this channel.",
+  "rangeOk": true
+},
+{
+  "id": "RC7_TRIM",
+  "value": "992",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC8_DZ",
+  "value": "0",
+  "doc": "dead zone around trim.",
+  "rangeOk": true,
+  "range": [
+    0,
+    200
+  ]
+},
+{
+  "id": "RC8_FUNCTION",
+  "value": "Disabled",
+  "doc": "Setting this to Disabled(0) will setup this output for control by auto missions or MAVLink servo set commands. any other value will enable the corresponding function",
+  "rangeOk": true
+},
+{
+  "id": "RC8_MAX",
+  "value": "1504",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC8_MIN",
+  "value": "1503",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC8_REV",
+  "value": "Normal",
+  "doc": "Reverse servo operation. Set to 1 for normal (forward) operation. Set to -1 to reverse this channel.",
+  "rangeOk": true
+},
+{
+  "id": "RC8_TRIM",
+  "value": "1504",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC9_MAX",
+  "value": "1900",
+  "doc": "RC maximum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC9_MIN",
+  "value": "1100",
+  "doc": "RC minimum PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RC9_TRIM",
+  "value": "1500",
+  "doc": "RC trim (neutral) PWM pulse width. Typically 1000 is lower limit, 1500 is neutral and 2000 is upper limit.",
+  "rangeOk": true,
+  "range": [
+    800,
+    2200
+  ]
+},
+{
+  "id": "RCMAP_PITCH",
+  "value": "2",
+  "doc": "Pitch channel number. This is useful when you have a RC transmitter that can't change the channel order easily. Pitch is normally on channel 2, but you can move it to any channel with this parameter.",
+  "rangeOk": true,
+  "range": [
+    1,
+    8
+  ]
+},
+{
+  "id": "RCMAP_ROLL",
+  "value": "1",
+  "doc": "Roll channel number. This is useful when you have a RC transmitter that can't change the channel order easily. Roll is normally on channel 1, but you can move it to any channel with this parameter.",
+  "rangeOk": true,
+  "range": [
+    1,
+    8
+  ]
+},
+{
+  "id": "RCMAP_THROTTLE",
+  "value": "3",
+  "doc": "Throttle channel number. This is useful when you have a RC transmitter that can't change the channel order easily. Throttle is normally on channel 3, but you can move it to any channel with this parameter. Warning APM 2.X: Changing the throttle channel could produce unexpected fail-safe results if connection between receiver and on-board PPM Encoder is lost. Disabling on-board PPM Encoder is recommended.",
+  "rangeOk": true,
+  "range": [
+    1,
+    8
+  ]
+},
+{
+  "id": "RCMAP_YAW",
+  "value": "4",
+  "doc": "Yaw channel number. This is useful when you have a RC transmitter that can't change the channel order easily. Yaw (also known as rudder) is normally on channel 4, but you can move it to any channel with this parameter.",
+  "rangeOk": true,
+  "range": [
+    1,
+    8
+  ]
+},
+{
+  "id": "RC_FEEL_RP",
+  "value": "70",
+  "doc": "RC feel for roll/pitch which controls vehicle response to user input with 0 being extremely soft and 100 being crisp",
+  "rangeOk": true,
+  "range": [
+    0,
+    100
+  ]
+},
+{
+  "id": "RELAY_PIN2",
+  "value": "Disabled",
+  "doc": "Digital pin number for 2nd relay control.",
+  "rangeOk": true
+},
+{
+  "id": "RELAY_PIN3",
+  "value": "Disabled",
+  "doc": "Digital pin number for 3rd relay control.",
+  "rangeOk": true
+},
+{
+  "id": "RELAY_PIN4",
+  "value": "Disabled",
+  "doc": "Digital pin number for 4th relay control.",
+  "rangeOk": true
+},
+{
+  "id": "RSSI_PIN",
+  "value": "Disabled",
+  "doc": "This selects an analog pin for the receiver RSSI voltage. It assumes the voltage is RSSI_RANGE for max rssi, 0V for minimum",
+  "rangeOk": true
+},
+{
+  "id": "RSSI_RANGE",
+  "value": "5.0",
+  "doc": "Receiver RSSI voltage range",
+  "rangeOk": true
+},
+{
+  "id": "RTL_ALT",
+  "value": "3000",
+  "doc": "The minimum altitude the model will move to before Returning to Launch.  Set to zero to return at current altitude.",
+  "rangeOk": true,
+  "range": [
+    0,
+    8000
+  ]
+},
+{
+  "id": "RTL_ALT_FINAL",
+  "value": "0",
+  "doc": "This is the altitude the vehicle will move to as the final stage of Returning to Launch or after completing a mission.  Set to zero to land.",
+  "rangeOk": true,
+  "range": [
+    -1,
+    1000
+  ]
+},
+{
+  "id": "RTL_LOIT_TIME",
+  "value": "5000",
+  "doc": "Time (in milliseconds) to loiter above home before begining final descent",
+  "rangeOk": true,
+  "range": [
+    0,
+    60000
+  ]
+},
+{
+  "id": "SCHED_DEBUG",
+  "value": "Disabled",
+  "doc": "Set to non-zero to enable scheduler debug messages. When set to show \"Slips\" the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table.",
+  "rangeOk": true
+},
+{
+  "id": "SERIAL1_BAUD",
+  "value": "57600",
+  "doc": "The baud rate used on the first telemetry port. The APM2 can support all baudrates up to 115, and also can support 500. The PX4 can support rates of up to 1500. If you setup a rate you cannot support on APM2 and then can't connect to your board you should load a firmware from a different vehicle type. That will reset all your parameters to defaults.",
+  "rangeOk": true
+},
+{
+  "id": "SERIAL2_BAUD",
+  "value": "57600",
+  "doc": "The baud rate used on the second telemetry port. The APM2 can support all baudrates up to 115, and also can support 500. The PX4 can support rates of up to 1500. If you setup a rate you cannot support on APM2 and then can't connect to your board you should load a firmware from a different vehicle type. That will reset all your parameters to defaults.",
+  "rangeOk": true
+},
+{
+  "id": "SIMPLE",
+  "value": "0",
+  "doc": "Bitmask which holds which flight modes use simple heading mode (eg bit 0 = 1 means Flight Mode 0 uses simple mode)",
+  "rangeOk": true
+},
+{
+  "id": "SONAR_ENABLE",
+  "value": "Disabled",
+  "doc": "set to 1 to enable this sonar",
+  "rangeOk": true
+},
+{
+  "id": "SONAR_GAIN",
+  "value": "0.8",
+  "doc": "Used to adjust the speed with which the target altitude is changed when objects are sensed below the copter",
+  "rangeOk": true,
+  "range": [
+    0.009999999776482582,
+    2
+  ]
+},
+{
+  "id": "SONAR_TYPE",
+  "value": "XL-EZ0 / XL-EZ4",
+  "doc": "Used to adjust scaling to match the sonar used (only Maxbotix sonars are supported at this time)",
+  "rangeOk": true
+},
+{
+  "id": "SR1_EXTRA1",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR1_EXTRA2",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR1_EXTRA3",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR1_EXT_STAT",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR1_PARAMS",
+  "value": "10",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR1_POSITION",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR1_RAW_CTRL",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR1_RC_CHAN",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_EXTRA1",
+  "value": "5",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_EXTRA2",
+  "value": "2",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_EXTRA3",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_EXT_STAT",
+  "value": "2",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_PARAMS",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_POSITION",
+  "value": "2",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_RAW_CTRL",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_RAW_SENS",
+  "value": "2",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "SR2_RC_CHAN",
+  "value": "5",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "STB_RLL_I",
+  "value": "0.0",
+  "doc": "Roll axis stabilize (i.e. angle) controller I gain.  Corrects for longer-term difference in desired roll angle and actual angle",
+  "rangeOk": true,
+  "range": [
+    0,
+    0.10000000149011612
+  ]
+},
+{
+  "id": "STB_YAW_P",
+  "value": "4.5",
+  "doc": "Yaw axis stabilize (i.e. angle) controller P gain.  Converts the error between the desired yaw angle and actual angle to a desired yaw rate",
+  "rangeOk": true,
+  "range": [
+    3,
+    6
+  ]
+},
+{
+  "id": "SUPER_SIMPLE",
+  "value": "Disabled",
+  "doc": "Bitmask to enable Super Simple mode for some flight modes. Setting this to Disabled(0) will disable Super Simple Mode",
+  "rangeOk": true
+},
+{
+  "id": "SYSID_MYGCS",
+  "value": "253",
+  "doc": "Allows restricting radio overrides to only come from my ground station",
+  "rangeOk": true,
+  "range": [
+    1,
+    255
+  ]
+},
+{
+  "id": "SYSID_SW_MREV",
+  "value": "120",
+  "doc": "This value is incremented when changes are made to the eeprom format",
+  "rangeOk": true
+},
+{
+  "id": "SYSID_SW_TYPE",
+  "value": "10",
+  "doc": "This is used by the ground station to recognise the software type (eg ArduPlane vs ArduCopter)",
+  "rangeOk": true
+},
+{
+  "id": "SYSID_THISMAV",
+  "value": "1",
+  "doc": "Allows reconising the mavlink version",
+  "rangeOk": true,
+  "range": [
+    1,
+    255
+  ]
+},
+{
+  "id": "TELEM_DELAY",
+  "value": "0",
+  "doc": "The amount of time (in seconds) to delay radio telemetry to prevent an Xbee bricking on power up",
+  "rangeOk": true,
+  "range": [
+    0,
+    10
+  ]
+},
+{
+  "id": "THR_ACCEL_I",
+  "value": "1.4",
+  "doc": "Throttle acceleration controller I gain.  Corrects long-term difference in desired vertical acceleration and actual acceleration",
+  "rangeOk": true,
+  "range": [
+    0,
+    3
+  ]
+},
+{
+  "id": "THR_ACCEL_P",
+  "value": "0.7",
+  "doc": "Throttle acceleration controller P gain.  Converts the difference between desired vertical acceleration and actual acceleration into a motor output",
+  "rangeOk": true,
+  "range": [
+    0.5,
+    1.5
+  ]
+},
+{
+  "id": "THR_ALT_I",
+  "value": "0.0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "THR_MAX",
+  "value": "1000",
+  "doc": "The maximum throttle that will be sent to the motors.  This should normally be left as 1000.",
+  "rangeOk": true,
+  "range": [
+    800,
+    1000
+  ]
+},
+{
+  "id": "THR_MID",
+  "value": "500",
+  "doc": "The throttle output (0 ~ 1000) when throttle stick is in mid position.  Used to scale the manual throttle so that the mid throttle stick position is close to the throttle required to hover",
+  "rangeOk": true,
+  "range": [
+    300,
+    700
+  ]
+},
+{
+  "id": "THR_MIN",
+  "value": "130",
+  "doc": "The minimum throttle that will be sent to the motors to keep them spinning",
+  "rangeOk": true,
+  "range": [
+    0,
+    300
+  ]
+},
+{
+  "id": "THR_RATE_P",
+  "value": "3.5",
+  "doc": "Throttle rate controller P gain.  Converts the difference between desired vertical speed and actual speed into a desired acceleration that is passed to the throttle acceleration controller",
+  "rangeOk": true,
+  "range": [
+    1,
+    8
+  ]
+},
+{
+  "id": "TRIM_THROTTLE",
+  "value": "464",
+  "doc": "The autopilot's estimate of the throttle required to maintain a level hover.  Calculated automatically from the pilot's throttle input while in stabilize mode",
+  "rangeOk": true,
+  "range": [
+    0,
+    1000
+  ]
+},
+{
+  "id": "TUNE",
+  "value": "None",
+  "doc": "Controls which parameters (normally PID gains) are being tuned with transmitter's channel 6 knob",
+  "rangeOk": true
+},
+{
+  "id": "TUNE_HIGH",
+  "value": "1000",
+  "doc": "The maximum value that will be applied to the parameter currently being tuned with the transmitter's channel 6 knob",
+  "rangeOk": true,
+  "range": [
+    0,
+    32767
+  ]
+},
+{
+  "id": "TUNE_LOW",
+  "value": "0",
+  "doc": "The minimum value that will be applied to the parameter currently being tuned with the transmitter's channel 6 knob",
+  "rangeOk": true,
+  "range": [
+    0,
+    32767
+  ]
+},
+{
+  "id": "WPNAV_ACCEL",
+  "value": "100.0",
+  "doc": "Defines the horizontal acceleration in cm/s/s used during missions",
+  "rangeOk": true,
+  "range": [
+    50,
+    500
+  ]
+},
+{
+  "id": "WPNAV_LOIT_SPEED",
+  "value": "500.0",
+  "doc": "Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode",
+  "rangeOk": true,
+  "range": [
+    0,
+    2000
+  ]
+},
+{
+  "id": "WPNAV_SPEED_DN",
+  "value": "150.0",
+  "doc": "Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission",
+  "rangeOk": true,
+  "range": [
+    0,
+    1000
+  ]
+},
+{
+  "id": "WPNAV_SPEED_UP",
+  "value": "250.0",
+  "doc": "Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission",
+  "rangeOk": true,
+  "range": [
+    0,
+    1000
+  ]
+},
+{
+  "id": "WP_INDEX",
+  "value": "0",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "WP_TOTAL",
+  "value": "11",
+  "doc": "",
+  "rangeOk": true
+},
+{
+  "id": "WP_YAW_BEHAVIOR",
+  "value": "Face next waypoint",
+  "doc": "Determines how the autopilot controls the yaw during missions and RTL",
+  "rangeOk": true
+}]

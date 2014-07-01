@@ -1,0 +1,361 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+    "type": "FeatureCollection",
+    "features": [
+      {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.9295056,
+          64.1300183,
+          29.47
+        ]
+      },
+      "properties": {
+        "marker-size": "small",
+        "title": "Mode change",
+        "description": "STABILIZE",
+        "marker-color": "#64ff00",
+        "marker-symbol": "triangle-stroked"
+      }
+    }
+    ]
+  },
+  {
+    "type": "FeatureCollection",
+    "features": [
+      {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.92949104309082,
+          64.1300277709961,
+          0
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Home",
+        "description": "Home",
+        "marker-color": "#000099",
+        "marker-symbol": "building"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.943431854248047,
+          64.0523910522461,
+          40
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #1",
+        "marker-color": "#9999D6",
+        "marker-symbol": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.941980361938477,
+          64.0521240234375,
+          40
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #2",
+        "marker-color": "#9999D6",
+        "marker-symbol": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.941375732421875,
+          64.0514907836914,
+          30
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #3",
+        "marker-color": "#9999D6",
+        "marker-symbol": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.941980361938477,
+          64.05085754394531,
+          30
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #4",
+        "marker-color": "#9999D6",
+        "marker-symbol": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.943431854248047,
+          64.05059051513672,
+          30
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #5",
+        "marker-color": "#9999D6",
+        "marker-symbol": "5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.944883346557617,
+          64.05085754394531,
+          30
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #6",
+        "marker-color": "#9999D6",
+        "marker-symbol": "6"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.945486068725586,
+          64.0514907836914,
+          30
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #7",
+        "marker-color": "#9999D6",
+        "marker-symbol": "7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.944883346557617,
+          64.0521240234375,
+          40
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #8",
+        "marker-color": "#9999D6",
+        "marker-symbol": "8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.943431854248047,
+          64.0523910522461,
+          40
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #9",
+        "marker-color": "#9999D6",
+        "marker-symbol": "9"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -21.943151473999023,
+          64.0513687133789,
+          30
+        ]
+      },
+      "properties": {
+        "marker-size": "medium",
+        "title": "Waypoint #10",
+        "description": "Loiter (forever)",
+        "marker-color": "#9999D6",
+        "marker-symbol": "0"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+          -21.943431854248047,
+          64.0523910522461,
+          40
+        ],
+        [
+          -21.941980361938477,
+          64.0521240234375,
+          40
+        ],
+        [
+          -21.941375732421875,
+          64.0514907836914,
+          30
+        ],
+        [
+          -21.941980361938477,
+          64.05085754394531,
+          30
+        ],
+        [
+          -21.943431854248047,
+          64.05059051513672,
+          30
+        ],
+        [
+          -21.944883346557617,
+          64.05085754394531,
+          30
+        ],
+        [
+          -21.945486068725586,
+          64.0514907836914,
+          30
+        ],
+        [
+          -21.944883346557617,
+          64.0521240234375,
+          40
+        ],
+        [
+          -21.943431854248047,
+          64.0523910522461,
+          40
+        ],
+        [
+          -21.943151473999023,
+          64.0513687133789,
+          30
+        ]
+        ]
+      },
+      "properties": {
+        "stroke": "#9999D6",
+        "stroke-opacity": 0.5
+      }
+    }
+    ]
+  },
+  {
+    "type": "FeatureCollection",
+    "features": [
+      {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+          -21.9295056,
+          64.1300183,
+          29.47
+        ],
+        [
+          -21.9295063,
+          64.1300186,
+          29.53
+        ],
+        [
+          -21.9295069,
+          64.1300189,
+          29.63
+        ],
+        [
+          -21.9295074,
+          64.130019,
+          29.72
+        ]
+        ]
+      },
+      "properties": {
+        "stroke": "#444444",
+        "stroke-width": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+          -21.9295056,
+          64.1300183,
+          29.47
+        ],
+        [
+          -21.9295063,
+          64.1300186,
+          29.53
+        ],
+        [
+          -21.9295069,
+          64.1300189,
+          29.63
+        ],
+        [
+          -21.9295074,
+          64.130019,
+          29.72
+        ]
+        ]
+      },
+      "properties": {
+        "stroke": "#00FF00",
+        "stroke-width": 2
+      }
+    }
+    ]
+  }
+  ],
+  "bbox": [
+    -21.934507399999998,
+    64.12501830000001,
+    29.47,
+    -21.9245056,
+    64.135019,
+    29.72
+  ]
+}

@@ -1,0 +1,24 @@
+{
+    "type": "delete",
+    "data": {
+        "missionId": 6671,
+        "payload": {
+            "id": 6671,
+            "isLive": false,
+            "viewPrivacy": "DEFAULT",
+            "vehicleId": 219,
+            "maxAlt": 0.0,
+            "maxGroundspeed": 0.0,
+            "maxAirspeed": 0.0,
+            "maxG": -1.0,
+            "createdOn": "2014-06-24T23:57Z",
+            "updatedOn": "2014-06-24T23:57Z",
+            "summaryText": "San Diego, California, United States",
+            "viewURL": "http://www.droneshare.com/mission/6671",
+            "vehicleText": "quadcopter",
+            "userName": "mrpollo",
+            "userAvatarImage": "http://www.gravatar.com/avatar/8c4caaefed2a4b497af546524bc3bf6f.jpg",
+            "numParameters": 0
+        }
+    }
+}

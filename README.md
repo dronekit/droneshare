@@ -1,6 +1,8 @@
-# mega-droneshare
+# Droneshare
 
-Build Status: [![Dependency Status](https://www.codeship.io/projects/bdded4a0-a3ed-0131-b562-3a2ddf12dbeb/status)](https://www.codeship.io/projects/18633)
+Build Status:
+
+[![Codeship Status for diydrones/droneshare](https://codeship.io/projects/1d6b0730-e382-0131-36da-0e6774a12e5d/status)](https://codeship.io/projects/25456)
 
 The new version of droneshare - built upon the DroneAPI.  Please see our [welcome letter](WELCOME.md).
 
@@ -37,3 +39,4 @@ Simply run the following grunt task.
 
 This project uses a [http://editorconfig.org/](.editorconfig) file to specify source formatting conventions.  We encourage you to install a suitable
 plug-in into your text-editor of choice.
+

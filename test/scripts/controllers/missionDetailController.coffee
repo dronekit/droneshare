@@ -37,6 +37,7 @@ describe "missionDetailController", ->
       expect(@scope.bounds).toEqual {}
       @scope.$apply()
       @httpBackend.flush()
+
       expect(@scope.bounds).not.toEqual {}
       expect(@scope.bounds.southWest.lng).toEqual @geojson.bbox[0]
       expect(@scope.bounds.southWest.lat).toEqual @geojson.bbox[1]
@@ -47,7 +48,8 @@ describe "missionDetailController", ->
     it 'gets formats date to present to users', ->
       @scope.$apply()
       @httpBackend.flush()
-      expect(@scope.record.dateString).toEqual (new Date(@mission.createdOn)).toDateString()
+      createdOn = new Date(@mission.createdOn)
+      expect(@scope.record.dateString).toEqual "#{createdOn.toDateString()} - #{createdOn.toLocaleTimeString()}"
 
     it 'prepares data for social sharing', ->
       @scope.$apply()

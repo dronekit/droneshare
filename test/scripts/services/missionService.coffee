@@ -3,21 +3,29 @@ jasmine.getJSONFixtures().fixturesPath = '/base/test/fixtures'
 describe "missionService", ->
   beforeEach module 'app'
 
-  beforeEach ->
+  beforeEach inject ($rootScope, _$httpBackend_, missionService) ->
+    loadJSONFixtures('dseries.json')
+    loadJSONFixtures('mission.json')
+    loadJSONFixtures('parameters.json')
+    loadJSONFixtures('messages.geo.json')
+
     @fetchParams =
       order_by: "createdAt"
       order_dir: "desc"
       page_size: "12"
 
     @urlBase = 'https://api.3drobotics.com/api/v1'
+    @scope = $rootScope.$new()
+    @missionService = missionService
+    @httpBackend = _$httpBackend_
 
-  it 'should get missions', inject ['$httpBackend', 'missionService', ($httpBackend, missionService) ->
-    loadJSONFixtures('missions.json')
+    @httpBackend.whenGET("#{@urlBase}/auth/user").respond({"message":"You are not logged in"})
+
+  it 'should get missions', ->
     expected = getJSONFixture('missions.json')
     notExpected = [{}]
 
-    $httpBackend.expectGET("#{@urlBase}/auth/user").respond({"message":"You are not logged in"})
-    $httpBackend.expectGET("#{@urlBase}/mission").respond(expected)
+    @httpBackend.expectGET("#{@urlBase}/mission").respond(expected)
 
     positiveTestSuccess = (results) ->
       expect(results).toEqual expected
@@ -27,18 +35,15 @@ describe "missionService", ->
       expect(results).not.toEqual notExpected
       results
 
-    missionService.get().then(positiveTestSuccess).then(negativeTestSuccess)
+    @missionService.get().then(positiveTestSuccess).then(negativeTestSuccess)
 
-    $httpBackend.flush()
-  ]
+    @httpBackend.flush()
 
-  it 'should get a mission by id', inject ['$httpBackend', 'missionService', ($httpBackend, missionService) ->
-    loadJSONFixtures('mission.json')
+  it 'should get a mission by id', ->
     expected = getJSONFixture('mission.json')
     notExpected = {}
 
-    $httpBackend.expectGET("#{@urlBase}/auth/user").respond({"message":"You are not logged in"})
-    $httpBackend.expectGET("#{@urlBase}/mission/4750").respond(expected)
+    @httpBackend.expectGET("#{@urlBase}/mission/4750").respond(expected)
 
     positiveTestSuccess = (results) ->
       expect(results).toEqual expected
@@ -48,18 +53,15 @@ describe "missionService", ->
       expect(results).not.toEqual notExpected
       results
 
-    missionService.getId(4750).then(positiveTestSuccess).then(negativeTestSuccess)
+    @missionService.getId(4750).then(positiveTestSuccess).then(negativeTestSuccess)
 
-    $httpBackend.flush()
-  ]
+    @httpBackend.flush()
 
-  it 'should get plot data from a mission', inject ['$httpBackend', 'missionService', ($httpBackend, missionService) ->
-    loadJSONFixtures('dseries.json')
+  it 'should get plot data from a mission', ->
     expected = getJSONFixture('dseries.json')
     notExpected = []
 
-    $httpBackend.expectGET("#{@urlBase}/auth/user").respond({"message":"You are not logged in"})
-    $httpBackend.expectGET("#{@urlBase}/mission/4750/dseries").respond(expected)
+    @httpBackend.expectGET("#{@urlBase}/mission/4750/dseries").respond(expected)
 
     positiveTestSuccess = (results) ->
       expect(results.data).toEqual expected
@@ -69,18 +71,15 @@ describe "missionService", ->
       expect(results.data).not.toEqual notExpected
       results
 
-    missionService.get_plotdata(4750).then(positiveTestSuccess).then(negativeTestSuccess)
+    @missionService.get_plotdata(4750).then(positiveTestSuccess).then(negativeTestSuccess)
 
-    $httpBackend.flush()
-  ]
+    @httpBackend.flush()
 
-  it 'should get parameters from a mission', inject ['$httpBackend', 'missionService', ($httpBackend, missionService) ->
-    loadJSONFixtures('parameters.json')
+  it 'should get parameters from a mission', ->
     expected = getJSONFixture('parameters.json')
     notExpected = []
 
-    $httpBackend.expectGET("#{@urlBase}/auth/user").respond({"message":"You are not logged in"})
-    $httpBackend.expectGET("#{@urlBase}/mission/4750/parameters.json").respond(expected)
+    @httpBackend.expectGET("#{@urlBase}/mission/4750/parameters.json").respond(expected)
 
     positiveTestSuccess = (results) ->
       expect(results.data).toEqual expected
@@ -90,28 +89,24 @@ describe "missionService", ->
       expect(results.data).not.toEqual notExpected
       results
 
-    missionService.get_parameters(4750).then(positiveTestSuccess).then(negativeTestSuccess)
+    @missionService.get_parameters(4750).then(positiveTestSuccess).then(negativeTestSuccess)
 
-    $httpBackend.flush()
-  ]
+    @httpBackend.flush()
 
-  it 'should get geojson from a mission', inject ['$httpBackend', 'missionService', ($httpBackend, missionService) ->
-    loadJSONFixtures('messages.geo.json')
+  it 'should get geojson from a mission', ->
     expected = getJSONFixture('messages.geo.json')
     notExpected = []
 
-    $httpBackend.expectGET("#{@urlBase}/auth/user").respond({"message":"You are not logged in"})
-    $httpBackend.expectGET("#{@urlBase}/mission/4750/messages.geo.json").respond(expected)
+    @httpBackend.expectGET("#{@urlBase}/mission/4750/messages.geo.json").respond(expected)
 
     positiveTestSuccess = (results) ->
-      expect(results).toEqual expected
+      expect(results.data).toEqual expected
       results
 
     negativeTestSuccess = (results) ->
-      expect(results).not.toEqual notExpected
+      expect(results.data).not.toEqual notExpected
       results
 
-    missionService.get_geojson(4750).then(positiveTestSuccess).then(negativeTestSuccess)
+    @missionService.get_geojson(4750).then(positiveTestSuccess).then(negativeTestSuccess)
 
-    $httpBackend.flush()
-  ]
+    @httpBackend.flush()

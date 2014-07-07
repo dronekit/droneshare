@@ -1,0 +1,30 @@
+{
+    "type": "update",
+    "data": {
+        "missionId": 6671,
+        "payload": {
+            "id": 6671,
+            "isLive": true,
+            "viewPrivacy": "DEFAULT",
+            "vehicleId": 219,
+            "maxAlt": 89.44,
+            "maxGroundspeed": 0.10999999940395355,
+            "maxAirspeed": 0.10999999940395355,
+            "maxG": -1.0,
+            "latitude": 39.3223914,
+            "longitude": -76.6463088,
+            "softwareVersion": "V3.1.5",
+            "softwareGit": "",
+            "createdOn": "2014-06-24T23:52Z",
+            "updatedOn": "2014-06-24T23:53Z",
+            "summaryText": "San Diego, California, United States",
+            "mapThumbnailURL": "http://api.tiles.mapbox.com/v3/kevin3dr.hokdl9ko/pin-s-heliport+f44(-76.6463,39.3224,2)/-76.6463,39.3224,2/140x100.png",
+            "viewURL": "http://www.droneshare.com/mission/6671",
+            "vehicleText": "quadcopter",
+            "userName": "mrpollo",
+            "userAvatarImage": "http://www.gravatar.com/avatar/8c4caaefed2a4b497af546524bc3bf6f.jpg",
+            "numParameters": 0,
+            "vehicleType": "quadcopter"
+        }
+    }
+}

@@ -189,7 +189,7 @@ class AuthService extends RESTService
       @log.error("Login check failed #{results.status}: #{results.statusText}")
       if results.status == 0
         @error = "DroneAPI server is offline, please try again later."
-      @setLoggedOut
+      @setLoggedOut()
 
 
 class UserService extends RESTService

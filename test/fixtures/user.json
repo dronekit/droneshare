@@ -1,0 +1,26 @@
+{
+    "login": "mrpollo",
+    "id": 219,
+    "fullName": "Ramón Roche",
+    "isAdmin": false,
+    "avatarImage": "http://www.gravatar.com/avatar/8c4caaefed2a4b497af546524bc3bf6f.jpg",
+    "profileURL": "http://www.gravatar.com/8c4caaefed2a4b497af546524bc3bf6f",
+    "emailVerified": false,
+    "needNewPassword": false,
+    "defaultViewPrivacy": 0,
+    "defaultControlPrivacy": 0,
+    "vehicles": [{
+        "uuid": "05bc38ee-fecd-47d9-88b4-7885492dc520",
+        "name": "quadcopter",
+        "id": 218,
+        "userId": 219,
+        "viewPrivacy": "SHARED",
+        "controlPrivacy": "DEFAULT",
+        "missions": [],
+        "createdOn": "2014-06-04T16:08Z",
+        "updatedOn": "2014-06-05T14:22Z",
+        "summaryText": "quadcopter"
+    }],
+    "email": "mrpollo@gmail.com",
+    "wantEmails": true
+}

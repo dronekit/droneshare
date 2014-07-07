@@ -12,7 +12,7 @@ describe "vehicleDetailController", ->
     routeParamsStub.id = 218
 
     @vehicleDetailController = $controller('vehicleDetailController', { '$scope': @scope, '$routeParams': routeParamsStub })
-    @urlBase = 'https://api.3drobotics.com/api/v1'
+    @urlBase = 'http://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
     @httpBackend.expectGET("#{@urlBase}/auth/user").respond 200, @user
     @httpBackend.expectGET("#{@urlBase}/vehicle/#{routeParamsStub.id}").respond 200, @vehicle

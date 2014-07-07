@@ -14,7 +14,7 @@ describe "missionDetailController", ->
     routeParamsStub.id = 218
 
     @userDetailController = $controller('missionDetailController', { '$scope': @scope, '$routeParams': routeParamsStub })
-    @urlBase = 'https://api.3drobotics.com/api/v1'
+    @urlBase = 'http://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
     @httpBackend.whenGET("#{@urlBase}/auth/user").respond 200, @user
     @httpBackend.whenGET("#{@urlBase}/mission/#{routeParamsStub.id}").respond 200, @mission

@@ -7,7 +7,7 @@ describe "authService", ->
     loadJSONFixtures 'user.json'
     @user         = getJSONFixture 'user.json'
     @scope        = $rootScope.$new()
-    @urlBase      = 'https://api.3drobotics.com/api/v1'
+    @urlBase      = 'http://api.droneshare.com/api/v1'
     @authService  = authService
     @httpBackend  = _$httpBackend_
 

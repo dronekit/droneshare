@@ -308,6 +308,7 @@ module.exports = (grunt) ->
           '!libs/html5shiv-printshiv.{coffee,js}'
           '!libs/json3.min.{coffee,js}'
           '!libs/require.{coffee,js}'
+          '!libs/jasmine-jquery.js'
         ]
         order: [
           'custom/atmosphere.js'
@@ -342,6 +343,7 @@ module.exports = (grunt) ->
           '!libs/html5shiv-printshiv.{coffee,js}'
           '!libs/json3.min.{coffee,js}'
           '!libs/require.{coffee,js}'
+          '!libs/jasmine-jquery.js'
         ]
         order: [
           'custom/atmosphere.js'

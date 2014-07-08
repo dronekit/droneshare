@@ -30,6 +30,7 @@ class MapController
       scrollWheelZoom: true
       zoom: 10
       minZoom: 2
+      maxZoom: 19
     @scope.tiles = maps.threedr_default
 
 class BoundsFactory

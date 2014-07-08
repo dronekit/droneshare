@@ -8,6 +8,7 @@ describe "missionService", ->
     loadJSONFixtures('mission.json')
     loadJSONFixtures('parameters.json')
     loadJSONFixtures('messages.geo.json')
+    loadJSONFixtures('staticmap.json')
 
     @fetchParams =
       order_by: "createdAt"
@@ -20,6 +21,7 @@ describe "missionService", ->
     @httpBackend = _$httpBackend_
 
     @httpBackend.whenGET("#{@urlBase}/auth/user").respond({"message":"You are not logged in"})
+    @httpBackend.whenGET("#{@urlBase}/mission/staticMap").respond(getJSONFixture('staticmap.json'))
 
   it 'should get missions', ->
     expected = getJSONFixture('missions.json')

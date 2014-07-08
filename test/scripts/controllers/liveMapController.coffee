@@ -11,6 +11,7 @@ describe "liveMapController", ->
   beforeEach module 'app'
   beforeEach inject ($rootScope, $controller, _$httpBackend_, _atmosphere_) ->
     loadJSONFixtures('user.json')
+    loadJSONFixtures('staticmap.json')
     @scope = $rootScope.$new()
     @atmosphere = _atmosphere_
 
@@ -18,6 +19,9 @@ describe "liveMapController", ->
     @urlBase = 'http://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
     @httpBackend.expectGET("#{@urlBase}/auth/user").respond 200, getJSONFixture('user.json')
+
+    # FIXME - we should share this init with missionService
+    @httpBackend.whenGET("#{@urlBase}/mission/staticMap").respond(getJSONFixture('staticmap.json'))
 
   it 'should check if current user is logged in', ->
     @scope.$apply()

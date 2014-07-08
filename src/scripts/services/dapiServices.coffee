@@ -218,25 +218,28 @@ class MissionService extends RESTService
   atmosphere_disconnect: () =>
     @atmosphere.close()
 
-  get_parameters: (id) ->
+  get_staticmap: () =>
+    @getId("staticMap")
+
+  get_parameters: (id) =>
     c = angular.extend({}, @config)
     @http.get("#{@urlBase()}/#{id}/parameters.json", c)
     .success (results) ->
       results.data
 
-  get_plotdata: (id) ->
+  get_plotdata: (id) =>
     c = angular.extend({}, @config)
     @http.get("#{@urlBase()}/#{id}/dseries", c)
     .success (results) ->
       results.data
 
-  get_analysis: (id) ->
+  get_analysis: (id) =>
     c = angular.extend({}, @config)
     @http.get("#{@urlBase()}/#{id}/analysis.json", c)
     .success (results) ->
       results.data
 
-  get_geojson: (id) ->
+  get_geojson: (id) =>
     c = angular.extend({}, @config)
     @http.get("#{@urlBase()}/#{id}/messages.geo.json", c)
 

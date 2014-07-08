@@ -1,3 +1,5 @@
+useAtmosphere = false
+
 # FIXME - fetch kml from here http://localhost:8080/api/v1/mission/10/messages.kml
 class MapController
   @$inject: ['$scope', '$http']
@@ -108,40 +110,48 @@ class LiveMapController extends MapController
       #  @scope.bounds = @boundsFactory.bounds
 
   connectAtmo: =>
-    @log.debug('live map now subscribed')
-    listeners =
-      "loc": @onLive
-      "att": @onAttitude
-      "stop": @onMissionDelete
-      "mode": @updateVehicleMessage
-      "arm": @updateVehicleMessage
+    if useAtmosphere
+      @log.debug('live map now subscribed')
+      listeners =
+        "loc": @onLive
+        "att": @onAttitude
+        "stop": @onMissionDelete
+        "mode": @updateVehicleMessage
+        "arm": @updateVehicleMessage
 
-      # Contains a complete update of mission state - resent occasionally by the server
-      "update": @onMissionUpdate
+        # Contains a complete update of mission state - resent occasionally by the server
+        "update": @onMissionUpdate
 
-      # Formatted the same as an update, but indicates start of a new mission (we treat both cases identically)
-      "start": @onMissionUpdate
+        # Formatted the same as an update, but indicates start of a new mission (we treat both cases identically)
+        "start": @onMissionUpdate
 
-      # This is like a mission update, but it is guaranteed to be the most recent flight for the current user
-      # It is also _guaranteed_ to be sent before any start/update msgs on the stream
-      "user": @onMissionUpdate
+        # This is like a mission update, but it is guaranteed to be the most recent flight for the current user
+        # It is also _guaranteed_ to be sent before any start/update msgs on the stream
+        "user": @onMissionUpdate
 
-      # Server sends this if a message gets deleted
-      "delete": @onMissionDelete
+        # Server sends this if a message gets deleted
+        "delete": @onMissionDelete
 
-      "mystery": @updateVehicleMessage
-      "text": @updateVehicleMessage
+        "mystery": @updateVehicleMessage
+        "text": @updateVehicleMessage
 
-    s = @missionService
-    @listenerIds = s.atmosphere.on(name, callback) for name, callback of listeners
-    s.atmosphere_connect()
+      s = @missionService
+      @listenerIds = s.atmosphere.on(name, callback) for name, callback of listeners
+      s.atmosphere_connect()
+    else
+      @log.debug('doing non atmo fetch')
+      @missionService.get_staticmap().then (results) =>
+        @onMissionUpdateCommon(update) for update in results.updates
+      , (results) =>
+        @set_http_error(results)
 
   disconnectAtmo: =>
-    @log.debug('Unsubscribe for atmosphere notification')
-    s = @missionService
-    for id of @listenerIds
-      s.atmosphere.off(id)
-    s.atmosphere_disconnect()
+    if useAtmosphere
+      @log.debug('Unsubscribe for atmosphere notification')
+      s = @missionService
+      for id of @listenerIds
+        s.atmosphere.off(id)
+      s.atmosphere_disconnect()
 
   onAttitude: (data) =>
     # FIXME - not sure if I need apply... (or how to optimize it)
@@ -155,18 +165,22 @@ class LiveMapController extends MapController
         # markers (probably a good idea) or we need to recreate the marker to get the new heading to show up.
         #@log.debug("Can't set angle to #{v.iconAngle} because angular-leaflet is dumb and separates options from markers")
 
-  # This is an update of mission data for a prexisting flight
+  # This is an update of mission data for a prexisting flight (we need to wrap it with an apply)
   onMissionUpdate: (data) =>
     @scope.$apply () =>
-      key = @vehicleKey(data.missionId)
-      payload = data.payload
-      lat = payload.latitude
-      lon = payload.longitude
-      if lat? && lon?
-        v = @updateVehicle(key, lat, lon, payload)
-        @updateMarkerPopup(v, payload)
-        if v.isMine
-          @zoomToVehicle(v)
+      @onMissionUpdateCommon(data)
+
+  # This is an update of mission data for a prexisting flight - shared between atmo and non atmo cases
+  onMissionUpdateCommon: (data) =>
+    key = @vehicleKey(data.missionId)
+    payload = data.payload
+    lat = payload.latitude
+    lon = payload.longitude
+    if lat? && lon?
+      v = @updateVehicle(key, lat, lon, payload)
+      @updateMarkerPopup(v, payload)
+      if v.isMine
+        @zoomToVehicle(v)
 
   onMissionDelete: (data) =>
     @scope.$apply () =>

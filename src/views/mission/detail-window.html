@@ -5,7 +5,7 @@
     <alert ng-repeat="alert in errors" class="popup-middle-screen"  type="danger">{{alert}}</alert>
 
     <section id="mission-detail-map" ng-controller="mapController as map" class="col-sm-10">
-        <leaflet watchMarkers="true" tiles="tiles" geojson="geojson" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
+        <leaflet watchMarkers="true" geojson="geojson" layers="layers" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
     </section>
 
     <section id="mission-detail-data" class="col-sm-2 col-fixed" ng-show="!!record">

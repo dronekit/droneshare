@@ -9,5 +9,5 @@ describe "mapController", ->
     expect(@scope.defaults.zoom).toEqual 10
     expect(@scope.defaults.minZoom).toEqual 2
 
-  it 'should initMap and set mapbox tiles', ->
-    expect(@scope.tiles.url).toMatch /mapbox/
+  it 'should initMap and set mapbox layers', ->
+    expect(@scope.layers.baselayers.threedr_satview.url).toMatch /mapbox/

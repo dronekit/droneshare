@@ -16,7 +16,7 @@ describe "liveMapController", ->
     @atmosphere = _atmosphere_
 
     @liveMapController = $controller('liveMapController', { '$scope': @scope })
-    @urlBase = 'http://api.droneshare.com/api/v1'
+    @urlBase = 'https://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
     @httpBackend.expectGET("#{@urlBase}/auth/user").respond 200, getJSONFixture('user.json')
 

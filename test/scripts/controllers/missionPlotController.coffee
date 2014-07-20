@@ -12,7 +12,7 @@ describe "missionPlotController", ->
     routeParamsStub.id = 218
 
     @missionPlotController = $controller('missionPlotController', { '$scope': @scope, '$routeParams': routeParamsStub })
-    @urlBase = 'http://api.droneshare.com/api/v1'
+    @urlBase = 'https://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
     @httpBackend.expectGET("#{@urlBase}/auth/user").respond 200, @user
     @httpBackend.expectGET("#{@urlBase}/mission/#{routeParamsStub.id}/dseries").respond 200, @dseries

@@ -8,7 +8,7 @@ describe "userDetailController", ->
     routeParamsStub.id = 219
 
     @userDetailController = $controller('userDetailController', { '$scope': @scope, '$routeParams': routeParamsStub })
-    @urlBase = 'http://api.droneshare.com/api/v1'
+    @urlBase = 'https://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
     @httpBackend.expectGET("#{@urlBase}/auth/user").respond 200, @user
     @httpBackend.expectGET("#{@urlBase}/user/#{routeParamsStub.id}").respond 200, @user

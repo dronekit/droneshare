@@ -15,7 +15,7 @@ describe "missionService", ->
       order_dir: "desc"
       page_size: "12"
 
-    @urlBase = 'http://api.droneshare.com/api/v1'
+    @urlBase = 'https://api.droneshare.com/api/v1'
     @scope = $rootScope.$new()
     @missionService = missionService
     @httpBackend = _$httpBackend_

@@ -1,0 +1,6 @@
+<h2>Recent Flights:</h2>
+<div class="" ng-hide="!records.length" >
+    <div id="mission-list" class="row" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
+        <div mission-summary class="col-md-3" ng-repeat="mission in records" mission="mission"></div>
+    </div>
+</div>

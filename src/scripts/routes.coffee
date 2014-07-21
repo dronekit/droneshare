@@ -28,6 +28,10 @@ class Config
     .when '/mission',
       title: 'Recent'
       templateUrl: '/views/mission/list-window.html'
+      controller: 'missionController'
+      resolve:
+        fetchMission: ($route, missionService) ->
+          missionService.fetchMissions({order_by: "createdAt", order_dir: "desc", page_size: 12})
     .when '/mission/:id',
       controller: 'missionDetailController as controller'
       title: 'Detail'

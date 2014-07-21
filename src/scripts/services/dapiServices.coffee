@@ -205,6 +205,18 @@ class MissionService extends RESTService
 
   endpoint: "mission"
 
+  fetchMissions: (fetchParams) ->
+    @get(fetchParams ? {}).then (results) ->
+       # dark sorceress evil magic
+       # please don't touch this
+      @records = (( (record) ->
+        date = new Date(record.createdOn)
+        record.dateString = "#{date.toDateString()} - #{date.toLocaleTimeString()}"
+        record.text = record.summaryText ? "Mission #{record.id}"
+        record
+      )(record) for record in results)
+
+
   atmosphere_connect: () =>
     request =
       url: @urlBase() + '/live'

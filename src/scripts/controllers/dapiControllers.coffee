@@ -165,15 +165,19 @@ class MultiRecordController extends BaseController
       results
 
 # Find a better way to share this code between mission, vehicle, etc...
-fixupMission = (rec) ->
+fixupMission = (rec, user) ->
   date = new Date(rec.createdOn)
   rec.dateString = date.toDateString() + " - " + date.toLocaleTimeString()
   rec.text = rec.summaryText ? "Mission #{rec.id}"
+
+  # If the user is looking at their own maps, then zoom in a bit more (because they are probably in same area of world)
+  isMine = user.loggedIn && (rec.userName == user.login)
+  rec.staticZoom = if isMine then 10 else 2
   rec
 
 class MissionController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'missionService']
-  constructor: (log, scope, @service) ->
+  @$inject: ['$log', '$scope', 'authService', 'missionService']
+  constructor: (log, scope, @authService, @service) ->
     @fetchParams =
       order_by: "createdAt"
       order_dir: "desc"
@@ -182,10 +186,10 @@ class MissionController extends MultiRecordController
     @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
   # Subclasses can override if they would like to modify the records that were returned by the server
-  extendRecord: (rec) ->
+  extendRecord: (rec) =>
     # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
     # a way to share this code!
-    fixupMission(rec)
+    fixupMission(rec, @authService.getUser())
 
 class UserController extends MultiRecordController
   @$inject: ['$log', '$scope', 'userService']
@@ -342,7 +346,7 @@ class VehicleDetailController extends DetailController
     for rec in data.missions
       # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
       # a way to share this code!
-      fixupMission(rec)
+      fixupMission(rec, @authService.getUser())
 
     super(data)
 
@@ -429,7 +433,7 @@ class MissionDetailController extends DetailController
     super(data)
 
     # FIXME - unify these fixups with the regular mission record fetch - should be in the service instead!
-    fixupMission(data)
+    fixupMission(data, @authService.getUser())
 
     if !data.latitude?
       @set_error('This mission did not include location data')

@@ -1,5 +1,5 @@
 angular.module('app').directive 'mapboxStaticMap', () ->
-  restrict: 'E'
+  restrict: 'A'
   template: '<img ng-src="{{url}}"></img>'
   scope:
     latitude: '='
@@ -14,7 +14,7 @@ angular.module('app').directive 'mapboxStaticMap', () ->
 
     longitude = scope.longitude
     latitude = scope.latitude
-    zoom = scope.zoom ? "2"
+    zoom = scope.zoom ? "10"
     latlonstr = "#{longitude},#{latitude},#{zoom}"
     markerstr = if scope.icon?
       color = scope.color ? "f44" # default to redish

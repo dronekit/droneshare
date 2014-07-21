@@ -329,7 +329,8 @@ module.exports = (grunt) ->
             'ui.bootstrap': 'libs/ui-bootstrap-tpls-0.11.0.min.js',
             'angular-flot': 'libs/angular-flot.js',
             'ngSocial': 'libs/angular-social.js',
-            'angularFileUpload': 'libs/angular-file-upload.min.js'
+            'angularFileUpload': 'libs/angular-file-upload.min.js',
+            'infinite-scroll': 'libs/ng-infinite-scroll.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:
@@ -365,6 +366,7 @@ module.exports = (grunt) ->
             'angular-flot': 'libs/angular-flot.js',
             'ngSocial': 'libs/angular-social.js',
             'angularFileUpload': 'libs/angular-file-upload.min.js'
+            'infinite-scroll': 'libs/ng-infinite-scroll.js'
         ]
         require: '<%= shimmer.dev.require %>'
 

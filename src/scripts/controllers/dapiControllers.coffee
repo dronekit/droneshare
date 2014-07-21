@@ -176,20 +176,23 @@ fixupMission = (rec, user) ->
   rec
 
 class MissionController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'authService', 'missionService']
-  constructor: (log, scope, @authService, @service) ->
-    @fetchParams =
-      order_by: "createdAt"
-      order_dir: "desc"
-      page_size: "12"
-    super(log, scope)
-    @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
+  @$inject: ['$log', '$scope', 'fetchMission', 'missionService', 'authService']
+  constructor: (log, $scope, fetchMission, service, @authService) ->
+    @service = service
+    @records = fetchMission
+    $scope.records = @records
+
+    $scope.fetchMissions = (fetchParams) ->
+      service.fetchMissions(fetchParams)
+
+    super(log, $scope)
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) =>
     # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
     # a way to share this code!
     fixupMission(rec, @authService.getUser())
+
 
 class UserController extends MultiRecordController
   @$inject: ['$log', '$scope', 'userService']
@@ -342,7 +345,7 @@ class VehicleDetailController extends DetailController
       me.loggedIn && (@record?.userId == me.id)
 
   # Normally the response to submit is used to update the local model, subclasses can override
-  handle_fetch_response: (data) =>
+  handle_fetch_response: (data) ->
     for rec in data.missions
       # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
       # a way to share this code!

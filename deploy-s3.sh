@@ -23,6 +23,7 @@ fi
 
 # Kill any running dev server, then start a prod build
 skill grunt
+grunt test
 grunt prod
 
 BUCKETNAME=$SERVERNAME.droneshare.com

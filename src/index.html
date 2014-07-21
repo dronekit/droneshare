@@ -55,19 +55,19 @@
     <header header-nav class="container-fluid"></header>
 
     <div class="container-fluid">
-        <ng:view></ng:view>
+        <div ng-view></div>
     </div>
 
-    <ng-include src="'/views/footer.html'"></ng-include>
+    <div ng-include src="'/views/footer.html'"></div>
 
     <% if (config.environment && config.environment === 'prod') { %>
         <script src="<%= config.getHashedFile('./.temp/scripts/scripts.min.js', {trim: './.temp'}) %>"></script>
-        <ng-include src="'/helpers/google-analytics.html'"></ng-include>
+        <div ng-include src="'/helpers/google-analytics.html'"></div>
     <% } else { %>
         <script data-main="/scripts/main.js" src="/scripts/libs/require.js"></script>
     <% } %>
-    <ng-include src="'/helpers/facebook-share.html'"></ng-include>
-    <ng-include src="'/helpers/google-plus.html'"></ng-include>
-    <ng-include src="'/helpers/twitter-share.html'"></ng-include>
+    <div ng-include src="'/helpers/facebook-share.html'"></div>
+    <div ng-include src="'/helpers/google-plus.html'"></div>
+    <div ng-include src="'/helpers/twitter-share.html'"></div>
 </body>
 </html>

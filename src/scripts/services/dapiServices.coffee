@@ -56,6 +56,7 @@ class DapiService
     @error = null
 
     @config =
+      cache: true
       withCredentials: true # Needed to send cookies
       useXDomain: true # needed to send cookies in POST
       # FIXME - better to include in an auth header per RFC2617 Authorization: DroneApi apikey="blah.blah"

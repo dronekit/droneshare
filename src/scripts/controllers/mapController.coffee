@@ -33,6 +33,7 @@ class MapController
       maxZoom: 19
 
     # FIXME - default to sat view when zoomed in maps.threedr_satview.top = true
+    @scope.tiles = maps.threedr_default
     @scope.layers =
       baselayers: maps
 

@@ -11,7 +11,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="dns-prefetch" href="//api.droneshare.com">
-    <link rel="shortcut icon" href="/images/icon.png">
+    <% if (config.environment && config.environment === 'prod') { %>
+        <link rel="shortcut icon" href="<%= config.getHashedFile('./.temp/images/icon.png', {trim: './.temp'}) %>">
+    <% } else { %>
+        <link rel="shortcut icon" href="/images/icon.png">
+    <% } %>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
 
     <% if (config.environment && config.environment === 'prod') { %>

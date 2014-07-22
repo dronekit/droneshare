@@ -23,6 +23,14 @@ describe "liveMapController", ->
     # FIXME - we should share this init with missionService
     @httpBackend.whenGET("#{@urlBase}/mission/staticMap").respond(getJSONFixture('staticmap.json'))
 
+  it 'should set scope.tiles', ->
+    @scope.$apply()
+    expect(@scope.tiles).not.toBeUndefined()
+
+  it 'should set scope.layers', ->
+    @scope.$apply()
+    expect(@scope.layers).not.toBeUndefined()
+
   it 'should check if current user is logged in', ->
     @scope.$apply()
     @httpBackend.flush()

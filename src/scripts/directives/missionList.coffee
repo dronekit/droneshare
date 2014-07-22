@@ -1,8 +1,9 @@
 angular.module('app').directive 'missionList', -> return {
   restrict: 'A'
   templateUrl: '/views/directives/mission-list.html'
-  controller: ($scope) ->
+  controller: ['$scope', ($scope) ->
     $scope.busy = true
+  ]
   compile: (element, attributes) ->
     pre: ($scope, element, attributes, controller) ->
       $scope.fetchParams =

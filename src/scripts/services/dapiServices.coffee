@@ -209,7 +209,7 @@ class MissionService extends RESTService
     @get(fetchParams ? {}).then (results) ->
        # dark sorceress evil magic
        # please don't touch this
-      @records = (( (record) ->
+      (( (record) ->
         date = new Date(record.createdOn)
         record.dateString = "#{date.toDateString()} - #{date.toLocaleTimeString()}"
         record.text = record.summaryText ? "Mission #{record.id}"

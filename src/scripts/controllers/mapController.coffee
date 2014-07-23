@@ -9,16 +9,17 @@ class MapController
   initMap: =>
     # Collect various maps worth using
     typ = "xyz"
-    mbox = (key, name) ->
+    mbox = (key, name, attribution) ->
       url: "https://a.tiles.mapbox.com/v3/" + key + "/{z}/{x}/{y}.png"
       name: name
       type: typ
       layerOptions:
-        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+        attribution: attribution || '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
 
     maps =
       threedr_default: mbox("kevin3dr.hokdl9ko", "Topographic")
       threedr_satview: mbox("kevin3dr.io0162i9", "Satellite")
+      airspace_warning: mbox("mslee.h1kk2o6r", "Restricted Zones", '<a href="http://openstreetmap.org">NPS</a>, <a href="https://explore.data.gov/National-Security-and-Veterans-Affairs/Military-Installations-Ranges-and-Training-Areas/wcc7-57p3">US Military Data</a>')
       openstreetmap:
         url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         name: "OpenStreetMap"

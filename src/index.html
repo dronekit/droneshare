@@ -26,18 +26,22 @@
                 parent: "<%= config.getHashedFile('./.temp/images/3drobotics.png', {trim: './.temp'}) %>",
                 son: "<%= config.getHashedFile('./.temp/images/droneshare.png', {trim: './.temp'}) %>",
                 vehicleMarkerActive: "<%= config.getHashedFile('./.temp/images/vehicle-marker-active.png', {trim: './.temp'}) %>",
-                vehicleMarkerInactive: "<%= config.getHashedFile('./.temp/images/vehicle-marker-inactive.png', {trim: './.temp'}) %>"
+                vehicleMarkerInactive: "<%= config.getHashedFile('./.temp/images/vehicle-marker-inactive.png', {trim: './.temp'}) %>",
+                octocat: "<%= config.getHashedFile('./.temp/images/octocat-drone.jpg', {trim: './.temp'}) %>"
             };
         </script>
     <% } else { %>
         <!--[if lte IE 8]> <script src="/scripts/libs/json3.js"></script> <script src="/scripts/libs/html5shiv-printshiv.js"></script> <![endif]-->
         <link rel="stylesheet" href="/styles/styles.css" />
-        <script> window.logos = {
-            parent: '/images/3drobotics.png',
-            son: '/images/droneshare.png',
-            vehicleMarkerActive: '/images/vehicle-marker-active.png',
-            vehicleMarkerInactive: '/images/vehicle-marker-inactive.png'
-            }; </script>
+        <script>
+            window.logos = {
+                parent: '/images/3drobotics.png',
+                son: '/images/droneshare.png',
+                vehicleMarkerActive: '/images/vehicle-marker-active.png',
+                vehicleMarkerInactive: '/images/vehicle-marker-inactive.png',
+                octocat: '/images/octocat-drone.jpg'
+            };
+        </script>
     <% } %>
 
     <style>

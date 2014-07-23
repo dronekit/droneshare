@@ -22,6 +22,7 @@ class Config
     .when '/vehicle',
       templateUrl: '/views/vehicle-list.html'
     .when '/about',
+      controller: 'aboutController'
       templateUrl: '/views/about.html'
     .when '/vehicle/:id',
       templateUrl: '/views/vehicle-detail.html'

@@ -441,6 +441,14 @@ module.exports = (grunt) ->
         options:
           livereload: true
           nospawn: true
+      html:
+        files: 'src/views/**/*.html'
+        tasks: [
+          'copy:app'
+          'template:indexDev'
+          'copy:dev'
+          'karma'
+        ]
       spaHtml:
         files: 'src/index.html'
         tasks: [

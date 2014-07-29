@@ -78,6 +78,27 @@
 
         ga('create', 'UA-50407686-1', 'auto');
         </script>
+        <script>
+        trackJsError = function(e) {
+          var ie = window.event,
+              errMsg = e.message || ie.errorMessage;
+          var errSrc = (e.filename || ie.errorUrl) + ': ' + (e.lineno || ie.errorLine);
+          ga('send', 'exception', {
+              'exDescription': errSrc + ': ' + errMsg,
+              'exFatal': false
+          });
+        }
+        /**
+         * Cross-browser event listener
+         */
+        if (window.addEventListener) {
+          window.addEventListener('error', trackJsError, false);
+        } else if (window.attachEvent) {
+          window.attachEvent('onerror', trackJsError);
+        } else {
+          window.onerror = trackJsError;
+        }
+        </script>
     <% } else { %>
         <script data-main="/scripts/main.js" src="/scripts/libs/require.js"></script>
     <% } %>

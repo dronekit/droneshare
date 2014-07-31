@@ -321,10 +321,10 @@ class VehicleDetailController extends DetailController
         method: 'POST'
         file: files
       angular.extend(c, @service.config)
+      @uploading = true
       @upload.upload(c)
       .progress((evt) =>
-        if evt.total > 0
-          @uploading = true
+        if evt.total > 0 && @uploading
           progress = evt.loaded * 0.75 # We reserve last 1/4 for server time
           @upload_progress = parseInt(100.0 * progress / evt.total)
           @log.debug('percent: ' + parseInt(100.0 * evt.loaded / evt.total)))

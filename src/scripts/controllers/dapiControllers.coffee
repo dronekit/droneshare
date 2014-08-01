@@ -205,8 +205,8 @@ class UserController extends MultiRecordController
     @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
 class VehicleController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'vehicleService']
-  constructor: (log, scope, @service) ->
+  @$inject: ['$log', '$scope', 'vehicleService', 'ngProgressLite']
+  constructor: (log, scope, @service, ngProgressLite) ->
     super(log, scope)
     log.debug('Not autofetching vehicles') # FIXME - find a better way to control when/if we autofetch anything
 
@@ -318,6 +318,7 @@ class VehicleDetailController extends DetailController
   constructor: (@upload, @log, scope, routeParams, @service, @authService, window, ngProgressLite) ->
     scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
     scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
+    scope.urlBase = service.urlId(routeParams.id)
 
     super(scope, routeParams, window)
 

@@ -319,6 +319,7 @@ module.exports = (grunt) ->
           'libs/angular.min.js'
           'libs/mapbox.js'
           'NGAPP':
+            'ngProgressLite': 'libs/ngprogress-lite.js'
             'ngAnimate': 'libs/angular-animate.min.js'
             #'ngMockE2E': 'libs/angular-mocks.js'
             'ngRoute': 'libs/angular-route.min.js'
@@ -330,7 +331,7 @@ module.exports = (grunt) ->
             'angular-flot': 'libs/angular-flot.js',
             'ngSocial': 'libs/angular-social.js',
             'angularFileUpload': 'libs/angular-file-upload.min.js',
-            'infinite-scroll': 'libs/ng-infinite-scroll.js'
+            'infinite-scroll': 'libs/ng-infinite-scroll.js',
         ]
         require: 'NGBOOTSTRAP'
       prod:
@@ -355,6 +356,7 @@ module.exports = (grunt) ->
           'libs/angular.min.js'
           'libs/mapbox.js'
           'NGAPP':
+            'ngProgressLite': 'libs/ngprogress-lite.js'
             'ngAnimate': 'libs/angular-animate.min.js'
             #'ngMockE2E': 'libs/angular-mocks.js'
             'ngRoute': 'libs/angular-route.min.js'

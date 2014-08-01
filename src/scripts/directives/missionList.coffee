@@ -6,6 +6,14 @@ angular.module('app').directive 'missionList', -> return {
   ]
   compile: (element, attributes) ->
     pre: ($scope, element, attributes, controller) ->
+      sameRouteSameParams = (config) ->
+        $scope.urlBase == config.url && config.params.page_offset == $scope.fetchParams.page_offset
+
+      $scope.$on 'loading-started', (event, config) ->
+        $scope.recordsLoaded(false, config) if sameRouteSameParams(config)
+      $scope.$on 'loading-complete', (event, config) ->
+        $scope.recordsLoaded(true, config) if sameRouteSameParams(config)
+
       $scope.fetchParams =
         order_by: "createdAt"
         order_dir: "desc"

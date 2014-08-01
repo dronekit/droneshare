@@ -330,7 +330,8 @@ module.exports = (grunt) ->
             'angular-flot': 'libs/angular-flot.js',
             'ngSocial': 'libs/angular-social.js',
             'angularFileUpload': 'libs/angular-file-upload.min.js',
-            'infinite-scroll': 'libs/ng-infinite-scroll.js'
+            'infinite-scroll': 'libs/ng-infinite-scroll.js',
+            'ngProgressLite': 'libs/ngprogress-lite.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:
@@ -367,6 +368,7 @@ module.exports = (grunt) ->
             'ngSocial': 'libs/angular-social.js',
             'angularFileUpload': 'libs/angular-file-upload.min.js'
             'infinite-scroll': 'libs/ng-infinite-scroll.js'
+            'ngProgressLite': 'libs/ngprogress-lite.js'
         ]
         require: '<%= shimmer.dev.require %>'
 

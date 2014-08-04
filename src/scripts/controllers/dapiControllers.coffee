@@ -176,16 +176,20 @@ fixupMission = (rec, user) ->
   rec
 
 class MissionController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'fetchMission', 'missionService', 'authService']
-  constructor: (log, $scope, fetchMission, service, @authService) ->
+  @$inject: ['$log', '$scope', 'resolvedMissions', 'missionService', 'authService', 'ngProgressLite']
+  constructor: (log, $scope, resolvedMissions, service, @authService, ngProgressLite) ->
+    super(log, $scope)
+
     @service = service
-    @records = fetchMission
+    @records = resolvedMissions
+    $scope.urlBase = service.urlBase()
     $scope.records = @records
+
+    $scope.recordsLoaded = (mode, config) ->
+      if mode then ngProgressLite.done() else ngProgressLite.start()
 
     $scope.fetchMissions = (fetchParams) ->
       service.fetchMissions(fetchParams)
-
-    super(log, $scope)
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) =>
@@ -201,8 +205,8 @@ class UserController extends MultiRecordController
     @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
 class VehicleController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'vehicleService']
-  constructor: (log, scope, @service) ->
+  @$inject: ['$log', '$scope', 'vehicleService', 'ngProgressLite']
+  constructor: (log, scope, @service, ngProgressLite) ->
     super(log, scope)
     log.debug('Not autofetching vehicles') # FIXME - find a better way to control when/if we autofetch anything
 
@@ -280,8 +284,11 @@ class DetailController extends BaseController
     @original_record = angular.copy(@record) # deep copy to compare against
 
 class UserDetailController extends DetailController
-  @$inject: ['$log', '$scope', '$routeParams', 'userService', 'authService', '$window']
-  constructor: (@log, scope, routeParams, @service, @authService, window) ->
+  @$inject: ['$log', '$scope', '$routeParams', 'userService', 'authService', '$window', 'ngProgressLite']
+  constructor: (@log, scope, routeParams, @service, @authService, window, ngProgressLite) ->
+    scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
+    scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
+
     super(scope, routeParams, window)
 
     @scope.$on('vehicleAdded', (event, args) =>
@@ -307,8 +314,12 @@ class UserDetailController extends DetailController
       @scope.showEditForm()
 
 class VehicleDetailController extends DetailController
-  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService', 'authService', '$window' ]
-  constructor: (@upload, @log, scope, routeParams, @service, @authService, window) ->
+  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService', 'authService', '$window', 'ngProgressLite']
+  constructor: (@upload, @log, scope, routeParams, @service, @authService, window, ngProgressLite) ->
+    scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
+    scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
+    scope.urlBase = service.urlId(routeParams.id)
+
     super(scope, routeParams, window)
 
     @uploading = false
@@ -354,8 +365,11 @@ class VehicleDetailController extends DetailController
     super(data)
 
 class MissionDetailController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService', '$window', '$sce']
-  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService, window, @sce) ->
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService', '$window', '$sce', 'ngProgressLite']
+  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService, window, @sce, ngProgressLite) ->
+    scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
+    scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
+
     super(scope, routeParams, window)
     @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}

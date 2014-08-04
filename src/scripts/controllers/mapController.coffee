@@ -79,13 +79,14 @@ class BoundsFactory
     dirty
 
 class LiveMapController extends MapController
-  @$inject: ['$scope', '$log', 'leafletData', '$http', 'missionService', 'authService', '$window']
-  constructor: (scope, @log, leafletData, http, @missionService, @authService, @window) ->
+  @$inject: ['$scope', '$log', 'leafletData', '$http', 'missionService', 'authService', '$window', 'ngProgressLite']
+  constructor: (scope, @log, leafletData, http, @missionService, @authService, @window, ngProgressLite) ->
     scope.leafletData = leafletData
     @boundsFactory = new BoundsFactory
-
     @currentMissionId = -1 # The most recent flight we have zoomed in on
 
+    scope.recordsLoaded = (mode, config) ->
+      if mode then ngProgressLite.done() else ngProgressLite.start()
     scope.vehicleMarkers = {}
     scope.vehiclePaths = {}
     scope.bounds = {} # Angular wants to see at least an empty object (not undefined)
@@ -99,6 +100,7 @@ class LiveMapController extends MapController
       @connectAtmo()
 
     super(scope, http)
+    scope.urlBase = "#{missionService.urlBase()}/staticMap"
 
     @connectAtmo()
 

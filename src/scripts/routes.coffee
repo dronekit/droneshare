@@ -18,14 +18,21 @@ class Config
     .when '/user',
       templateUrl: '/views/user/list-all.html'
     .when '/user/:id',
+      controller: 'userDetailController as controller'
       templateUrl: '/views/user/detail.html'
+      resolve:
+        resolvedUser: ['$route', 'userService', ($route, userService) ->
+          userService.getId($route.current.params.id)
+        ]
     .when '/vehicle',
       templateUrl: '/views/vehicle-list.html'
-    .when '/about',
-      controller: 'aboutController'
-      templateUrl: '/views/about.html'
     .when '/vehicle/:id',
       templateUrl: '/views/vehicle-detail.html'
+      controller: 'vehicleDetailController as controller'
+      resolve:
+        resolvedVehicle: ['$route', 'vehicleService', ($route, vehicleService) ->
+          vehicleService.getId($route.current.params.id)
+        ]
     .when '/mission',
       title: 'Recent'
       templateUrl: '/views/mission/list-window.html'
@@ -51,6 +58,9 @@ class Config
       controller: 'gitHubController'
     .when '/admin',
       templateUrl: '/views/admin-screen.html'
+    .when '/about',
+      controller: 'aboutController'
+      templateUrl: '/views/about.html'
     .when '/',
       title: 'World'
       templateUrl: '/views/site.html'

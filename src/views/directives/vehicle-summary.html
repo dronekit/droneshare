@@ -1,8 +1,16 @@
-<div class="vehicle-list-item">
-    <a ng-href="/vehicle/{{vehicle.id}}"><h4>{{vehicle.summaryText}}</h4></a>
-    <ul class="list-unstyled">
-        <li ng-show="vehicle.autopilotType">{{vehicle.autopilotType}}</li>
-        <li ng-show="vehicle.vehicleType">{{vehicle.vehicleType}}</li>
-        <li>{{vehicle.missions.length}} missions flown</li>
-    </ul>
+<div class="row vehicle-list-item">
+    <div class="col-sm-12">
+      <div class="col-sm-12 vehicle-title {{vehicle.vehicleType || 'unkown-type'}}">
+        <a ng-href="/vehicle/{{vehicle.id}}">
+          {{vehicle.name || vehicle.summaryText}}
+        </a>
+      </div>
+      <ul class="col-sm-12 list-unstyled">
+        <li class="attribute">Type: <span class="property">{{vehicle.vehicleType || "Unknown Type"}}</span></li>
+        <li class="attribute">Autopilot: {{vehicle.autopilotType || "Unknown Type"}}</li>
+        <li>{{vehicle.missions.length}} Missions Flown</li>
+        <li><a ng-href="/vehicle/{{vehicle.id}}">Edit vehicle</a></li>
+        <li ng-show="controller.isMe(vehicle)"><a href="" ng-click="controller.remove_vehicle_modal(vehicle)">Remove vehicle</a></li>
+      </ul>
+    </div>
 </div>

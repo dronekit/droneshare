@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{modalTitle || "Alert"}}</h3>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-lg-12">
+      <p>
+        {{ modalDescription || "Are you sure you want to perform this operation?" }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="row">
+    <div class="col-sm-8">
+      <button type="submit" class="btn btn-primary" ng-click="ok()">{{modalAction || "Continue"}}</button>
+      <button type="button" class="btn btn-default" ng-click="$dismiss('cancel')">Cancel</button>
+    </div>
+  </div>
+
+</div>

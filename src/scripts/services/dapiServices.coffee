@@ -197,6 +197,24 @@ class UserService extends RESTService
 
 class VehicleService extends RESTService
   endpoint: "vehicle"
+  vehicleTypes: [
+    "quadcopter"
+    "tricopter"
+    "coaxial"
+    "hexarotor"
+    "octorotor"
+    "fixed-wing"
+    "ground-rover"
+    "submarine"
+    "airship"
+    "flapping-wing"
+    "boat"
+    "free-balloon"
+    "antenna-tracker"
+    "generic"
+    "rocket"
+    "helicopter"
+  ]
 
 class MissionService extends RESTService
   @$inject: ['$log', '$http', '$routeParams', 'atmosphere', 'authService']

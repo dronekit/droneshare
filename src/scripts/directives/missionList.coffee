@@ -6,7 +6,7 @@ angular.module('app').directive 'missionList', -> return {
   ]
   compile: (element, attributes) ->
     pre: ($scope, element, attributes, controller) ->
-      $scope.fetchParams =
+      $scope.allFlightsParams =
         order_by: "createdAt"
         order_dir: "desc"
         page_size: 12
@@ -14,10 +14,10 @@ angular.module('app').directive 'missionList', -> return {
 
       $scope.nextPage = ->
         $scope.busy = true
-        offset = $scope.fetchParams.page_offset
-        offset = 1 if $scope.fetchParams.page_offset == 0
-        $scope.fetchParams.page_offset = $scope.fetchParams.page_size + offset
-        $scope.fetchMissions($scope.fetchParams).then (records) ->
+        offset = $scope.allFlightsParams.page_offset
+        offset = 1 if $scope.allFlightsParams.page_offset == 0
+        $scope.allFlightsParams.page_offset = $scope.allFlightsParams.page_size + offset
+        $scope.fetchMissions($scope.allFlightsParams).then (records) ->
           $scope.busy = false
           $scope.records = $scope.records.concat records
 

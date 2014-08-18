@@ -180,10 +180,40 @@ class MissionController extends MultiRecordController
   constructor: (log, $scope, fetchMission, service, @authService) ->
     @service = service
     @records = fetchMission
+    $scope.currentUser = @authService.getUser()
+    $scope.missionScopeTitle = "All"
     $scope.records = @records
+
+    $scope.allFlightsParams =
+      order_by: 'createdAt'
+      order_dir: 'desc'
+      page_offset: 0
+      page_size: 12
+
+    $scope.myFlightsParams =
+      order_by: 'createdAt'
+      order_dir: 'desc'
+      page_offset: 0
+      page_size: 12
+      field_userName: $scope.currentUser.login
 
     $scope.fetchMissions = (fetchParams) ->
       service.fetchMissions(fetchParams)
+
+    $scope.filterFlights = (mode) ->
+      newTarget = $('#filter-buttons button.' + mode)
+
+      return true if newTarget.hasClass('active')
+
+      $('#filter-buttons button.active').removeClass('active')
+      newTarget.addClass('active')
+
+      $scope.missionScopeTitle = newTarget.data('title-prefix')
+
+      params = angular.copy(if mode == 'my-flights' then $scope.myFlightsParams else $scope.allFlightsParams)
+      $scope.fetchMissions(params).then (records) ->
+        $scope.records = records
+      true
 
     super(log, $scope)
 
@@ -201,8 +231,8 @@ class UserController extends MultiRecordController
     @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
 class VehicleController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'vehicleService']
-  constructor: (log, scope, @service) ->
+  @$inject: ['$log', '$scope', 'vehicleService', '$modal']
+  constructor: (log, scope, @service, @modal) ->
     super(log, scope)
     log.debug('Not autofetching vehicles') # FIXME - find a better way to control when/if we autofetch anything
 
@@ -215,6 +245,20 @@ class VehicleController extends MultiRecordController
       # tell others they may want to refetch our vehicles
       @scope.$emit('vehicleAdded')
 
+class AlertController
+  @$inject: ['$scope', '$modalInstance', 'record', 'modalOptions', '$location']
+  constructor: (@scope, @modalInstance, @record, modalOptions, @location) ->
+    @scope.modalTitle = modalOptions.title
+    @scope.modalDescription = modalOptions.description
+    @scope.modalAction = modalOptions.action
+    @scope.record = @record
+    @scope.go = (path) =>
+      @location.path(path)
+      @scope.$close('success')
+    @scope.ok = =>
+      @modalInstance.close(@record)
+
+angular.module('app').controller 'alertController', AlertController
 angular.module('app').controller 'missionController', MissionController
 angular.module('app').controller 'vehicleController', VehicleController
 angular.module('app').controller 'userController', UserController

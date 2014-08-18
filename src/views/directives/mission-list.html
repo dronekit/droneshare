@@ -1,6 +1,18 @@
-<h2>Recent Flights:</h2>
-<div class="" ng-hide="!records.length" >
-    <div id="mission-list" class="row" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
-        <div mission-summary class="col-md-3" ng-repeat="mission in records" mission="mission"></div>
+<h2>{{missionScopeTitle}} Missions:</h2>
+<div id="mission-filters" class="subnav row">
+  <div class="col-md-6 pull-left">
+    <div id="filter-buttons" class="btn-group">
+      <button class="btn btn-default all-flights active" data-title-prefix="All" ng-click="filterFlights('all-flights')">All Missions</button>
+      <button ng-show="currentUser.loggedIn" class="btn btn-default my-flights" data-title-prefix="My" ng-click="filterFlights('my-flights')">My Missions</button>
     </div>
+  </div>
+  <div class="col-md-3 pull-right">
+    <div upload-mission user="currentUser"></div>
+  </div>
+</div>
+<div id="mission-list" class="row" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' ng-hide="!records.length">
+  <div mission-summary class="col-md-3" ng-repeat="mission in records" mission="mission"></div>
+</div>
+<div ng-show="!records.length" class="alert alert-danger" role="alert">
+  No missions found
 </div>

@@ -445,9 +445,10 @@ module.exports = (grunt) ->
         files: 'src/views/**/*.html'
         tasks: [
           'copy:app'
+          'ngTemplateCache'
+          'shimmer:dev'
           'template:indexDev'
           'copy:dev'
-          'karma'
         ]
       spaHtml:
         files: 'src/index.html'

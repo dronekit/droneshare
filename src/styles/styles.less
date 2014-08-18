@@ -1,4 +1,5 @@
-@import "bootstrap.less";
+@import 'bootstrap.less';
+@import (inline) 'ladda-themeless.css';
 
 @base-blue: #2db4eb;
 @border-blue: #45cbf1;
@@ -29,6 +30,39 @@
 
 // Recommended by angular-ui site - to make these elements work correctly
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.btn-group {
+  .btn-group.dropdown {
+    padding: 0;
+    margin-top: -1px;
+    margin-left: -2px;
+    margin-right: -1px;
+  }
+  .dropdown-menu {
+    li.clear-filter {
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+    }
+  }
+}
+
+.input-group-btn {
+  .btn.dropdown {
+    padding: 0;
+    border: none;
+  }
+  .btn {
+    &.dropdown {
+      &:first-child > .btn {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      &:not(:first-child) > .btn {
+        border-radius: 0;
+      }
+    }
+  }
+}
+
 
 body {
     padding-bottom: 70px;
@@ -281,14 +315,29 @@ mission-detail {
     padding-right: 0;
 }
 
-#recent-flights {
-    h2 {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        color: #626466;
-        font-weight: normal;
-    }
+.mission-list-heading {
+  margin-top: 50px;
+  margin-bottom: 25px;
+  h2 {
+    color: #626466;
+    font-weight: normal;
+    margin: 0;
+  }
 }
+.mission-list-filters {
+  margin-bottom: 25px;
+  .form-control-input-clear {
+    position: absolute;
+    top: 11px;
+    color: #C9C9C9;
+    right: 55px;
+    z-index: 2;
+    cursor: pointer;
+  }
+}
+.mission-list-body {
+}
+
 
 .mission-summary-card {
     padding: 0;

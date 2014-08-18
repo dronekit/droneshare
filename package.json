@@ -43,6 +43,7 @@
     "grunt-karma": "~0.8.2",
     "grunt-prompt": "~1.1.0",
     "karma-junit-reporter": "~0.2.1",
+    "karma-requirejs": "^0.2.2",
     "load-grunt-tasks": "~0.4.0",
     "optipng-bin": "^0.3.8",
     "time-grunt": "~0.3.1"

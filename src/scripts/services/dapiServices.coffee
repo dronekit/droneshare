@@ -72,13 +72,12 @@ class DapiService
 
 class RESTService extends DapiService
   get: (params = {}) ->
-    @log.debug("Getting all #{@endpoint}")
+    @log.debug("Getting from #{@endpoint}")
     cfg =
       params: params
     angular.extend(cfg, @config)
-    @http.get(@urlBase(), cfg)
-    .then (results) ->
-      results.data
+
+    @http.get(@urlBase(), cfg).then (results) -> results.data
 
   # Return a URL that points to the specified ID
   urlId: (id) ->
@@ -201,21 +200,90 @@ class VehicleService extends RESTService
 class MissionService extends RESTService
   @$inject: ['$log', '$http', '$routeParams', 'atmosphere', 'authService']
   constructor: (log, http, routeParams, @atmosphere, @authService) ->
+    @fetchParams = @getFetchParams()
+    @createdAt = 'desc'
+    @userWatching = @authService.getUser()
     super(log, http, routeParams)
 
   endpoint: "mission"
 
-  fetchMissions: (fetchParams) ->
-    @get(fetchParams ? {}).then (results) ->
-       # dark sorceress evil magic
-       # please don't touch this
-      (( (record) ->
-        date = new Date(record.createdOn)
-        record.dateString = "#{date.toDateString()} - #{date.toLocaleTimeString()}"
-        record.text = record.summaryText ? "Mission #{record.id}"
-        record
-      )(record) for record in results)
+  getAllMissions: (fetchParams) =>
+    fetchParams or= @getFetchParams()
+    @getMissionsFromParams(fetchParams)
 
+  getUserMissions: (userLogin, filterParams = false) =>
+    fetchParams =
+      field_userName: userLogin
+    # if we want to limit the user data set even further
+    # and add more filters we should always use getUserMissions
+    # with the second param being arguments
+    angular.extend(fetchParams, filterParams) if filterParams
+
+    console.log 'fetchParams: ', fetchParams
+    @getMissionsFromParams(fetchParams)
+
+  getVehicleTypeMissions: (vehicleType) =>
+    fetchParams =
+      field_vehicleType: vehicleType
+    @getMissionsFromParams(fetchParams)
+
+  getDurationMissions: (duration, opt = 'GT') =>
+    fetchParams = {}
+    fetchParams["field_flightDuration[#{opt}]"] = duration
+    @getMissionsFromParams(fetchParams)
+
+  getMaxAltMissions: (altitude, opt = 'GT') =>
+    fetchParams = {}
+    fetchParams["field_maxAlt[#{opt}]"] = altitude
+    @getMissionsFromParams(fetchParams)
+
+  getMaxGroundSpeedMissions: (speed, opt = 'GT') =>
+    fetchParams = {}
+    fetchParams["field_maxGroundspeed[#{opt}]"] = speed
+    @getMissionsFromParams(fetchParams)
+
+  getMaxAirSpeedMissions: (speed, opt = 'GT') =>
+    fetchParams = {}
+    fetchParams["field_maxAirspeed[#{opt}]"] = speed
+    @getMissionsFromParams(fetchParams)
+
+  getLatitudeMissions: (latitude, opt = 'GT') =>
+    fetchParams = {}
+    fetchParams["field_latitude[#{opt}]"] = latitude
+    @getMissionsFromParams(fetchParams)
+
+  getLongitudeMissions: (longitude, opt = 'GT') =>
+    fetchParams = {}
+    fetchParams["field_longitude[#{opt}"] = longitude
+    @getMissionsFromParams(fetchParams)
+
+  getMissionsFromParams: (params) =>
+    angular.extend(params, @getFetchParams())
+    @getMissions(params)
+
+  getMissions: (params) =>
+    missions = @get(params)
+    missions.then @fixMissionRecords
+
+  fixMissionRecords: (results) =>
+    (@fixMissionRecord(record) for record in results)
+
+  fixMissionRecord: (record) =>
+    date = new Date(record.createdOn)
+    record.dateString = "#{date.toDateString()} - #{date.toLocaleTimeString()}"
+    record.text = record.summaryText ? "Mission #{record.id}"
+
+    # If the user is looking at their own maps, then zoom in a bit more (because they are probably in same area of world)
+    isMine = @userWatching.loggedIn && (record.userName == @userWatching.login)
+    record.staticZoom = if isMine then 8 else 2
+    record
+
+  getFetchParams: ->
+    fetchParams =
+      order_by: 'createdAt'
+      order_dir: @createdAt
+      page_offset: 0
+      page_size: 12
 
   atmosphere_connect: () =>
     request =

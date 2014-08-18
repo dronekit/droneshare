@@ -17,7 +17,9 @@
     "ng-file-upload": "~1.3.2",
     "jasmine-jquery": "~2.0.5",
     "ngInfiniteScroll": "~1.1.2",
-    "ngprogress-lite": "~1.0.6"
+    "ngprogress-lite": "~1.0.6",
+    "ng-ladda-bootstrap": "*",
+    "spin.js": "~1.3.2"
   },
   "exportsOverride": {
     "angular": {
@@ -82,6 +84,9 @@
     "ngprogress-lite": {
       "scripts/libs": "ngprogress-lite.js",
       "styles": "ngprogress-lite.css"
+    },
+    "ng-ladda-bootstrap": {
+      "scripts/libs": "dist/ng-ladda-bootstrap.js"
     }
   },
   "resolutions": {

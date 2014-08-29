@@ -210,14 +210,15 @@ class MissionService extends RESTService
     fetchParams or= @getFetchParams()
     @getMissionsFromParams(fetchParams)
 
-  getUserMissions: (user, filterParams = false) =>
+  getUserMissions: (userLogin, filterParams = false) =>
     fetchParams =
-      field_userName: user.login
+      field_userName: userLogin
     # if we want to limit the user data set even further
     # and add more filters we should always use getUserMissions
     # with the second param being arguments
     angular.extend(fetchParams, filterParams) if filterParams
 
+    console.log 'fetchParams: ', fetchParams
     @getMissionsFromParams(fetchParams)
 
   getVehicleTypeMissions: (vehicleType) =>
@@ -257,6 +258,9 @@ class MissionService extends RESTService
 
   getMissionsFromParams: (params) =>
     angular.extend(params, @getFetchParams())
+    @getMissions(params)
+
+  getMissions: (params) =>
     missions = @get(params)
     missions.then @fixMissionRecords
 

@@ -185,12 +185,12 @@ fixupMission = (rec, user) ->
 class MissionController extends MultiRecordController
   @$inject: ['$log', '$scope', 'preFetchedMissions', 'missionService', 'authService']
   constructor: (log, $scope, @records, @service, @authService) ->
+    $scope.busy = false
     super(log, $scope)
 
 class UserController extends MultiRecordController
   @$inject: ['$log', '$scope', 'userService']
   constructor: (log, scope, @service) ->
-    super(log, scope)
     @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
 class VehicleController extends MultiRecordController

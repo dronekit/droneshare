@@ -7,9 +7,14 @@ angular.module('app').directive 'missionList', -> return {
     'noInfiniteScroll': '='
     'preFetched': '='
     'records': '='
-    'allowDurationFilter': '='
   controller: ['$scope', '$sce', 'missionService', 'authService', (@scope, @sce, @service, @authService) ->
     @currentUser = @authService.getUser()
+
+    if @scope.preFetched
+      @scope.busy = false
+    else
+      @scope.busy = true
+      @allMissions().then (results) => @scope.busy = false
 
     @scope.loaded = if @scope.preFetched then true else false
     @scope.missionScopeTitle = 'All'
@@ -19,11 +24,17 @@ angular.module('app').directive 'missionList', -> return {
       field: false
       opt: false
 
-    @fetchParams =
-      order_by: 'createdAt'
-      order_dir: 'desc'
-      page_offset: 0
-      page_size: 12
+    @getFetchParams = =>
+      fetchParams =
+        order_by: 'createdAt'
+        order_dir: 'desc'
+        page_offset: 0
+        page_size: 12
+
+    @setFetchParamsFilter = (value) =>
+      @fetchParams = @getFetchParams()
+      @fetchParams["#{@scope.filters.field.field}[#{@scope.filters.opt.opt}]"] = value
+      @fetchParams
 
     @createFilterField = (title, field, units) ->
       filter =
@@ -35,6 +46,8 @@ angular.module('app').directive 'missionList', -> return {
       filter =
         title: @sce.trustAsHtml(title)
         opt: opt
+
+    @fetchParams = @getFetchParams()
 
     @filterFields = [
       @createFilterField('Max Groundspeed', 'field_maxGroundspeed', 'm/s')
@@ -80,17 +93,22 @@ angular.module('app').directive 'missionList', -> return {
 
     @allMissions = =>
       @scope.missionScopeTitle = "All"
+      # reset fetchParams
+      @fetchParams = @getFetchParams()
       @service.getAllMissions().then @assignRecords
 
     @userMissions = (filterParams = false) =>
       @scope.missionScopeTitle = "My"
+      # reset fetchParams
+      @fetchParams = @getFetchParams()
+      # then add user login limitation
+      @fetchParams['field_userName'] = @currentUser.login
       @service.getUserMissions(@currentUser.login, filterParams).then @assignRecords
 
     @getVehicleTypeMissions = (vehicleType) =>
       @service.getVehicleTypeMissions(vehicleType).then @assignRecords
 
     @getDurationMissions = (duration, opt) =>
-      duration *= 60 # data given in minutes API needs seconds
       @service.getDurationMissions(duration, opt).then @assignRecords
 
     @getMaxAltMissions = (maxAlt, opt) =>
@@ -108,10 +126,6 @@ angular.module('app').directive 'missionList', -> return {
     @getLongitudeMissions = (longitude, opt = 'GT') =>
       @service.getLongitudeMissions(longitude, opt).then @assignRecords
 
-    @setFetchParams = (fetchParams) =>
-      anular.extend(@fetchParams, fetchParams)
-      @fetchParams
-
     @sortCreatedAt = =>
       # figure out how to toggle sort by other fields
 
@@ -119,13 +133,19 @@ angular.module('app').directive 'missionList', -> return {
       @scope.records = records
 
     @appendRecords = (records) =>
-      @scope.records.concat records
+      @scope.records = @scope.records.concat records
 
     @chooseDataSet = =>
       @allMissions() if @scope.missionDataSet == 'all'
       @userMissions() if @scope.missionDataSet == 'mine'
 
     @filterDataSet = (value, opt)=>
+      # if trying to get duration input from user is in minutes
+      # API expects seconds, need to convert
+      value *= 60 if @scope.filters.field.field == 'field_flightDuration'
+      # set the fetchParams so that we can use them later
+      @setFetchParamsFilter value
+
       if @scope.missionDataSet == 'all'
         switch @scope.filters.field.field
           when 'field_maxGroundspeed' then @getMaxGroundSpeedMissions(value, opt)
@@ -136,7 +156,10 @@ angular.module('app').directive 'missionList', -> return {
           when 'field_longitude' then @getLongitudeMissions(value, opt)
           else console.log("something is wrong")
       else if @scope.missionDataSet == 'mine'
-        console.log 'user stuff'
+        # since we know set the fetchParams before choosing
+        # which dataSet to work on, we can just tell the service
+        # to poll the user missions with this filters applied
+        @userMissions(@fetchParams)
 
     @setCreatedAt = (sort) =>
       fetchParams = @service.getFetchParams()
@@ -144,24 +167,23 @@ angular.module('app').directive 'missionList', -> return {
       @service.fetchParams = fetchParams
 
     @nextPage = =>
+      return false if @scope.busy
       @scope.busy = true
-      #offset = $scope.requestParams.page_offset
-      #offset = 1 if $scope.requestParams.page_offset == 0
-      #$scope.requestParams.page_offset = $scope.requestParams.page_size + offset
-      #@fetchAppendRecords() # this is the new way of appending to current records
-      #$scope.fetchMissions($scope.requestParams).then (records) ->
-      #$scope.busy = false
-      #$scope.records = $scope.records.concat records
-      console.log 'nxtpge'
+
+      offset = @fetchParams.page_offset
+      offset = 1 if @fetchParams.page_offset == 0
+      @fetchParams.page_offset = @fetchParams.page_size + offset
+
+      @service.getMissions(@fetchParams).then (records) =>
+        @scope.busy = false
+        @appendRecords(records)
 
     return @
   ]
   link: ($scope, element, attributes, controller) ->
-    $scope.busy = false
-
     $scope.$watch 'missionDataSet', (newValue, oldValue) =>
       unless newValue == oldValue
-        controller.queryFilterHidden = if $scope.missionDataSet == 'mine' then true else false
+        #controller.queryFilterHidden = if $scope.missionDataSet == 'mine' then true else false
         controller.chooseDataSet()
 
     $scope.tryFilterField = (index) =>

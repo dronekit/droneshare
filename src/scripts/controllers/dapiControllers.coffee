@@ -144,12 +144,19 @@ class MultiRecordController extends BaseController
 
   fetchRecords: =>
     @service.get(@fetchParams ? {}).then (results) =>
-      @records = (@extendRecord(r) for r in results)
+      @records = @extendRecords(results)
       @log.debug("Fetched #{@records.length} records")
+
+  fetchAppendRecords: =>
+    @service.get(@fetchParams ? {}).then (results) =>
+      @records = @records.concat @extendRecords(results)
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) ->
     rec
+
+  extendRecords: (records) =>
+    (@extendRecord(record) for record in records)
 
   addRecord: (mission) =>
     @service.save(mission)
@@ -176,53 +183,9 @@ fixupMission = (rec, user) ->
   rec
 
 class MissionController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'fetchMission', 'missionService', 'authService']
-  constructor: (log, $scope, fetchMission, service, @authService) ->
-    @service = service
-    @records = fetchMission
-    $scope.currentUser = @authService.getUser()
-    $scope.missionScopeTitle = "All"
-    $scope.records = @records
-
-    $scope.allFlightsParams =
-      order_by: 'createdAt'
-      order_dir: 'desc'
-      page_offset: 0
-      page_size: 12
-
-    $scope.myFlightsParams =
-      order_by: 'createdAt'
-      order_dir: 'desc'
-      page_offset: 0
-      page_size: 12
-      field_userName: $scope.currentUser.login
-
-    $scope.fetchMissions = (fetchParams) ->
-      service.fetchMissions(fetchParams)
-
-    $scope.filterFlights = (mode) ->
-      newTarget = $('#filter-buttons button.' + mode)
-
-      return true if newTarget.hasClass('active')
-
-      $('#filter-buttons button.active').removeClass('active')
-      newTarget.addClass('active')
-
-      $scope.missionScopeTitle = newTarget.data('title-prefix')
-
-      params = angular.copy(if mode == 'my-flights' then $scope.myFlightsParams else $scope.allFlightsParams)
-      $scope.fetchMissions(params).then (records) ->
-        $scope.records = records
-      true
-
+  @$inject: ['$log', '$scope', 'preFetchedMissions', 'missionService', 'authService']
+  constructor: (log, $scope, @records, @service, @authService) ->
     super(log, $scope)
-
-  # Subclasses can override if they would like to modify the records that were returned by the server
-  extendRecord: (rec) =>
-    # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
-    # a way to share this code!
-    fixupMission(rec, @authService.getUser())
-
 
 class UserController extends MultiRecordController
   @$inject: ['$log', '$scope', 'userService']

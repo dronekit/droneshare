@@ -16,6 +16,8 @@ angular.module('app').directive 'missionList', -> return {
       @scope.busy = true
       @allMissions().then (results) => @scope.busy = false
 
+    @scope.filterInProgress = false
+    @scope.filtersActive = false
     @scope.loaded = if @scope.preFetched then true else false
     @scope.missionScopeTitle = 'All'
     @scope.missionDataSet = 'all'
@@ -42,10 +44,11 @@ angular.module('app').directive 'missionList', -> return {
         field: field
         units: units
 
-    @createFilterOpt = (title, opt) =>
+    @createFilterOpt = (title, opt, humanize) =>
       filter =
         title: @sce.trustAsHtml(title)
         opt: opt
+        humanize: humanize
 
     @fetchParams = @getFetchParams()
 
@@ -59,18 +62,19 @@ angular.module('app').directive 'missionList', -> return {
     ]
 
     @filterOpts = [
-      @createFilterOpt('&gt;', 'GT')
-      @createFilterOpt('&gt;=', 'GE')
-      @createFilterOpt('==', 'EQ')
-      @createFilterOpt('&lt;', 'LT')
-      @createFilterOpt('&lt;=', 'LE')
-      @createFilterOpt('&lt;&gt;', 'NE')
+      @createFilterOpt('&gt;', 'GT', 'greater than')
+      @createFilterOpt('&gt;=', 'GE', 'greater or equal to')
+      @createFilterOpt('==', 'EQ', 'equal to')
+      @createFilterOpt('&lt;', 'LT', 'lower than')
+      @createFilterOpt('&lt;=', 'LE', 'equal or lower than')
+      @createFilterOpt('!=', 'NE', 'different than')
     ]
 
     @scope.filters =
       field: @filterFields[0]
       opt: @filterOpts[0]
       input: ''
+      dataset: ''
 
     @vehicleTypes = [
       "quadcopter"
@@ -136,10 +140,11 @@ angular.module('app').directive 'missionList', -> return {
       @scope.records = @scope.records.concat records
 
     @chooseDataSet = =>
-      @allMissions() if @scope.missionDataSet == 'all'
-      @userMissions() if @scope.missionDataSet == 'mine'
+      return @allMissions() if @scope.missionDataSet == 'all'
+      return @userMissions() if @scope.missionDataSet == 'mine'
 
     @filterDataSet = (value, opt)=>
+      @scope.filterInProgress = true
       # if trying to get duration input from user is in minutes
       # API expects seconds, need to convert
       value *= 60 if @scope.filters.field.field == 'field_flightDuration'
@@ -148,18 +153,21 @@ angular.module('app').directive 'missionList', -> return {
 
       if @scope.missionDataSet == 'all'
         switch @scope.filters.field.field
-          when 'field_maxGroundspeed' then @getMaxGroundSpeedMissions(value, opt)
-          when 'field_flightDuration' then @getDurationMissions(value, opt)
-          when 'field_maxAirspeed' then @getMaxAirSpeedMissions(value, opt)
-          when 'field_maxAlt' then @getMaxAltMissions(value, opt)
-          when 'field_latitude' then @getLatitudeMissions(value, opt)
-          when 'field_longitude' then @getLongitudeMissions(value, opt)
+          when 'field_maxGroundspeed' then @getMaxGroundSpeedMissions(value, opt).then @filterClear
+          when 'field_flightDuration' then @getDurationMissions(value, opt).then @filterClear
+          when 'field_maxAirspeed' then @getMaxAirSpeedMissions(value, opt).then @filterClear
+          when 'field_maxAlt' then @getMaxAltMissions(value, opt).then @filterClear
+          when 'field_latitude' then @getLatitudeMissions(value, opt).then @filterClear
+          when 'field_longitude' then @getLongitudeMissions(value, opt).then @filterClear
           else console.log("something is wrong")
       else if @scope.missionDataSet == 'mine'
         # since we know set the fetchParams before choosing
         # which dataSet to work on, we can just tell the service
         # to poll the user missions with this filters applied
-        @userMissions(@fetchParams)
+        @userMissions(@fetchParams).then @filterClear
+
+    @filterClear = =>
+      @scope.filterInProgress = false
 
     @setCreatedAt = (sort) =>
       fetchParams = @service.getFetchParams()
@@ -195,7 +203,10 @@ angular.module('app').directive 'missionList', -> return {
       $scope.filters.opt = controller.filterOpts[index]
 
     $scope.tryFilterDataSet = =>
+      $scope.filtersActive = true
       controller.filterDataSet $scope.filters.input, $scope.filters.opt.opt
+      # humanized filter query
+      $scope.filters.dataset = "#{$scope.filters.field.title} is #{$scope.filters.opt.humanize} #{$scope.filters.input}"
 
     $scope.checkIfNextPage = ->
       return false if $scope.noInfiniteScroll
@@ -205,4 +216,13 @@ angular.module('app').directive 'missionList', -> return {
       controller.createdAt = if controller.createdAt == 'asc' then 'desc' else 'asc'
       controller.setCreatedAt(newValue)
       controller.chooseDataSet()
+
+    ($ '.form-control-input-clear').bind 'click', (event) =>
+      console.log 'click clear ', $scope.filtersActive
+      if $scope.filtersActive
+        $scope.filtersActive = false
+        $scope.filterInProgress = true
+        $scope.filters.input = ''
+        $scope.filters.dataset = ''
+        controller.chooseDataSet().then controller.filterClear
 }

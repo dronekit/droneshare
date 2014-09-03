@@ -1,4 +1,5 @@
-@import "bootstrap.less";
+@import 'bootstrap.less';
+@import (inline) 'ladda-themeless.css';
 
 @base-blue: #2db4eb;
 @border-blue: #45cbf1;
@@ -312,6 +313,14 @@ mission-detail {
 }
 .mission-list-filters {
   margin-bottom: 25px;
+  .form-control-input-clear {
+    position: absolute;
+    top: 11px;
+    color: #C9C9C9;
+    right: 55px;
+    z-index: 2;
+    cursor: pointer;
+  }
 }
 .mission-list-body {
 }

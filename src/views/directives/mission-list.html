@@ -22,7 +22,7 @@
         <div class="input-group">
           <div class="input-group-btn">
             <div class="btn dropdown" is-open="dropDownIsOpen.field">
-              <button type="button" class="btn btn-default dropdown-toggle">
+              <button type="button" class="btn btn-default dropdown-toggle" ng-class="{active: filtersActive}">
                 {{filters.field.title}} <b class="caret"></b>
               </button>
               <ul class="dropdown-menu">
@@ -33,7 +33,7 @@
             </div>
 
             <div class="btn dropdown" is-open="dropDownIsOpen.opt">
-              <button type="button" class="btn btn-default dropdown-toggle">
+              <button type="button" class="btn btn-default dropdown-toggle" ng-class="{active: filtersActive}">
                 <span ng-bind-html="filters.opt.title"></span> <b class="caret"></b>
               </button>
               <ul class="dropdown-menu" role="menu">
@@ -45,12 +45,13 @@
           </div>
 
           <input type="text" class="form-control" ng-model="filters.input" />
+          <span ng-show="filtersActive" class="form-control-input-clear glyphicon glyphicon-remove-circle"></span>
           <span class="input-group-addon">{{filters.field.units}}</span>
         </div>
       </div>
 
       <div class="col-md-2">
-        <button class="btn btn-primary" ng-click="tryFilterDataSet()">
+        <button ng-ladda-bootstrap data-style="zoom-out" ladda-toggle="filterInProgress" class="ladda-button btn btn-primary" ng-click="tryFilterDataSet()">
           Filter
         </button>
       </div>

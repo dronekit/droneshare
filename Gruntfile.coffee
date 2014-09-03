@@ -318,6 +318,8 @@ module.exports = (grunt) ->
           'libs/angular-file-upload-shim.min.js'
           'libs/angular.min.js'
           'libs/mapbox.js'
+          'spin.js'
+          'libs/ladda.js'
           'NGAPP':
             'ngAnimate': 'libs/angular-animate.min.js'
             #'ngMockE2E': 'libs/angular-mocks.js'
@@ -354,6 +356,8 @@ module.exports = (grunt) ->
           'libs/angular-file-upload-shim.min.js'
           'libs/angular.min.js'
           'libs/mapbox.js'
+          'spin.js'
+          'libs/ladda.js'
           'NGAPP':
             'ngAnimate': 'libs/angular-animate.min.js'
             #'ngMockE2E': 'libs/angular-mocks.js'

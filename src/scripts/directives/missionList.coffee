@@ -22,6 +22,10 @@ angular.module('app').directive 'missionList', -> return {
     @scope.loaded = if @scope.preFetched then true else false
     @scope.missionScopeTitle = 'All'
     @scope.missionDataSet = 'all'
+    @scope.missionDataSetOptions = [
+      {value: 'all', label: 'All Missions'},
+      {value: 'mine', label: 'My Missions'}
+    ]
     @scope.vehicleType = ''
     @scope.dropDownIsOpen =
       field: false
@@ -63,12 +67,12 @@ angular.module('app').directive 'missionList', -> return {
     ]
 
     @filterOpts = [
-      @createFilterOpt('&gt;', 'GT', 'greater than')
-      @createFilterOpt('&gt;=', 'GE', 'greater or equal to')
-      @createFilterOpt('==', 'EQ', 'equal to')
-      @createFilterOpt('&lt;', 'LT', 'lower than')
-      @createFilterOpt('&lt;=', 'LE', 'equal or lower than')
-      @createFilterOpt('!=', 'NE', 'different than')
+      @createFilterOpt('Greater than', 'GT', 'greater than')
+      @createFilterOpt('Greater or Equal to', 'GE', 'greater or equal to')
+      @createFilterOpt('Equal to', 'EQ', 'equal to')
+      @createFilterOpt('Lower than', 'LT', 'lower than')
+      @createFilterOpt('Lower or Equal to', 'LE', 'equal or lower than')
+      @createFilterOpt('Different than', 'NE', 'different than')
     ]
 
     @scope.filters =
@@ -203,6 +207,7 @@ angular.module('app').directive 'missionList', -> return {
       $scope.filters.field = controller.filterFields[index]
 
     $scope.tryFilterOp = (index) =>
+      console.log "tryfilterOp: ", index
       $scope.dropDownIsOpen.opt = false
       $scope.filters.opt = controller.filterOpts[index]
 

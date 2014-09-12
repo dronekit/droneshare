@@ -1,6 +1,6 @@
 <div class="row mission-list-heading">
   <div class="col-md-6 pull-left">
-    <h2>{{missionScopeTitle}} Missions:</h2>
+    <h2>Missions:</h2>
   </div>
   <div class="col-md-2 pull-right">
     <div upload-mission user="controller.currentUser"></div>
@@ -9,51 +9,53 @@
 
 <div class="row mission-list-filters">
 
-  <div class="col-md-6 btn-group">
-    <label class="btn btn-default active" ng-model="missionDataSet" btn-radio="'all'">All Missions</label>
-    <label class="btn btn-default" ng-show="controller.currentUser.loggedIn" ng-model="missionDataSet" btn-radio="'mine'">My Missions</label>
-    <button class="btn btn-default" ng-click="toggleCreatedAt()" ng-class="{dropup: (controller.createdAt == 'asc')}">Sort <b class="caret"></b></button>
+  <div class="col-md-2 btn-group">
+    <select ng-model="missionDataSet" class='form-control' ng-options='option.value as option.label for option in missionDataSetOptions'></select>
   </div>
 
-  <div class="col-md-6" ng-hide="controller.queryFilterHidden">
+  <div class="col-md-10 pull-right" ng-hide="controller.queryFilterHidden">
     <div class="row">
 
-      <div class="col-md-10">
-        <div class="input-group">
-          <div class="input-group-btn">
-            <div class="btn dropdown" is-open="dropDownIsOpen.field">
-              <button type="button" class="btn btn-default dropdown-toggle" ng-class="{active: filtersActive}">
-                {{filters.field.title}} <b class="caret"></b>
-              </button>
-              <ul class="dropdown-menu">
-                <li ng-repeat="field in controller.filterFields">
-                  <a href ng-click="tryFilterField($index)">{{field.title}}</a>
-                </li>
-              </ul>
-            </div>
-
-            <div class="btn dropdown" is-open="dropDownIsOpen.opt">
-              <button type="button" class="btn btn-default dropdown-toggle" ng-class="{active: filtersActive}">
-                <span ng-bind-html="filters.opt.title"></span> <b class="caret"></b>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="fieldOpt in controller.filterOpts">
-                  <a href ng-click="tryFilterOp($index)"><span ng-bind-html="fieldOpt.title"></span></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <input type="text" class="form-control" ng-model="filters.input" />
-          <span ng-show="filtersActive" class="form-control-input-clear glyphicon glyphicon-remove-circle"></span>
-          <span class="input-group-addon">{{filters.field.units}}</span>
-        </div>
-      </div>
-
-      <div class="col-md-2">
+      <div class="pull-right form-item">
         <button ng-ladda-bootstrap data-style="zoom-out" ladda-toggle="filterInProgress" class="ladda-button btn btn-primary" ng-click="tryFilterDataSet()">
           Filter
         </button>
+      </div>
+
+      <div class='pull-right form-item text-item'>
+        <div>{{filters.field.units}}</div>
+      </div>
+
+      <div class='pull-right form-item'>
+        <input type="text" class="form-control text-input" ng-model="filters.input" />
+        <span ng-show="filtersActive" class="form-control-input-clear glyphicon glyphicon-remove-circle"></span>
+      </div>
+
+      <div class="dropdown pull-right form-item" is-open="dropDownIsOpen.opt">
+        <a href class='dropdown-toggle' ng-class="{active: filtersActive}">
+          <span ng-bind-html='filters.opt.title'></span> <b class='caret'></b>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li ng-repeat="fieldopt in controller.filterOpts">
+            <a href ng-click="tryFilterOp($index)"><span ng-bind-html="fieldopt.title"></span></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="dropdown pull-right form-item" is-open="dropDownIsOpen.field">
+        Filter:
+        <a href class="dropdown-toggle" ng-class="{active: filtersActive}">
+          {{filters.field.title}} <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li ng-repeat="field in controller.filterFields">
+            <a href ng-click="tryFilterField($index)">{{field.title}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class='pull-right form-item text-item'>
+        Sort by: <a href ng-click="toggleCreatedAt()" ng-class="{dropup: (controller.createdAt == 'asc')}">Most recent <b class="caret"></b></a>
       </div>
 
     </div>
@@ -64,6 +66,9 @@
 <div class="row mission-list-body">
   <div class="clearfix" infinite-scroll='checkIfNextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1' ng-hide="!records.length">
     <div mission-summary class="col-md-3" ng-repeat="mission in records" mission="mission"></div>
+  </div>
+  <div class="col-md-12 alert alert-info text-center" ng-show="busy" role="info">
+    Loading missions...
   </div>
   <div class="col-md-12 alert alert-danger" ng-show="!records.length" role="alert">
     No missions found

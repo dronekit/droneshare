@@ -4,7 +4,7 @@
 <div class="modal-body">
   <ul class="list-unstyled">
     <li ng-repeat="vehicle in record.vehicles">
-      <a href="" ng-click="go('/vehicle/' + vehicle.id)">{{vehicle.name || vehicle.summaryText}}</a> - {{vehicle.missions.length}} Missions
+      <a href ng-click="go('/vehicle/' + vehicle.id)">{{vehicle.name || vehicle.summaryText}}</a> - {{vehicle.missions.length || 0}} Missions
     </li>
   </ul>
 </div>

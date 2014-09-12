@@ -2,6 +2,8 @@ angular.module('app').directive 'uploadMission', -> return {
   restrict: 'A'
   templateUrl: '/views/directives/upload-mission.html'
   controller: 'vehicleController as controller'
+  scope:
+    'user': '='
   link: ($scope, element, attributes, controller) ->
     $scope.vehicleDialog = ->
       controller.modal.open
@@ -13,6 +15,7 @@ angular.module('app').directive 'uploadMission', -> return {
           modalOptions: ->
             options =
               title: 'Upload mission to vehicle'
-  scope:
-    'user': '='
+              description: ''
+              action: ''
+    return
 }

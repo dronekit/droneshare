@@ -210,16 +210,16 @@ class VehicleController extends MultiRecordController
 
 class AlertController
   @$inject: ['$scope', '$modalInstance', 'record', 'modalOptions', '$location']
-  constructor: (@scope, @modalInstance, @record, modalOptions, @location) ->
-    @scope.modalTitle = modalOptions.title
-    @scope.modalDescription = modalOptions.description
-    @scope.modalAction = modalOptions.action
-    @scope.record = @record
-    @scope.go = (path) =>
-      @location.path(path)
-      @scope.$close('success')
-    @scope.ok = =>
-      @modalInstance.close(@record)
+  constructor: ($scope, $modalInstance, record, modalOptions, $location) ->
+    $scope.modalTitle = modalOptions.title
+    $scope.modalDescription = modalOptions.description
+    $scope.modalAction = modalOptions.action
+    $scope.record = record
+    $scope.go = (path) =>
+      $modalInstance.close()
+      $location.path(path)
+    $scope.ok = =>
+      $modalInstance.close(record)
 
 angular.module('app').controller 'alertController', AlertController
 angular.module('app').controller 'missionController', MissionController

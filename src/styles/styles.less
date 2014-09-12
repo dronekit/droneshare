@@ -326,13 +326,23 @@ mission-detail {
 }
 .mission-list-filters {
   margin-bottom: 25px;
-  .form-control-input-clear {
-    position: absolute;
-    top: 11px;
-    color: #C9C9C9;
-    right: 55px;
-    z-index: 2;
-    cursor: pointer;
+  .form-item {
+    margin: 0 10px;
+    position: relative;
+    .text-input {
+      width: 65px;
+    }
+    .form-control-input-clear {
+      position: absolute;
+      top: 11px;
+      color: #c9c9c9;
+      right: 5px;
+      z-index: 2;
+      cursor: pointer;
+    }
+    &.text-item, &.dropdown {
+      padding: 7px 0;
+    }
   }
 }
 .mission-list-body {

@@ -219,7 +219,6 @@ class MissionService extends RESTService
     # with the second param being arguments
     angular.extend(fetchParams, filterParams) if filterParams
 
-    console.log 'fetchParams: ', fetchParams
     @getMissionsFromParams(fetchParams)
 
   getVehicleTypeMissions: (vehicleType) =>

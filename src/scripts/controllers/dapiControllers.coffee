@@ -144,12 +144,19 @@ class MultiRecordController extends BaseController
 
   fetchRecords: =>
     @service.get(@fetchParams ? {}).then (results) =>
-      @records = (@extendRecord(r) for r in results)
+      @records = @extendRecords(results)
       @log.debug("Fetched #{@records.length} records")
+
+  fetchAppendRecords: =>
+    @service.get(@fetchParams ? {}).then (results) =>
+      @records = @records.concat @extendRecords(results)
 
   # Subclasses can override if they would like to modify the records that were returned by the server
   extendRecord: (rec) ->
     rec
+
+  extendRecords: (records) =>
+    (@extendRecord(record) for record in records)
 
   addRecord: (mission) =>
     @service.save(mission)
@@ -176,37 +183,19 @@ fixupMission = (rec, user) ->
   rec
 
 class MissionController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'resolvedMissions', 'missionService', 'authService', 'ngProgressLite']
-  constructor: (log, $scope, resolvedMissions, service, @authService, ngProgressLite) ->
+  @$inject: ['$log', '$scope', 'preFetchedMissions', 'missionService', 'authService']
+  constructor: (log, $scope, @records, @service, @authService) ->
+    $scope.busy = false
     super(log, $scope)
-
-    @service = service
-    @records = resolvedMissions
-    $scope.urlBase = service.urlBase()
-    $scope.records = @records
-
-    $scope.recordsLoaded = (mode, config) ->
-      if mode then ngProgressLite.done() else ngProgressLite.start()
-
-    $scope.fetchMissions = (fetchParams) ->
-      service.fetchMissions(fetchParams)
-
-  # Subclasses can override if they would like to modify the records that were returned by the server
-  extendRecord: (rec) =>
-    # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
-    # a way to share this code!
-    fixupMission(rec, @authService.getUser())
-
 
 class UserController extends MultiRecordController
   @$inject: ['$log', '$scope', 'userService']
   constructor: (log, scope, @service) ->
-    super(log, scope)
     @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
 class VehicleController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'vehicleService', 'ngProgressLite']
-  constructor: (log, scope, @service, ngProgressLite) ->
+  @$inject: ['$log', '$scope', 'vehicleService', '$modal']
+  constructor: (log, scope, @service, @modal) ->
     super(log, scope)
     log.debug('Not autofetching vehicles') # FIXME - find a better way to control when/if we autofetch anything
 
@@ -219,6 +208,20 @@ class VehicleController extends MultiRecordController
       # tell others they may want to refetch our vehicles
       @scope.$emit('vehicleAdded')
 
+class AlertController
+  @$inject: ['$scope', '$modalInstance', 'record', 'modalOptions', '$location']
+  constructor: ($scope, $modalInstance, record, modalOptions, $location) ->
+    $scope.modalTitle = modalOptions.title
+    $scope.modalDescription = modalOptions.description
+    $scope.modalAction = modalOptions.action
+    $scope.record = record
+    $scope.go = (path) =>
+      $modalInstance.close()
+      $location.path(path)
+    $scope.ok = =>
+      $modalInstance.close(record)
+
+angular.module('app').controller 'alertController', AlertController
 angular.module('app').controller 'missionController', MissionController
 angular.module('app').controller 'vehicleController', VehicleController
 angular.module('app').controller 'userController', UserController

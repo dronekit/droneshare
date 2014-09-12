@@ -311,6 +311,8 @@ module.exports = (grunt) ->
           '!libs/jasmine-jquery.js'
         ]
         order: [
+          'libs/spin.js'
+          'libs/ladda.js'
           'custom/atmosphere.js'
           'libs/jquery.js'
           'libs/jquery.flot.js'
@@ -321,17 +323,17 @@ module.exports = (grunt) ->
           'NGAPP':
             'ngProgressLite': 'libs/ngprogress-lite.js'
             'ngAnimate': 'libs/angular-animate.min.js'
-            #'ngMockE2E': 'libs/angular-mocks.js'
             'ngRoute': 'libs/angular-route.min.js'
             'leaflet-directive': 'custom/angular-leaflet-directive.js'
             'ngAtmosphere': 'custom/angular-atmosphere.js'
-            'angulartics': 'libs/angulartics.min.js',
-            'angulartics.google.analytics': 'libs/angulartics-ga.min.js',
-            'ui.bootstrap': 'libs/ui-bootstrap-tpls-0.11.0.min.js',
-            'angular-flot': 'libs/angular-flot.js',
-            'ngSocial': 'libs/angular-social.js',
-            'angularFileUpload': 'libs/angular-file-upload.min.js',
-            'infinite-scroll': 'libs/ng-infinite-scroll.js',
+            'angulartics': 'libs/angulartics.min.js'
+            'angulartics.google.analytics': 'libs/angulartics-ga.min.js'
+            'ui.bootstrap': 'libs/ui-bootstrap-tpls-0.11.0.min.js'
+            'angular-flot': 'libs/angular-flot.js'
+            'ngSocial': 'libs/angular-social.js'
+            'angularFileUpload': 'libs/angular-file-upload.min.js'
+            'infinite-scroll': 'libs/ng-infinite-scroll.js'
+            'ngLaddaBootstrap': 'libs/ng-ladda-bootstrap.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:
@@ -348,6 +350,8 @@ module.exports = (grunt) ->
           '!libs/jasmine-jquery.js'
         ]
         order: [
+          'libs/spin.js'
+          'libs/ladda.js'
           'custom/atmosphere.js'
           'libs/jquery.js'
           'libs/jquery.flot.js'
@@ -358,7 +362,6 @@ module.exports = (grunt) ->
           'NGAPP':
             'ngProgressLite': 'libs/ngprogress-lite.js'
             'ngAnimate': 'libs/angular-animate.min.js'
-            #'ngMockE2E': 'libs/angular-mocks.js'
             'ngRoute': 'libs/angular-route.min.js'
             'leaflet-directive': 'custom/angular-leaflet-directive.js'
             'ngAtmosphere': 'custom/angular-atmosphere.js'
@@ -369,6 +372,7 @@ module.exports = (grunt) ->
             'ngSocial': 'libs/angular-social.js',
             'angularFileUpload': 'libs/angular-file-upload.min.js'
             'infinite-scroll': 'libs/ng-infinite-scroll.js'
+            'ngLaddaBootstrap': 'libs/ng-ladda-bootstrap.js'
         ]
         require: '<%= shimmer.dev.require %>'
 
@@ -447,9 +451,10 @@ module.exports = (grunt) ->
         files: 'src/views/**/*.html'
         tasks: [
           'copy:app'
+          'ngTemplateCache'
+          'shimmer:dev'
           'template:indexDev'
           'copy:dev'
-          'karma'
         ]
       spaHtml:
         files: 'src/index.html'

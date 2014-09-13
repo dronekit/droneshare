@@ -179,7 +179,7 @@ fixupMission = (rec, user) ->
 
   # If the user is looking at their own maps, then zoom in a bit more (because they are probably in same area of world)
   isMine = user.loggedIn && (rec.userName == user.login)
-  rec.staticZoom = if isMine then 10 else 2
+  rec.staticZoom = if isMine then 10 else 8
   rec
 
 class MissionController extends MultiRecordController

@@ -274,7 +274,7 @@ class MissionService extends RESTService
 
     # If the user is looking at their own maps, then zoom in a bit more (because they are probably in same area of world)
     isMine = @userWatching.loggedIn && (record.userName == @userWatching.login)
-    record.staticZoom = if isMine then 8 else 2
+    record.staticZoom = if isMine then 10 else 8
     record
 
   getFetchParams: ->

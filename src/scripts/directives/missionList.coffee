@@ -62,8 +62,6 @@ angular.module('app').directive 'missionList', -> return {
       @createFilterField('Duration', 'field_flightDuration', 'min')
       @createFilterField('Max Airspeed', 'field_maxAirspeed', 'm/s')
       @createFilterField('Max Altitude', 'field_maxAlt', 'm')
-      @createFilterField('Latitude', 'field_latitude', '')
-      @createFilterField('Longitude', 'field_longitude', '')
     ]
 
     @filterOpts = [

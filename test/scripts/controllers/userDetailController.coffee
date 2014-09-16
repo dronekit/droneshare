@@ -4,28 +4,29 @@ describe "userDetailController", ->
     loadJSONFixtures('user.json')
     @scope = $rootScope.$new()
     @user = getJSONFixture('user.json')
+    @authUser = angular.extend({loggedIn: true}, @user)
     routeParamsStub = jasmine.createSpy('routeParamsStub')
     routeParamsStub.id = 219
 
-    @userDetailController = $controller('userDetailController', { '$scope': @scope, '$routeParams': routeParamsStub })
+    @userDetailController = $controller('userDetailController', { '$scope': @scope, '$routeParams': routeParamsStub, 'resolvedUser': @user })
     @urlBase = 'https://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
-    @httpBackend.expectGET("#{@urlBase}/auth/user").respond 200, @user
-    @httpBackend.expectGET("#{@urlBase}/user/#{routeParamsStub.id}").respond 200, @user
+    @httpBackend.whenGET("#{@urlBase}/auth/user").respond 200, @user
+    @httpBackend.whenGET("#{@urlBase}/user/#{routeParamsStub.id}").respond 200, @user
 
-  it 'gets user detail by params', ->
-    expect(@scope.record).toBeUndefined()
-    @scope.$apply()
-    @httpBackend.flush()
+  it 'expects a resolved user object to be provided', ->
     expect(@scope.record).not.toBeUndefined()
 
   describe 'isMeOrAdmin', ->
-    it 'knows if its me', ->
+    it 'knows if auth user is owner of current user record', ->
+      spyOn(@userDetailController.authService, 'getUser').and.returnValue(@authUser)
+
       @scope.$apply()
       @httpBackend.flush()
+
       expect(@userDetailController.isMe()).toBeTruthy()
 
-    it 'knows if i\'m an admin', ->
+    it 'knows if auth user is owner of current record or an admin', ->
       @scope.$apply()
       @httpBackend.flush()
 

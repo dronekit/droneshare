@@ -1,5 +1,5 @@
 <div class="row">
-  <section id="recent-flights" class="container" ng-controller="vehicleDetailController as controller">
+  <section id="recent-flights" class="container">
 
     <div class="row">
       <form class="form-horizontal" name="form" ng-submit="controller.submit()">
@@ -15,53 +15,52 @@
         <div class="col-lg-6" ng-cloak>
 
           <div class="row form-group">
-            <label class="col-sm-4 control-label" for="name">Name</label>
-            <div class="col-sm-8">
+            <label class="col-sm-2 control-label" for="name">Name</label>
+            <div class="col-sm-10">
               <input ng-disabled="!controller.isMine()" type="text" class="form-control" ng-model="controller.record.name" placeholder="Name your vehicle here" name="name" size="20" />
             </div>
           </div>
 
           <div class="row form-group">
-            <label class="col-sm-4 control-label" for="type">Type</label>
-            <div class="col-sm-8">
+            <label class="col-sm-2 control-label" for="type">Type</label>
+            <div class="col-sm-10">
               <input ng-disabled="!controller.isMine()" type="text" class="form-control" ng-model="controller.record.vehicleType" tooltip-placement="right" tooltip="Automatically determined from log files" name="type" size="20" />
             </div>
           </div>
 
           <div class="row form-group">
-            <label class="col-sm-4 control-label" for="autopilot">Autopilot</label>
-            <div class="col-sm-8">
+            <label class="col-sm-2 control-label" for="autopilot">Autopilot</label>
+            <div class="col-sm-10">
               <input ng-disabled="!controller.isMine()" type="text" class="form-control" ng-model="controller.record.autopilotType" tooltip-placement="right" tooltip="Automatically determined from log files" name="autopilotType" size="20" />
             </div>
           </div>
 
           <div ng-show="controller.isMine()" class="row form-group">
-            <label class="col-sm-4 control-label" for="privacy">Privacy</label>
-            <div class="col-sm-8">
+            <label class="col-sm-2 control-label" for="privacy">Privacy</label>
+            <div class="col-sm-10">
               <access-code-dropdown field="privacy" code="controller.record.viewPrivacy"></access-code-dropdown>
             </div>
           </div>
 
           <div ng-show="controller.isMine()" class="row form-group">
-            <label class="col-sm-4 control-label" for="web-control">Web control</label>
-            <div class="col-sm-8">
+            <label class="col-sm-2 control-label" for="web-control">Web control</label>
+            <div class="col-sm-10">
               <access-code-dropdown field="web-control" code="controller.record.controlPrivacy"></access-code-dropdown>
             </div>
           </div>
 
         </div>
 
-
         <div ng-show="controller.isMine()" class="col-lg-6" ng-cloak>
           <div class="row">
             <div ng-hide="controller.uploading">
 
-              <div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
-                <input type="file" ng-file-select="onFileSelect($files)" multiple>
+              <div ng-file-drop="controller.on_file_select($files)" class="drop-box" ng-show="dropSupported">
+                Drag and drop flight logs here
               </div>
 
-              <div ng-file-drop="controller.on_file_select($files)" class="drop-box" ng-show="dropSupported">
-                Drag and drop flight logs here to upload
+              <div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
+                <input type="file" ng-file-select="onFileSelect($files)" multiple>
               </div>
 
             </div>
@@ -72,17 +71,15 @@
             </div>
           </div>
 
-          <div class="row">
-            <br/> <!-- FIXME - how to better make vertical space? -->
+        </div>
+
+        <div class="col-lg-12">
+          <div class="row form-group">
+            <button class="btn btn-success btn-sm" type="submit" id="submit" ng-show="form.$dirty">Update vehicle</button>
             <button type="button" class="btn btn-danger btn-sm" ng-click="controller.delete()">
               <span class="glyphicon glyphicon-trash"></span> Delete Vehicle
             </button>
           </div>
-        </div>
-
-        <div class="col-lg-12">
-          <input class="btn btn-success" type="submit" id="submit" value="Update vehicle" ng-show="form.$dirty" />
-
         </div>
 
       </form>

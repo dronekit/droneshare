@@ -194,17 +194,46 @@ class UserController extends MultiRecordController
     @fetchRecords() # FIXME - find a better way to control when/if we autofetch anything
 
 class VehicleController extends MultiRecordController
-  @$inject: ['$log', '$scope', 'vehicleService', '$modal']
-  constructor: (log, scope, @service, @modal) ->
+  @$inject: ['$log', '$scope', 'vehicleService', 'authService', '$modal']
+  constructor: (log, @scope, @service, @authService, @modal) ->
+    @name = "" # Vehicle Name
+    @scope.alertDialog =
+
+    @isMe = (record = false) ->
+      me = @authService.getUser()
+      me.loggedIn && (record?.userId == me.id)
+
+    # Is this user the same as me or am I at least an admin?
+    @isMeOrAdmin = (record) ->
+      @isMe(record) || @authService.getUser()?.isAdmin
+
     super(log, scope)
-    log.debug('Not autofetching vehicles') # FIXME - find a better way to control when/if we autofetch anything
 
-  add_vehicle: () =>
+  remove_vehicle_modal: (vehicle) =>
+    dialog = @modal.open({
+      templateUrl: '/views/directives/alert-modal.html'
+      controller: 'alertController as controller'
+      resolve:
+        record: ->
+          vehicle
+        modalOptions: ->
+          @options =
+            title: "Remove Vehicle"
+            description: "Are you sure you want to remove this vehicle?"
+            action: "Remove"
+    })
+    dialog.result.then (record) =>
+      @remove_vehicle(record.id)
+
+  remove_vehicle: (id) =>
+    @service.delete(id).then (result) =>
+      @scope.$emit('vehicleRemoved', result)
+    true
+
+  add_vehicle: (vehicleAppendForm = {$dirty: false}) =>
     # The JSON for this new vehicle
-    v =
-      name: "New vehicle"
-
-    @service.append(v).then (results) =>
+    vehicle = { name: if vehicleAppendForm.$dirty then @name else "New vehicle" }
+    @service.append(vehicle).then (results) =>
       # tell others they may want to refetch our vehicles
       @scope.$emit('vehicleAdded')
 
@@ -234,7 +263,7 @@ angular.module('app').controller 'emailConfirmController', EmailConfirmControlle
 
 # A controller that shows just a single record
 class DetailController extends BaseController
-  constructor: (scope, @routeParams, @window) ->
+  constructor: (scope, @routeParams, @window, @prefetch = true) ->
     super(scope)
 
     # Useful for constructing sub urls in the HTML
@@ -263,7 +292,7 @@ class DetailController extends BaseController
       , (results) =>
         @set_http_error(results)
 
-    @fetch_record() # Prefetch at start
+    @fetch_record() if @prefetch # Prefetch at start
 
   # Subclasses can override if they would like to strip content out before submitting
   get_record_for_submit: =>
@@ -282,48 +311,60 @@ class DetailController extends BaseController
     @assign_record(data)
 
   assign_record: (data) ->
-    @scope.record = data # FIXME - I don't think this is necessary - this is the scope...
+    @scope.record = data
     @record = data
     @original_record = angular.copy(@record) # deep copy to compare against
 
+  reset_record: ->
+    @record = angular.copy(@original_record)
+
 class UserDetailController extends DetailController
-  @$inject: ['$log', '$scope', '$routeParams', 'userService', 'authService', '$window', 'ngProgressLite']
-  constructor: (@log, scope, routeParams, @service, @authService, window, ngProgressLite) ->
-    scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
-    scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
+  @$inject: ['$log', '$scope', '$routeParams', 'resolvedUser', 'userService', 'authService', 'vehicleService', '$window', '$modal', 'ngProgressLite', '$location']
+  constructor: (@log, $scope, routeParams, resolvedUser, @service, @authService, @vehicleService, window, $modal, ngProgressLite, @$location) ->
+    $scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
+    $scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
+    super($scope, routeParams, window, false)
 
-    super(scope, routeParams, window)
-
-    @scope.$on('vehicleAdded', (event, args) =>
-      @log.debug('fetching due to add')
+    $scope.$on 'vehicleRemoved', (event, response) =>
       @fetch_record()
-    )
 
-    # Is this user the same as me?
-    @isMe = () =>
-      me = @authService.getUser()
-      me.loggedIn && (@record?.login == me.login)
+    $scope.$on 'vehicleAdded', (event, response) =>
+      $scope.controller.record.vehicles.push(response.data)
+      $scope.controller.vehicleModal.close('success')
 
+    @assign_record(resolvedUser)
+
+    @addVehicleModal = false
+    @isMe = => @authService.getUser().loggedIn && (@record?.login == @authService.getUser().login)
     # Is this user the same as me or am I at least an admin?
-    @isMeOrAdmin = () =>
-      @isMe() || @authService.getUser()?.isAdmin
+    @isMeOrAdmin = => if (@isMe() || @authService.getUser().isAdmin) then true else false
+    @ownershipPrefix = if @isMe() then 'My' else "#{@record.login}'s"
 
-    @scope.showEditForm = ->
+    @showEditForm = ->
       $('#user-details-form').toggleClass('hidden')
+      true
 
-    # reset form
-    @closeEditForm = ->
-      @record = angular.copy(@original_record) # reset record to original values
-      @scope.showEditForm()
+    @closeEditForm = =>
+      @reset_record()
+      @showEditForm()
+
+    @addVehicle = =>
+      @vehicleModal = $modal.open({
+        templateUrl: '/views/user/vehicle-modal.html'
+        controller: 'vehicleController as controller'
+        scope: $scope
+      })
 
 class VehicleDetailController extends DetailController
-  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'vehicleService', 'authService', '$window', 'ngProgressLite']
-  constructor: (@upload, @log, scope, routeParams, @service, @authService, window, ngProgressLite) ->
+  @$inject: ['$upload', '$log', '$scope', '$routeParams', 'resolvedVehicle', 'vehicleService', 'authService', '$window', 'ngProgressLite']
+  constructor: (@upload, @log, scope, routeParams, resolvedVehicle, @service, @authService, window, ngProgressLite) ->
     scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
     scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
     scope.urlBase = service.urlId(routeParams.id)
 
-    super(scope, routeParams, window)
+    super(scope, routeParams, window, false)
+
+    @assign_record(resolvedVehicle)
 
     @uploading = false
     @upload_progress = 0

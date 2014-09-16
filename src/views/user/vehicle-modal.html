@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h3 class="modal-title">Add Vehicle</h3>
+</div>
+
+<div class="modal-body">
+
+  <form name="vehicleAppendForm" ng-submit="controller.add_vehicle(vehicleAppendForm)" novalidate>
+    <div class="row">
+      <div class="col-lg-12">
+
+        <div class="row form-group">
+          <label class="col-sm-4 control-label" for="vehicleName">Vehicle Name</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" placeholder="Name your vehicle here" ng-model="controller.name" name="vehicleName" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-warning" ng-click="$dismiss('cancel')">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+</div>

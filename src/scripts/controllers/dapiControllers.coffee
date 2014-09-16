@@ -335,16 +335,10 @@ class UserDetailController extends DetailController
     @assign_record(resolvedUser)
 
     @addVehicleModal = false
-
-    @isMe = (
-      me = @authService.getUser()
-      me.loggedIn && (@record?.login == me.login)
-    )
-
+    @isMe = => @authService.getUser().loggedIn && (@record?.login == @authService.getUser().login)
     # Is this user the same as me or am I at least an admin?
-    @isMeOrAdmin = @isMe || @authService.getUser()?.isAdmin
-
-    @ownershipPrefix = if @isMe then 'My' else "#{@record.login}'s"
+    @isMeOrAdmin = => if (@isMe() || @authService.getUser().isAdmin) then true else false
+    @ownershipPrefix = if @isMe() then 'My' else "#{@record.login}'s"
 
     @showEditForm = ->
       $('#user-details-form').toggleClass('hidden')

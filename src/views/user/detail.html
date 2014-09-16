@@ -9,8 +9,8 @@
           <div class="user-details col-lg-10">
             <h1>{{controller.record.fullName}}</h1>
             <ul class="list-unstyled">
-              <li ng-show="controller.isMeOrAdmin" class="location">{{controller.record.email}}</li>
-              <li ng-show="controller.isMeOrAdmin" class="edit-profile"><a ng-click="controller.showEditForm()" href="" id="edit-profile">Edit Profile</a></li>
+              <li ng-show="controller.isMeOrAdmin()" class="location">{{controller.record.email}}</li>
+              <li ng-show="controller.isMeOrAdmin()" class="edit-profile"><a ng-click="controller.showEditForm()" href="" id="edit-profile">Edit Profile</a></li>
             </ul>
           </div>
         </div>
@@ -43,13 +43,13 @@
                 <input type="text" ng-model="controller.record.fullName" placeholder="Your full name" />
               </td>
             </tr>
-            <tr ng-show="controller.isMeOrAdmin" ng-show="!!controller.record.email">
+            <tr ng-show="controller.isMeOrAdmin()" ng-show="!!controller.record.email">
               <th>Email</th>
               <td>
                 {{controller.record.email}}
               </td>
             </tr>
-            <tr ng-show="controller.isMeOrAdmin" >
+            <tr ng-show="controller.isMeOrAdmin()" >
               <th>Password</th>
               <td>
                 <input type="password" ng-model="controller.record.password" placeholder="Type new password here" />

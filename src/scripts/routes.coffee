@@ -53,7 +53,6 @@ class Config
       templateUrl: '/views/mission/doarama-window.html'
     .when '/plot/:id',
       templateUrl: '/views/mission/plot-window.html'
-      #controller: 'missionDetailController'
     .when '/github/:id',
       controller: 'gitHubController'
     .when '/admin',
@@ -69,21 +68,7 @@ class Config
 
 angular.module('app').config ['$routeProvider', '$locationProvider', Config]
 
-# Clever trick from http://stackoverflow.com/questions/12506329/how-to-dynamically-change-header-based-on-angularjs-partial-view
-# to let you add titles via route entries
-angular.module('app').run(['$location', '$rootScope', (location, rootScope) ->
-  rootScope.$on('$routeChangeSuccess', (event, current, previous) ->
-    rootScope.title = if current?$$route?title?
-      " - " + current.$$route.title
-    else
-      "")
-])
-
-# Raven bug tracking - FIXME - move elsewhere
-#Raven.config('https://ffe3750cae4b47189ab3395c803ab8c4@app.getsentry.com/23130', {
-#    # Raven settings - FIXME pull from here
-#    # https://github.com/gdi2290/angular-raven
-#  }).install()
-
-# Raven.captureMessage('hello world')
-#     .setUser({"id": "SERVER_RENDERED_ID", "email": "SERVER_RENDERED_EMAIL" })
+angular.module('app').run ['$location', '$rootScope', (location, rootScope) ->
+  rootScope.$on '$routeChangeSuccess', (event, current, previous) ->
+    rootScope.title = if current?$$route?title? then " - " + current.$$route.title else ""
+]

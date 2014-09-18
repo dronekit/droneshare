@@ -49,7 +49,7 @@
 
                         <!--<div id="mission-detail-islive" class="col col-sm-6">-->
                         <div class="flight-live" ng-if="record.isLive">
-                            <!--<i class="glyphicon glyphicon-refresh"></i>--> Flight is live!
+                            <!--<i class="glyphicon glyphicon-refresh"></i>--> Mission is live!
                         </div>
                         <div class="flight-live" ng-if="!record.isLive">
                             <!--<i class="glyphicon glyphicon-ok-circle"></i>--> {{record.dateString}}
@@ -58,7 +58,7 @@
                     <!--</div>-->
                     <!--<div class="col col-sm-6">-->
                         <div ng-hide="!record.flightDuration">
-                            <h6>Flight time:</h6>
+                            <h6>Mission time:</h6>
                             <div class="big_nums">
                             {{record.flightDuration | duration}}
                             </div>

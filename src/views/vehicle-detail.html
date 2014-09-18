@@ -56,7 +56,7 @@
             <div ng-hide="controller.uploading">
 
               <div ng-file-drop="controller.on_file_select($files)" class="drop-box" ng-show="dropSupported">
-                Drag and drop flight logs here
+                Drag and drop missions logs here
               </div>
 
               <div ng-file-drop-available="dropSupported=true" ng-show="!dropSupported">
@@ -86,7 +86,7 @@
     </div>
 
     <div class="row" ng-show="controller.record.missions.length > 0">
-      <h4>Past flights</h3>
+      <h4>Past Missions</h3>
       <div class="row" ng-hide="!controller.record.missions.length" >
         <div mission-summary class="col-md-3" ng-repeat="mission in controller.record.missions" mission="mission"></div>
       </div>

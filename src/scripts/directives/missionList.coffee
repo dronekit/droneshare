@@ -1,4 +1,4 @@
-angular.module('app').directive 'missionList', -> return {
+angular.module('app').directive 'missionList', ['$log', ($log) -> return {
   restrict: 'A'
   controllerAs: 'controller'
   templateUrl: '/views/directives/mission-list.html'
@@ -164,7 +164,7 @@ angular.module('app').directive 'missionList', -> return {
           when 'field_maxAlt' then @getMaxAltMissions(value, opt).then @filterClear
           when 'field_latitude' then @getLatitudeMissions(value, opt).then @filterClear
           when 'field_longitude' then @getLongitudeMissions(value, opt).then @filterClear
-          else console.log("something is wrong")
+          else $log.debug("something is wrong")
       else if @scope.missionDataSet == 'mine'
         # since we know set the fetchParams before choosing
         # which dataSet to work on, we can just tell the service
@@ -178,7 +178,7 @@ angular.module('app').directive 'missionList', -> return {
       fetchParams = @service.getFetchParams()
       fetchParams.order_dir = @createdAt
       @service.createdAt = @createdAt
-      console.log "sortDirection: ", @createdAt, " fetchParams: ",  fetchParams
+      $log.debug "sortDirection: ", @createdAt, " fetchParams: ",  fetchParams
 
     @nextPage = =>
       return false if @scope.busy
@@ -205,7 +205,7 @@ angular.module('app').directive 'missionList', -> return {
       $scope.filters.field = controller.filterFields[index]
 
     $scope.tryFilterOp = (index) =>
-      console.log "tryfilterOp: ", index
+      $log.debug "tryfilterOp: ", index
       $scope.dropDownIsOpen.opt = false
       $scope.filters.opt = controller.filterOpts[index]
 
@@ -232,4 +232,4 @@ angular.module('app').directive 'missionList', -> return {
         $scope.filters.dataset = ''
         controller.createdAt = 'asc'
         controller.chooseDataSet().then controller.filterClear
-}
+}]

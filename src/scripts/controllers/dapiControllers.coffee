@@ -17,7 +17,7 @@ class BaseController
 
   # Set the error msg based on http response msg
   set_http_error: (results) =>
-    console.log("got error #{results.status} #{results.statusText}")
+    @log.debug("got error #{results.status} #{results.statusText}")
     msg = if results.status == 404
       "Record not found" # Provide slightly friendlier text for this common case
     else

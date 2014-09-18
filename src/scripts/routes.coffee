@@ -67,6 +67,7 @@ class Config
       redirectTo: '/'
 
 angular.module('app').config ['$routeProvider', '$locationProvider', Config]
+angular.module('app').config ['$logProvider', ($logProvider) -> $logProvider.debugEnabled(window.debugEnabled)]
 
 angular.module('app').run ['$location', '$rootScope', (location, rootScope) ->
   rootScope.$on '$routeChangeSuccess', (event, current, previous) ->

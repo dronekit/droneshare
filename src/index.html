@@ -22,6 +22,7 @@
         <!--[if lte IE 8]> <script src="<%= config.getHashedFile('./.temp/scripts/ie.min.js', {trim: './.temp'}) %>"></script> <![endif]-->
         <link rel="stylesheet" href="<%= config.getHashedFile('./.temp/styles/styles.min.css', {trim: './.temp'}) %>" />
         <script>
+            window.debugEnabled = false;
             window.logos = {
                 parent: "<%= config.getHashedFile('./.temp/images/3drobotics.png', {trim: './.temp'}) %>",
                 son: "<%= config.getHashedFile('./.temp/images/droneshare.png', {trim: './.temp'}) %>",
@@ -34,6 +35,7 @@
         <!--[if lte IE 8]> <script src="/scripts/libs/json3.js"></script> <script src="/scripts/libs/html5shiv-printshiv.js"></script> <![endif]-->
         <link rel="stylesheet" href="/styles/styles.css" />
         <script>
+            window.debugEnabled = true;
             window.logos = {
                 parent: '/images/3drobotics.png',
                 son: '/images/droneshare.png',

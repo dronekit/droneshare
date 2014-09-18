@@ -503,7 +503,7 @@ class MissionDetailController extends DetailController
     @rootScope.ogImage = data.mapThumbnailURL
     @rootScope.ogDescription = data.userName + " flew their drone in " +
       data.summaryText + " for " + Math.round(data.flightDuration / 60) + " minutes."
-    @rootScope.ogTitle = data.userName + "'s flight"
+    @rootScope.ogTitle = data.userName + "'s mission"
 
     # We need to tell angular to allow access to this external URL as trusted
     if data.doaramaURL?

@@ -56,4 +56,4 @@ describe "missionDetailController", ->
       @httpBackend.flush()
       expect(@scope.$parent.ogImage).toEqual @mission.mapThumbnailURL
       expect(@scope.$parent.ogDescription).toEqual "#{@mission.userName} flew their drone in #{@mission.summaryText} for #{Math.round(@mission.flightDuration / 60)} minutes."
-      expect(@scope.$parent.ogTitle).toEqual "#{@mission.userName}'s flight"
+      expect(@scope.$parent.ogTitle).toEqual "#{@mission.userName}'s mission"

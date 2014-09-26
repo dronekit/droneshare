@@ -27,6 +27,17 @@ angular.module('app').directive 'missionPlot', ['$log', '$window', ($log, $windo
         chart:
           type: 'line'
           zoomType: 'x'
+      xAxis:
+        ordinal: false
+        type: 'datetime'
+        tickInterval: 2 * 60 * 1000
+        labels:
+          rotation: -45
+        dateTimeLabelFormats:
+          day: '%H:%M'
+          hour: '%I %p'
+          minute: '%I:%M %p'
+
       title:
         text: 'Param Plot'
       series: ({name: option.label, data: option.data} for option in @scope.series)
@@ -40,4 +51,3 @@ angular.module('app').directive 'missionPlot', ['$log', '$window', ($log, $windo
     ($ window).resize controller.resizeChart
     #controller.resizeChart(false)
 }]
-

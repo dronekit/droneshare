@@ -1,156 +1,139 @@
 <div class="row">
-
-    <form name="form" >
-    <!-- FIXME - find a better way to share this alert boilerplate across views - directives? -->
+  <form name="form" >
     <alert ng-repeat="alert in errors" class="popup-middle-screen"  type="danger">{{alert}}</alert>
 
-    <section id="mission-detail-map" ng-controller="mapController as map" class="col-sm-10">
-        <leaflet watchMarkers="true" geojson="geojson" layers="layers" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
+    <section id="mission-detail-map" ng-controller="mapController as map" class="col-sm-9">
+      <leaflet watchMarkers="true" geojson="geojson" layers="layers" bounds="bounds" center="center" defaults="defaults" height="840px" width="100%"></leaflet>
     </section>
 
-    <section id="mission-detail-data" class="col-sm-2 col-fixed" ng-show="!!record">
-        <div class="row mission-summary">
-            <div class="col-xs-12">
-                <div class="col col-xs-3 vehicle-type">
-                    <img ng-show="!!record.userAvatarImage" ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
-                </div>
-                <!-- <div class="col col-sm-3 avatar">
-                    <img src="http://placehold.it/40x40">
-                </div> -->
-                <div class="col col-xs-7 contact-card">
-                    <span class="name"><a ng-href="/user/{{record.userName}}">{{ record.userName }}</a></span><br>
-                    <span class="vehicle-type"><a ng-href="/vehicle/{{record.vehicleId}}">{{ record.vehicleText }}</a></span>
+    <section id="mission-detail-data" class="col-sm-3 col-fixed" ng-show="!!record">
+      <div class="row mission-summary">
+        <div class="col-xs-12">
+          <div class="col col-xs-3 vehicle-type">
+            <img ng-show="!!record.userAvatarImage" ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded">
+          </div>
 
-                </div>
+          <div class="col col-xs-7 contact-card">
+            <span class="name"><a ng-href="/user/{{record.userName}}">{{ record.userName }}</a></span><br>
+            <span class="vehicle-type"><a ng-href="/vehicle/{{record.vehicleId}}">{{ record.vehicleText }}</a></span>
 
-                <!-- This is the dropdown menu of owner specific operations (delete etc) -->
-                <div class="btn-group col col-xs-1" dropdown ng-show="controller.isMine()" is-open="status.isopen">
-                  <button type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled">
-                    <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                    <li><a href="" ng-click="controller.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
-                  </ul>
-                </div>
+          </div>
+
+          <div class="btn-group col col-xs-1" dropdown ng-show="controller.isMine()" is-open="status.isopen">
+            <button type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled">
+              <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              <li><a href="" ng-click="controller.delete()"><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mission-details" ng-show="!!record">
+        <div class="col-md-12">
+          <div class="row">
+
+            <div class="" ng-show="controller.isMine()">
+              <input ng-hide="auth.isAnonymous()" class="col-xs-12 " type="text" ng-model="record.summaryText" ng-change="controller.submit()"/>
             </div>
+
+            <div class="mission-location" ng-show="!controller.isMine()">
+              {{record.summaryText}}
+            </div>
+
+            <div class="flight-live" ng-if="record.isLive">
+              Mission is live!
+            </div>
+            <div class="flight-live" ng-if="!record.isLive">
+              {{record.dateString}}
+            </div>
+
+            <div ng-hide="!record.flightDuration">
+              <h6>Mission time:</h6>
+              <div class="big_nums">
+                {{record.flightDuration | duration}}
+              </div>
+            </div>
+
+            <h6>Alt:</h6>
+            <div class="big_nums" tooltip="Altitude above mean sea level (MSL)">
+              {{record.maxAlt | number }} <span class="small">m</span>
+            </div>
+            <h6>Speed:</h6>
+            <div class="big_nums">
+              {{record.maxGroundspeed | number }} <span class="small">m/s</span>
+            </div>
+            <h6>Airspeed:</h6>
+            <div class="big_nums">
+              {{record.maxAirspeed | number }} <span class="small">m/s</span>
+            </div>
+            <div ng-hide="!record.softwareVersion">
+              <h6>Software version {{record.softwareVersion}}</h6>
+            </div>
+          </div>
         </div>
 
-        <div class="row mission-details" ng-show="!!record">
-            <div class="col-md-12">
-                <div class="row">
-
-                        <div class="" ng-show="controller.isMine()">
-                        <input ng-hide="auth.isAnonymous()" class="col-xs-12 " type="text" ng-model="record.summaryText" ng-change="controller.submit()"/>
-                        </div>
-
-                        <div class="mission-location" ng-show="!controller.isMine()">
-                        {{record.summaryText}}
-                        </div>
-
-                        <!--<div id="mission-detail-islive" class="col col-sm-6">-->
-                        <div class="flight-live" ng-if="record.isLive">
-                            <!--<i class="glyphicon glyphicon-refresh"></i>--> Mission is live!
-                        </div>
-                        <div class="flight-live" ng-if="!record.isLive">
-                            <!--<i class="glyphicon glyphicon-ok-circle"></i>--> {{record.dateString}}
-                        </div>
-
-                    <!--</div>-->
-                    <!--<div class="col col-sm-6">-->
-                        <div ng-hide="!record.flightDuration">
-                            <h6>Mission time:</h6>
-                            <div class="big_nums">
-                            {{record.flightDuration | duration}}
-                            </div>
-                        </div>
-
-                        <h6>Alt:</h6>
-                        <div class="big_nums" tooltip="Altitude above mean sea level (MSL)">
-                            {{record.maxAlt | number }} <span class="small">m</span>
-                        </div>
-                    <!--</div>-->
-                    <!--<div class="col col-sm-6">-->
-                        <h6>Speed:</h6>
-                        <div class="big_nums">
-                            {{record.maxGroundspeed | number }} <span class="small">m/s</span>
-                        </div>
-                    <!--</div>-->
-                    <!--<div class="col col-sm-6">-->
-                        <h6>Airspeed:</h6>
-                        <div class="big_nums">
-                            {{record.maxAirspeed | number }} <span class="small">m/s</span>
-                        </div>
-                    <!--</div>-->
-                    <!--<div class="col col-sm-12">-->
-                        <div ng-hide="!record.softwareVersion">
-                        <h6>Software version {{record.softwareVersion}}</h6>
-                        </div>
-                    <!--</div>-->
-                </div>
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="btn-group">
+              <button class="btn btn-primary" tooltip="3d view courtesy of Doarama" tooltip-placement="bottom" ng-click="controller.show_doarama()" ng-disabled="!record.doaramaURL">
+                Movie
+              </button>
+              <button class="btn btn-primary" tooltip="Heuristic analysis for possible vehicle problems" tooltip-placement="bottom" ng-click="controller.show_analysis()">
+                Analyze
+              </button>
+              <a class="btn btn-primary" tooltip="A (very) basic data plot" tooltip-placement="bottom" ng-href="/mission/{{record.id}}/plot">
+                Plot
+              </a>
+              <button class="btn btn-primary" tooltip="Vehicle parameters" tooltip-placement="bottom" ng-disabled="record.numParameters < 1" ng-click="controller.show_parameters()" >
+                Parameters
+              </button>
             </div>
-
-            <!-- The plot/parameters button bar - sometimes these modals show up empty in debug mode - but seem to work in production -->
-            <div class="col-sm-12">
-                <div class="row">
-                        <div class="btn-group">
-                                <label class="btn btn-primary" tooltip="3d view courtesy of Doarama" tooltip-placement="bottom" ng-click="controller.show_doarama()" ng-disabled="!record.doaramaURL">Movie</label>
-
-                                <label class="btn btn-primary" tooltip="Heuristic analysis for possible vehicle problems" tooltip-placement="bottom" ng-click="controller.show_analysis()">Analyze</label>
-
-                                <label class="btn btn-primary" tooltip="A (very) basic data plot" tooltip-placement="bottom" ng-click="controller.show_plot()">Plot</label>
-
-                                <label class="btn btn-primary" tooltip="Vehicle parameters" tooltip-placement="bottom" ng-disabled="record.numParameters < 1" ng-click="controller.show_parameters()" >Parameters</label>
-                        </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="row downloads">
-                    <!-- FIXME - find a way to tunnel this through angular so we can attach our app key -->
-                    <ul class="list-unstyled">
-                        <li>
-                            Downloads:
-                        </li>
-                        <li>
-                            <a ng-href="{{urlBase}}/messages.tlog"><i class="glyphicon glyphicon-download"></i> Download LOG</a>
-                        </li>
-                        <li>
-                            <a ng-href="{{urlBase}}/messages.kmz"><span class="glyphicon glyphicon-download"></span> Download KML</a>
-                        </li>
-                        <li>
-                            <a tooltip="This logfile did not include parameters." tooltip-placement="bottom" ng-show="record.numParameters < 1"><span class="glyphicon glyphicon-download"></span> Download Parameters</a>
-
-                            <a ng-href="{{urlBase}}/parameters.complete" download="vehicle.param" ng-show="record.numParameters >= 1"><span class="glyphicon glyphicon-download"></span> Download Parameters</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-sm-12">
-                <div class="row social">
-                    <h5>Share:</h5>
-                    <span class="list-inline">
-                        <div class="fb-share-button social-button" data-type="button"></div>
-                        <!-- <li class="facebook">
-                            <a href="#"><img src="/images/fb-share.jpg"></a>
-                        </li> -->
-
-                        <!-- <g:plus action="share"></g:plus> -->
-                        <div class="g-plus social-button" data-action="share" data-annotation="none"></div>
-                        <!-- <li class="google-plus">
-                            <a href="#"><img src="/images/google-plus-share.jpg"></a>
-                        </li> -->
-
-                        <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="droneshare" data-count="none"></a>
-                        <!-- <li class="twitter">
-                            <a href="#"><img src="/images/twitter-share.jpg"></a>
-                        </li> -->
-                    </span>
-                </div>
-            </div>
-
+          </div>
         </div>
+
+        <div class="col-md-12">
+          <div class="row downloads">
+            <ul class="list-unstyled">
+              <li>Downloads:</li>
+              <li>
+                <a ng-href="{{urlBase}}/messages.tlog">
+                  <i class="glyphicon glyphicon-download"></i> Download LOG
+                </a>
+              </li>
+              <li>
+                <a ng-href="{{urlBase}}/messages.kmz">
+                  <span class="glyphicon glyphicon-download"></span> Download KML
+                </a>
+              </li>
+              <li>
+                <a tooltip="This logfile did not include parameters." tooltip-placement="bottom" ng-show="record.numParameters < 1">
+                  <span class="glyphicon glyphicon-download"></span> Download Parameters
+                </a>
+              </li>
+              <li>
+                <a ng-href="{{urlBase}}/parameters.complete" download="vehicle.param" ng-show="record.numParameters >= 1">
+                  <span class="glyphicon glyphicon-download"></span> Download Parameters
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="row social">
+            <h5>Share:</h5>
+            <span class="list-inline">
+              <div class="fb-share-button social-button" data-type="button"></div>
+              <div class="g-plus social-button" data-action="share" data-annotation="none"></div>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="droneshare" data-count="none"></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
 
     </section>
-    </form>
+  </form>
 </div>

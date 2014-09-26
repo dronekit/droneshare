@@ -51,8 +51,18 @@ class Config
       templateUrl: '/views/mission/analysis-window.html'
     .when '/doarama/:id',
       templateUrl: '/views/mission/doarama-window.html'
-    .when '/plot/:id',
+    .when '/mission/:id/plot',
+      title: 'Plot'
       templateUrl: '/views/mission/plot-window.html'
+      controller: 'missionPlotController as controller'
+      resolve:
+        missionData: ['$route', 'missionService', ($route, missionService) ->
+          missionService.getId($route.current.params.id).then missionService.fixMissionRecord
+        ]
+        plotData: ['$route', 'missionService', ($route, missionService) ->
+          missionService.get_plotdata($route.current.params.id).then (response) ->
+            response.data
+        ]
     .when '/github/:id',
       controller: 'gitHubController'
     .when '/admin',

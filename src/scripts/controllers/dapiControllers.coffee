@@ -454,15 +454,6 @@ class MissionDetailController extends DetailController
         # size: 'lg'
         windowClass: 'parameters-modal fade'
 
-    # Show the data plot modal in the correct location
-    @show_plot = () =>
-      @log.info('opening data plot')
-      dialog = @modal.open
-        templateUrl: '/views/mission/plot-modal.html'
-        controller: 'missionPlotController as controller'
-        # backdrop: 'static'
-        # windowClass: 'parameters-modal fade'
-
     @show_analysis = () =>
       @log.info('opening analysis')
       dialog = @modal.open
@@ -529,24 +520,16 @@ class MissionParameterController extends BaseController
           p.style = if p.rangeOk then "param-good" else "param-bad"
 
 class MissionPlotController extends BaseController
-  @$inject: ['$log', '$scope', '$routeParams', 'missionService']
-  constructor: (@log, scope, @routeParams, @service) ->
+  @$inject: ['$log', '$scope', '$routeParams', 'missionService', 'authService', 'missionData', 'plotData']
+  constructor: (@log, scope, @routeParams, @service, @authService, @record, @plotData) ->
     super(scope)
 
-    @scope.plotOptions =
-      xaxis :
-        mode : "time"
-        timeformat : "%M:%S"
-      zoom :
-        interactive : true
-      pan :
-        interactive : true
-    @scope.plotData = {}
+    @isMine = () =>
+      me = @authService.getUser()
+      me.loggedIn && (@record?.userName == me.login)
 
-    @log.debug("Fetching plot data for " + @routeParams.id)
-    @service.get_plotdata(@routeParams.id).then (httpResp) =>
-      @log.debug("Setting plot")
-      @scope.plotData = httpResp.data
+    @scope.record = @record
+    @scope.series = @plotData
 
 class MissionAnalysisController extends BaseController
   @$inject: ['$log', '$scope', '$routeParams', 'missionService']

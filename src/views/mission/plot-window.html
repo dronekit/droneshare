@@ -1,14 +1,46 @@
+<div class="row">
+  <section class="col-md-12">
+    <div class="alert alert-danger" ng-show="!!controller.error">
+      <h4 class="alert-heading" ng-bind="controller.error.title"></h4>
+      <span ng-bind="controller.error.message"></span>
+    </div>
+  </section>
+</div>
+<div class='row mission-detail-plot'>
+  <section class='col-md-12'>
+    <div class='row mission-summary'>
+      <div class="col-md-1">
+        <a class="btn btn-danger" ng-href="/mission/{{record.id}}">&laquo; Back</a>
+      </div>
 
-        <div class="row" ng-controller="missionPlotController as controller">
-            <section class="col-lg-6">
-                <div class="alert alert-danger" ng-show="!!controller.error">
-                    <h4 class="alert-heading" ng-bind="controller.error.title"></h4>
-                    <span ng-bind="controller.error.message"></span>
-                </div>
+      <div class="col-md-3 contact-card">
+        <img ng-show="!!record.userAvatarImage" ng-src="{{record.userAvatarImage}}?s=40&d=mm" class="img-rounded pull-left">
+        <span class="name"><a ng-href="/user/{{record.userName}}">{{record.userName}}'s</a></span>
+        <span class="vehicle-type"><a ng-href="/vehicle/{{record.vehicleId}}">{{record.vehicleText}}</a></span><br>
+        <span ng-show="record.dateString" class="mission-date">{{record.dateString}}</span>
+      </div>
 
-                <flot dataset="plotData" options="plotOptions" width="640" height="480"></flot>
+      <div class="col-md-2 mission-location" ng-show="!controller.isMine()">
+        <strong>Location:</strong> {{record.summaryText}}
+      </div>
 
-            </section>
-
+      <div class="col-md-2 big_nums">
+        <div tooltip="Altitude above mean sea level (MSL)">
+          <strong>Alt:</strong> {{record.maxAlt | number }} <span class="small">m</span>
         </div>
+        <div ng-hide="!record.softwareVersion">
+          <strong>Software:</strong> {{record.softwareVersion}}
+        </div>
+      </div>
 
+      <div class="col-md-2 big_nums">
+        <strong>Speed:</strong> {{record.maxGroundspeed | number }} <span class="small">m/s</span><br>
+        <strong>Airspeed:</strong> {{record.maxAirspeed | number }} <span class="small">m/s</span>
+      </div>
+
+    </div>
+  </section>
+  <section class="col-md-12 plot-area">
+    <div mission-plot series='series'></div>
+  </section>
+</div>

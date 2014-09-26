@@ -334,6 +334,7 @@ module.exports = (grunt) ->
             'angularFileUpload': 'libs/angular-file-upload.min.js'
             'infinite-scroll': 'libs/ng-infinite-scroll.js'
             'ngLaddaBootstrap': 'libs/ng-ladda-bootstrap.js'
+            'highcharts-ng': 'libs/highcharts-ng.js'
         ]
         require: 'NGBOOTSTRAP'
       prod:
@@ -373,6 +374,7 @@ module.exports = (grunt) ->
             'angularFileUpload': 'libs/angular-file-upload.min.js'
             'infinite-scroll': 'libs/ng-infinite-scroll.js'
             'ngLaddaBootstrap': 'libs/ng-ladda-bootstrap.js'
+            'highcharts-ng': 'libs/highcharts-ng.js'
         ]
         require: '<%= shimmer.dev.require %>'
 

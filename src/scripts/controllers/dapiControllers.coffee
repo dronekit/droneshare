@@ -409,37 +409,36 @@ class VehicleDetailController extends DetailController
     super(data)
 
 class MissionDetailController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService', '$window', '$sce', 'ngProgressLite']
-  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService, window, @sce, ngProgressLite) ->
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', 'preFetchedMission', 'preFetchedGeoJson', '$rootScope', 'authService', '$window', '$sce', 'ngProgressLite']
+  constructor: (@modal, @log, scope, routeParams, @service, @record, @geojson, @rootScope, @authService, window, @sce, ngProgressLite) ->
     scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
     scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
 
-    super(scope, routeParams, window)
+    super(scope, routeParams, window, true)
     @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}
     @scope.bounds = {}
-    @scope.geojson = {}
+    @scope.access = if @record.approval then @record.approval else ''
+    @scope.geojson =
+      data: @geojson
+      style:
+        fillColor: "green"
+        weight: 2
+        color: 'black'
+        dashArray: '3'
+        fillOpacity: 0.7
+    @scope.bounds =
+      southWest:
+        lng: @geojson.bbox[0]
+        lat: @geojson.bbox[1]
+      northEast:
+        lng: @geojson.bbox[3]
+        lat: @geojson.bbox[4]
+    @scope.user = @authService.getUser()
 
-    @service.get_geojson(@routeParams.id).then (result) =>
-      @log.debug("Setting geojson")
-      @geojson = result.data
-      @scope.geojson =
-        data: @geojson
-        style:
-          fillColor: "green"
-          weight: 2
-          color: 'black'
-          dashArray: '3'
-          fillOpacity: 0.7
-
-      # Bounding box MUST be in the GeoJSON and it must be 3 dimensional
-      @scope.bounds =
-        southWest:
-          lng: @geojson.bbox[0]
-          lat: @geojson.bbox[1]
-        northEast:
-          lng: @geojson.bbox[3]
-          lat: @geojson.bbox[4]
+    @requestApproval = =>
+      @service.submitApproval(@record.id).then (result) =>
+        @scope.access = result.approval
 
     @isMine = () =>
       me = @authService.getUser()

@@ -340,6 +340,10 @@ class MissionService extends RESTService
     c = angular.extend({}, @config)
     @http.get("#{@urlBase()}/#{id}/messages.geo.json", c)
 
+  submitApproval: (id) =>
+    c = angular.extend({}, @config)
+    @http.get("#{@urlBase()}/#{id}/submitApproval", c).then (result) -> result.data
+
 # Server admin operations - not useful to users/developers
 class AdminService extends RESTService
   @$inject: ['$log', '$http', '$routeParams', 'atmosphere']

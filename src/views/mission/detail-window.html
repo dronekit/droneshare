@@ -74,6 +74,18 @@
           </div>
         </div>
 
+        <div class="col-sm-12" ng-show="user.isAdmin">
+          <div class="row">
+            <h3>Aerospace Access:</h3>
+            <div ng-show="access != 'SUBMITTED'">
+              <button class="btn btn-primary" tooltip="Request aerospace clearance" ng-click="controller.requestApproval()">Request approval</button>
+            </div>
+            <div ng-show="access == 'SUBMITTED'">
+              <button class="btn btn-default disabled" tooltip="Request aerospace clearance">Request Submitted</button>
+            </div>
+          </div>
+        </div>
+
         <div class="col-sm-12">
           <div class="row">
             <div class="btn-group">

@@ -45,6 +45,13 @@ class Config
       controller: 'missionDetailController as controller'
       title: 'Detail'
       templateUrl: '/views/mission/detail-window.html'
+      resolve:
+        preFetchedMission: ['$route', 'missionService', ($route, missionService) ->
+          missionService.getId($route.current.params.id)
+        ]
+        preFetchedGeoJson: ['$route', 'missionService', ($route, missionService) ->
+          missionService.get_geojson($route.current.params.id).then (result) -> result.data
+        ]
     .when '/parameters/:id',
       templateUrl: '/views/mission/parameters-window.html'
     .when '/analysis/:id',

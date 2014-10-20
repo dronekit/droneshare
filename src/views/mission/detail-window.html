@@ -77,10 +77,10 @@
         <div class="col-sm-12" ng-show="user.isAdmin">
           <div class="row">
             <h3>Aerospace Access:</h3>
-            <div ng-show="access != 'SUBMITTED'">
-              <button class="btn btn-primary" tooltip="Request aerospace clearance" ng-click="controller.requestApproval()">Request approval</button>
+            <div class='aerospace-button' ng-show="access != 'SUBMITTED'">
+              <button ng-ladda-bootstrap data-style="zoom-out" ladda-toggle="requestInProgress" class="ladda-button btn btn-primary" ng-click="controller.requestApproval()">Request approval</button>
             </div>
-            <div ng-show="access == 'SUBMITTED'">
+            <div class='aerospace-button' ng-show="access == 'SUBMITTED'">
               <button class="btn btn-default disabled" tooltip="Request aerospace clearance">Request Submitted</button>
             </div>
           </div>

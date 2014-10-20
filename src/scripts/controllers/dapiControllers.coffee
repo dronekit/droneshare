@@ -418,6 +418,7 @@ class MissionDetailController extends DetailController
     @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
     @scope.center = {}
     @scope.bounds = {}
+    @scope.requestInProgress = false
     @scope.access = if @record.approval then @record.approval else ''
     @scope.geojson =
       data: @geojson
@@ -437,7 +438,9 @@ class MissionDetailController extends DetailController
     @scope.user = @authService.getUser()
 
     @requestApproval = =>
+      @scope.requestInProgress = true
       @service.submitApproval(@record.id).then (result) =>
+        @scope.requestInProgress = false
         @scope.access = result.approval
 
     @isMine = () =>

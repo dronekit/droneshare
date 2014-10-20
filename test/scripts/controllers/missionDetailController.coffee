@@ -13,28 +13,25 @@ describe "missionDetailController", ->
     routeParamsStub = jasmine.createSpy('routeParamsStub')
     routeParamsStub.id = 218
 
-    @userDetailController = $controller('missionDetailController', { '$scope': @scope, '$routeParams': routeParamsStub })
+    @userDetailController = $controller('missionDetailController', { '$scope': @scope, '$routeParams': routeParamsStub, 'preFetchedMission': @mission, 'preFetchedGeoJson': @geojson })
     @urlBase = 'https://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
     @httpBackend.whenGET("#{@urlBase}/auth/user").respond 200, @user
     @httpBackend.whenGET("#{@urlBase}/mission/#{routeParamsStub.id}").respond 200, @mission
     @httpBackend.whenGET("#{@urlBase}/mission/#{routeParamsStub.id}/messages.geo.json").respond 200, @geojson
 
-  it 'gets mission record by params', ->
-    expect(@scope.record).toBeUndefined()
+  it 'gets prefetched mission record', ->
     @scope.$apply()
     @httpBackend.flush()
     expect(@scope.record).not.toBeUndefined()
 
   describe 'get_geojson', ->
-    it 'gets geojson data at init', ->
-      expect(@scope.geojson).toEqual {}
+    it 'gets geojson data prefetched at init', ->
       @scope.$apply()
       @httpBackend.flush()
       expect(@scope.geojson).not.toEqual {}
 
     it 'should set bounds', ->
-      expect(@scope.bounds).toEqual {}
       @scope.$apply()
       @httpBackend.flush()
 

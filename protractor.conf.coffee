@@ -7,8 +7,6 @@ exports.config =
     'browserName': 'firefox'
   }, {
     'browserName': 'chrome'
-  }, {
-    'browserName': 'safari'
   }]
 
   baseUrl: 'http://localhost:9001/'

@@ -16,6 +16,16 @@ module.exports = (grunt) ->
       srcDirectory: 'src'
       tempDirectory: '.temp'
       testDirectory: 'test'
+      testPort: 9001
+      devPort: 9099
+
+    sauceconnect:
+      options:
+        keepAlive: true
+        accessKey: process.env.SAUCE_ACCESS_KEY
+        username: process.env.SAUCE_USERNAME
+      test: {}
+      dev: {}
 
     # Gets dependent components from bower
     # see bower.json file
@@ -95,7 +105,7 @@ module.exports = (grunt) ->
     # Sets up a web server
     connect:
       options:
-        port: 9099 # Use 0 for dynamic
+        port: '<%= settings.devPort %>' # Use 0 for dynamic
         base: '<%= settings.distDirectory %>'
         hostname: 'localhost'
         livereload: 35729
@@ -219,14 +229,13 @@ module.exports = (grunt) ->
 
     protractor:
       options:
-        configFile: 'protractor.saucelabs.conf.coffee'
         keepAlive: true
         noColor: false
       dev:
         configFile: 'protractor.conf.coffee'
       test_e2e:
-        args:
-          browser: 'chrome'
+        options:
+          configFile: 'protractor.saucelabs.conf.coffee'
 
     # Compile LESS (.less) files to CSS (.css)
     less:
@@ -631,6 +640,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'test', [
     'build'
     'karma'
+    'integration-tests:dev'
   ]
 
   # Compiles all CoffeeScript files in the project to JavaScript then deletes all CoffeeScript files
@@ -646,12 +656,11 @@ module.exports = (grunt) ->
   grunt.registerTask 'integration-tests', [
     'build'
     'connect:test'
-    'protractor_webdriver'
-    'protractor'
+    'sauceconnect:test'
+    'protractor:test_e2e'
   ]
 
   grunt.registerTask 'integration-tests:dev', [
-    'build'
     'connect:test'
     'protractor_webdriver'
     'protractor:dev'

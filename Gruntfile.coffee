@@ -5,11 +5,27 @@ module.exports = (grunt) ->
   require('load-grunt-tasks')(grunt)
   require('time-grunt')(grunt)
 
+  appConfig = {
+    app: require('./bower.json').appPath || 'app'
+    dist: 'dist'
+  }
+
   grunt.initConfig
     settings:
       distDirectory: 'dist'
       srcDirectory: 'src'
       tempDirectory: '.temp'
+      testDirectory: 'test'
+      testPort: 9001
+      devPort: 9099
+
+    sauceconnect:
+      options:
+        keepAlive: true
+        accessKey: process.env.SAUCE_ACCESS_KEY
+        username: process.env.SAUCE_USERNAME
+      test: {}
+      dev: {}
 
     # Gets dependent components from bower
     # see bower.json file
@@ -88,14 +104,18 @@ module.exports = (grunt) ->
 
     # Sets up a web server
     connect:
+      options:
+        port: '<%= settings.devPort %>' # Use 0 for dynamic
+        base: '<%= settings.distDirectory %>'
+        hostname: 'localhost'
+        livereload: 35729
+        middleware: require './middleware'
       app:
         options:
-          base: '<%= settings.distDirectory %>'
-          hostname: 'localhost'
-          livereload: true
-          middleware: require './middleware'
           open: true
-          port: 9099 # Use 0 for dynamic
+      test:
+        options:
+          port: 9001
 
     # Copies directories and files from one location to another
     copy:
@@ -196,10 +216,26 @@ module.exports = (grunt) ->
             {pattern: 'dist/scripts/libs/jquery.js', watched: false, served: true, included: true}
             {pattern: 'bower_components/scripts/libs/jasmine-jquery.js', watched: false, served: true, included: true}
             {pattern: 'dist/**/*.js', watched: false, served: true, included: true}
-            {pattern: 'test/**/*.coffee', watched: true, served: true, included: true}
+            {pattern: 'test/units/**/*.coffee', watched: true, served: true, included: true}
           ]
           runnerPort: 9100
           singleRun: !grunt.option('watch')
+
+    protractor_webdriver:
+      test_e2e:
+        options:
+          path: './node_modules/protractor/bin/'
+          command: 'webdriver-manager start'
+
+    protractor:
+      options:
+        keepAlive: true
+        noColor: false
+      dev:
+        configFile: 'protractor.conf.coffee'
+      test_e2e:
+        options:
+          configFile: 'protractor.saucelabs.conf.coffee'
 
     # Compile LESS (.less) files to CSS (.css)
     less:
@@ -604,6 +640,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'test', [
     'build'
     'karma'
+    'integration-tests:dev'
   ]
 
   # Compiles all CoffeeScript files in the project to JavaScript then deletes all CoffeeScript files
@@ -614,4 +651,17 @@ module.exports = (grunt) ->
     'prompt:jslove'
     'coffee:jslove'
     'clean:jslove'
+  ]
+
+  grunt.registerTask 'integration-tests', [
+    'build'
+    'connect:test'
+    'sauceconnect:test'
+    'protractor:test_e2e'
+  ]
+
+  grunt.registerTask 'integration-tests:dev', [
+    'connect:test'
+    'protractor_webdriver'
+    'protractor:dev'
   ]

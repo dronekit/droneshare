@@ -52,6 +52,7 @@ to install just do
 
 ```
 npm install
+bower install
 grunt bower:install
 ```
 

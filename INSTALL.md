@@ -33,6 +33,7 @@ To install the app you need to install the packages required for this project, t
 
 ```
 npm install
+bower install
 grunt bower:install
 ```
 

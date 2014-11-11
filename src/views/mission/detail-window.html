@@ -74,14 +74,15 @@
           </div>
         </div>
 
-        <div class="col-sm-12" ng-show="user.isAdmin">
+        <div class="col-sm-12" ng-show="user.isAdmin || user.groups.indexOf('preauth') > -1">
           <div class="row">
             <h3>Aerospace Access:</h3>
-            <div class='aerospace-button' ng-show="access != 'SUBMITTED'">
+            <div class='aerospace-button' ng-show="access == ''">
               <button ng-ladda-bootstrap data-style="zoom-out" ladda-toggle="requestInProgress" class="ladda-button btn btn-primary" ng-click="controller.requestApproval()">Request approval</button>
             </div>
-            <div class='aerospace-button' ng-show="access == 'SUBMITTED'">
-              <button class="btn btn-default disabled" tooltip="Request aerospace clearance">Request Submitted</button>
+            <div class='aerospace-button' ng-show="access != ''" ng-click="controller.requestApproval()">
+              <!-- removed disabled, because we want to make it easier to resubmit -->
+              <button class="btn btn-default" tooltip="{{access}}">Submitted (see tooltip for status)</button>
             </div>
           </div>
         </div>

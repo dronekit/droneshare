@@ -408,17 +408,38 @@ class VehicleDetailController extends DetailController
 
     super(data)
 
-class MissionDetailController extends DetailController
-  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'missionService', '$rootScope', 'authService', '$window', '$sce', 'ngProgressLite']
-  constructor: (@modal, @log, scope, routeParams, @service, @rootScope, @authService, window, @sce, ngProgressLite) ->
-    scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
-    scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
+class MissionSupportController
+  @$inject: ['$log', '$scope', 'mission', 'user', 'missionService']
+  constructor: (@log, @scope, @mission, @user, @service) ->
+    @log.info 'hello this is modals reporting!'
+    @scope.mission = @mission
+    @scope.user = @user
+    @scope.extraInfo = ''
 
-    super(scope, routeParams, window)
-    @scope.urlBase = @urlBase # FIXME - is there a better way to pass this out to the html?
+  send_support_ticket: (form = {$dirty: false}) =>
+    ticketPayload = {priority: 'unused'}
+    if form.$dirty
+      ticketPayload.extraInfo = form.extraInfo.$viewValue
+      @service.openSupportTicket(@mission, ticketPayload).then (response) =>
+        @scope.$dismiss('cancel')
+
+class MissionDetailController extends DetailController
+  @$inject: ['$modal', '$log', '$scope', '$routeParams', 'preFetchedMission', 'missionService', '$rootScope', 'authService', '$window', '$sce', 'ngProgressLite']
+  constructor: (@modal, @log, @scope, routeParams, @record, @service, @rootScope, @authService, window, @sce, ngProgressLite) ->
+    @scope.$on 'loading-started', (event, config) -> ngProgressLite.start() if event.currentScope.urlBase == config.url
+    @scope.$on 'loading-complete', (event, config) -> ngProgressLite.done() if event.currentScope.urlBase == config.url
+
+    super(@scope, routeParams, window, false)
+
+    # make sure we call this since its the function that
+    # fixes the record and sets up open graph tags
+    @handle_fetch_response(@record)
+
+    @scope.urlBase = @urlBase
     @scope.center = {}
     @scope.bounds = {}
     @scope.geojson = {}
+    @scope.record = @record
 
     @service.get_geojson(@routeParams.id).then (result) =>
       @log.debug("Setting geojson")
@@ -469,6 +490,18 @@ class MissionDetailController extends DetailController
       name = 'doarama' + @record.id
       @window.open(@scope.doaramaURL, name, "width=940,height=420,scrollbars=no,left=#{x},top=#{y}")
 
+    @get_support_modal = () =>
+      @log.info('creating window dialog for support tickets')
+      dialog = @modal.open
+        templateUrl: '/views/mission/support-ticket.html'
+        controller: 'missionSupportController as controller'
+        resolve:
+          mission: =>
+            @record
+          user: ['$route', 'userService', ($route, userService) =>
+            userService.getId(@record.userName)
+          ]
+
   # Subclasses can override if they would like to strip content out before submitting
   get_record_for_submit: =>
     # The server doesn't understand this yet
@@ -482,10 +515,10 @@ class MissionDetailController extends DetailController
 
   # We update open social data so facebook shows nice content
   handle_fetch_response: (data) =>
-    super(data)
-
     # FIXME - unify these fixups with the regular mission record fetch - should be in the service instead!
-    fixupMission(data, @authService.getUser())
+    @record = fixupMission(data, @authService.getUser())
+
+    super(data)
 
     if !data.latitude?
       @set_error('This mission did not include location data')
@@ -549,6 +582,7 @@ class MissionAnalysisController extends BaseController
 angular.module('app').controller 'userDetailController', UserDetailController
 angular.module('app').controller 'vehicleDetailController', VehicleDetailController
 angular.module('app').controller 'missionDetailController', MissionDetailController
+angular.module('app').controller 'missionSupportController', MissionSupportController
 angular.module('app').controller 'missionParameterController', MissionParameterController
 angular.module('app').controller 'missionPlotController', MissionPlotController
 angular.module('app').controller 'missionAnalysisController', MissionAnalysisController

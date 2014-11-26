@@ -13,17 +13,15 @@ describe "missionDetailController", ->
     routeParamsStub = jasmine.createSpy('routeParamsStub')
     routeParamsStub.id = 218
 
-    @userDetailController = $controller('missionDetailController', { '$scope': @scope, '$routeParams': routeParamsStub })
+    @userDetailController = $controller('missionDetailController', { '$scope': @scope, '$routeParams': routeParamsStub, 'preFetchedMission': @mission })
+
     @urlBase = 'https://api.droneshare.com/api/v1'
     @httpBackend = _$httpBackend_
     @httpBackend.whenGET("#{@urlBase}/auth/user").respond 200, @user
     @httpBackend.whenGET("#{@urlBase}/mission/#{routeParamsStub.id}").respond 200, @mission
     @httpBackend.whenGET("#{@urlBase}/mission/#{routeParamsStub.id}/messages.geo.json").respond 200, @geojson
 
-  it 'gets mission record by params', ->
-    expect(@scope.record).toBeUndefined()
-    @scope.$apply()
-    @httpBackend.flush()
+  it 'it pre-fetches the mission object on router resolve', ->
     expect(@scope.record).not.toBeUndefined()
 
   describe 'get_geojson', ->
@@ -46,8 +44,6 @@ describe "missionDetailController", ->
 
   describe 'handle_fetch_response', ->
     it 'gets formats date to present to users', ->
-      @scope.$apply()
-      @httpBackend.flush()
       createdOn = new Date(@mission.createdOn)
       expect(@scope.record.dateString).toEqual "#{createdOn.toDateString()} - #{createdOn.toLocaleTimeString()}"
 

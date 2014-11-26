@@ -225,6 +225,10 @@ class MissionService extends RESTService
 
   endpoint: "mission"
 
+  openSupportTicket: (mission, ticketPayload) =>
+    @log.debug "Posting new Ticket"
+    @postId("#{mission.id}/openTicket", ticketPayload)
+
   getAllMissions: (fetchParams) =>
     fetchParams or= @getFetchParams()
     @getMissionsFromParams(fetchParams)

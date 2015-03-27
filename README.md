@@ -4,7 +4,9 @@ Build Status:
 
 [![Codeship Status for diydrones/droneshare](https://codeship.io/projects/1d6b0730-e382-0131-36da-0e6774a12e5d/status)](https://codeship.io/projects/25456)
 
-The new version of droneshare - built upon the DroneAPI.  Please see our [welcome letter](WELCOME.md).
+DroneShare is a shared repository of drone missions. It was conceived by @geeksville with the idea of having an easier way of sharing logs, and it eventually grew into the current state. The backend server behind this is called DroneKit-Cloud, which is part of DroneKit by 3D Robotics.
+
+This is new version of droneshare - built upon DroneKit.  Please see our [welcome letter](WELCOME.md). 
 
 ## Developers guide
 

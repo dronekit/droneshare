@@ -4,7 +4,7 @@ Build Status:
 
 [![Codeship Status for diydrones/droneshare](https://codeship.io/projects/1d6b0730-e382-0131-36da-0e6774a12e5d/status)](https://codeship.io/projects/25456)
 
-The new version of droneshare - built upon the DroneAPI.  Please see our [welcome letter](WELCOME.md).
+The new version of droneshare - built upon the [DroneKit](http://www.dronekit.io/).  Please see our [welcome letter](WELCOME.md).
 
 ## Developers guide
 

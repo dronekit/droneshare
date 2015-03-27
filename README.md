@@ -6,7 +6,7 @@ Build Status:
 
 DroneShare is a shared repository of drone missions. It was conceived by @geeksville with the idea of having an easier way of sharing logs, and it eventually grew into the current state. The backend server behind this is called DroneKit-Cloud, which is part of DroneKit by 3D Robotics.
 
-This is new version of droneshare - built upon the DroneKit.  Please see our [welcome letter](WELCOME.md). 
+This is new version of droneshare - built upon DroneKit.  Please see our [welcome letter](WELCOME.md). 
 
 ## Developers guide
 

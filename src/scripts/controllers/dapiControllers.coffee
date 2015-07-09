@@ -364,6 +364,11 @@ class VehicleDetailController extends DetailController
 
     super(scope, routeParams, window, false)
 
+    for rec in resolvedVehicle.missions
+      # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
+      # a way to share this code!
+      fixupMission(rec, @authService.getUser())
+
     @assign_record(resolvedVehicle)
 
     @uploading = false
@@ -552,4 +557,3 @@ angular.module('app').controller 'missionDetailController', MissionDetailControl
 angular.module('app').controller 'missionParameterController', MissionParameterController
 angular.module('app').controller 'missionPlotController', MissionPlotController
 angular.module('app').controller 'missionAnalysisController', MissionAnalysisController
-

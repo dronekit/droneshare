@@ -244,10 +244,10 @@ class AlertController
     $scope.modalDescription = modalOptions.description
     $scope.modalAction = modalOptions.action
     $scope.record = record
-    $scope.go = (path) =>
+    $scope.go = (path) ->
       $modalInstance.close()
       $location.path(path)
-    $scope.ok = =>
+    $scope.ok = ->
       $modalInstance.close(record)
 
 angular.module('app').controller 'alertController', AlertController
@@ -328,7 +328,7 @@ class UserDetailController extends DetailController
     $scope.$on 'vehicleRemoved', (event, response) =>
       @fetch_record()
 
-    $scope.$on 'vehicleAdded', (event, response) =>
+    $scope.$on 'vehicleAdded', (event, response) ->
       $scope.controller.record.vehicles.push(response.data)
       $scope.controller.vehicleModal.close('success')
 

@@ -133,7 +133,7 @@ angular.module('app').directive 'missionList', ['$log', ($log) -> return {
     @getLongitudeMissions = (longitude, opt = 'GT') =>
       @service.getLongitudeMissions(longitude, opt).then @assignRecords
 
-    @sortCreatedAt = =>
+    @sortCreatedAt = ->
       # figure out how to toggle sort by other fields
 
     @assignRecords = (records) =>
@@ -195,21 +195,21 @@ angular.module('app').directive 'missionList', ['$log', ($log) -> return {
     return @
   ]
   link: ($scope, element, attributes, controller) ->
-    $scope.$watch 'missionDataSet', (newValue, oldValue) =>
+    $scope.$watch 'missionDataSet', (newValue, oldValue) ->
       unless newValue == oldValue
         #controller.queryFilterHidden = if $scope.missionDataSet == 'mine' then true else false
         controller.chooseDataSet()
 
-    $scope.tryFilterField = (index) =>
+    $scope.tryFilterField = (index) ->
       $scope.dropDownIsOpen.field = false
       $scope.filters.field = controller.filterFields[index]
 
-    $scope.tryFilterOp = (index) =>
+    $scope.tryFilterOp = (index) ->
       $log.debug "tryfilterOp: ", index
       $scope.dropDownIsOpen.opt = false
       $scope.filters.opt = controller.filterOpts[index]
 
-    $scope.tryFilterDataSet = =>
+    $scope.tryFilterDataSet = ->
       $scope.filtersActive = true
       controller.filterDataSet $scope.filters.input, $scope.filters.opt.opt
       # humanized filter query
@@ -219,12 +219,12 @@ angular.module('app').directive 'missionList', ['$log', ($log) -> return {
       return false if $scope.noInfiniteScroll
       controller.nextPage()
 
-    $scope.toggleCreatedAt = =>
+    $scope.toggleCreatedAt = ->
       controller.createdAt = if controller.createdAt == 'asc' then 'desc' else 'asc'
       controller.setCreatedAt()
       controller.chooseDataSet()
 
-    ($ '.form-control-input-clear').bind 'click', (event) =>
+    ($ '.form-control-input-clear').bind 'click', (event) ->
       if $scope.filtersActive
         $scope.filtersActive = false
         $scope.filterInProgress = true

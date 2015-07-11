@@ -5,7 +5,7 @@ angular.module('app').directive 'missionPlot', ['$log', '$window', ($log, $windo
   scope:
     'series': '='
   controller: ['$scope', (@scope) ->
-    @getPlotWidthHeight = =>
+    @getPlotWidthHeight = ->
       navHeight = ($ 'header[header-nav]').height()
       infoHeight = ($ '.plot-info').height()
       plotHeight = ($ window).height() - navHeight - infoHeight - 200

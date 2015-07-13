@@ -244,10 +244,10 @@ class AlertController
     $scope.modalDescription = modalOptions.description
     $scope.modalAction = modalOptions.action
     $scope.record = record
-    $scope.go = (path) =>
+    $scope.go = (path) ->
       $modalInstance.close()
       $location.path(path)
-    $scope.ok = =>
+    $scope.ok = ->
       $modalInstance.close(record)
 
 angular.module('app').controller 'alertController', AlertController
@@ -328,7 +328,7 @@ class UserDetailController extends DetailController
     $scope.$on 'vehicleRemoved', (event, response) =>
       @fetch_record()
 
-    $scope.$on 'vehicleAdded', (event, response) =>
+    $scope.$on 'vehicleAdded', (event, response) ->
       $scope.controller.record.vehicles.push(response.data)
       $scope.controller.vehicleModal.close('success')
 
@@ -363,6 +363,11 @@ class VehicleDetailController extends DetailController
     scope.urlBase = service.urlId(routeParams.id)
 
     super(scope, routeParams, window, false)
+
+    for rec in resolvedVehicle.missions
+      # FIXME - this is copy-pasta with the similar code that fixes up missions in the vehicle record - find
+      # a way to share this code!
+      fixupMission(rec, @authService.getUser())
 
     @assign_record(resolvedVehicle)
 
@@ -552,4 +557,3 @@ angular.module('app').controller 'missionDetailController', MissionDetailControl
 angular.module('app').controller 'missionParameterController', MissionParameterController
 angular.module('app').controller 'missionPlotController', MissionPlotController
 angular.module('app').controller 'missionAnalysisController', MissionAnalysisController
-

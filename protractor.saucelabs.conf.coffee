@@ -50,4 +50,3 @@ exports.config =
     defaultTimeoutInterval: 30000
     isVerbose : true
     includeStackTrace : true
-

@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h3 class="modal-title">3DR Support Ticket</h3>
+</div>
+<div class="modal-body">
+  <form name="supportTicketForm" ng-submit="controller.send_support_ticket(supportTicketForm)" novalidate>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row form-group">
+          <label class="col-sm-2 control-label" for="contactEmail">Email:</label>
+          <div class="col-sm-10">
+            <input disabled type="text" class="form-control" ng-model="user.email" name="contactEmail" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="col-sm-2 control-label" for="extraInfo">Message</label>
+      <div class="col-sm-10">
+        <textarea ng-model="extraInfo" name="extraInfo" class="form-control">
+        </textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-warning" ng-click="$dismiss('cancel')">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+</div>
